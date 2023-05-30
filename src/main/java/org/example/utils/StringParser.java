@@ -1,5 +1,7 @@
 package org.example.utils;
 
+import lombok.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -7,11 +9,12 @@ import java.util.regex.Pattern;
 
 public class StringParser {
 
-    public static String getFirst(String input, String pattern) {
+    @NonNull
+    public static String getFirst(@NonNull final String input, @NonNull final String pattern) {
         String substring = "";
 
-        Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = regex.matcher(input);
+        final Pattern regex = Pattern.compile(pattern);
+        final Matcher matcher = regex.matcher(input);
 
         if (matcher.find()) {
             substring = matcher.group(1);
@@ -20,16 +23,18 @@ public class StringParser {
         return substring;
     }
 
-    public static List<String> getAll(String input, String pattern) {
-        List<String> substrings = new ArrayList<>();
-        Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = regex.matcher(input);
+    @NonNull
+    public static List<String> getAll(@NonNull final String input, @NonNull final String pattern) {
+        final List<String> substrings = new ArrayList<>();
+        final Pattern regex = Pattern.compile(pattern);
+        final Matcher matcher = regex.matcher(input);
 
         while (matcher.find()) {
-            String substring = matcher.group();
+            final String substring = matcher.group();
             substrings.add(substring);
         }
 
         return substrings;
     }
+
 }

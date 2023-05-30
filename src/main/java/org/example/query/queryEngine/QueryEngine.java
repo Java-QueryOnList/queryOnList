@@ -1,7 +1,12 @@
 package org.example.query.queryEngine;
 
+import lombok.NonNull;
+
 import java.util.List;
 
 public interface QueryEngine {
-    <T> List<T> run(String query, List<T> onList);
+
+    @NonNull
+    <T> List<T> run(@NonNull final String query, List<T> onList);
+
 }

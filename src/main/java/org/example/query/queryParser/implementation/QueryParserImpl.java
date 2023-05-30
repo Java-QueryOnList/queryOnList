@@ -1,5 +1,8 @@
 package org.example.query.queryParser.implementation;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.example.query.queryNode.QueryNode;
 import org.example.query.queryNode.implementation.SuperQueryNode;
 import org.example.query.queryNode.implementation.filterNode.FilterNode;
@@ -11,30 +14,38 @@ import org.example.query.queryParser.implementation.subClasses.PaginationParser;
 import org.example.query.queryParser.implementation.subClasses.SortingParser;
 import org.example.utils.StringParser;
 
+
 /**
  * Parse given query and return the parsed QueryNode
  */
+@SuperBuilder
+@RequiredArgsConstructor
 public class QueryParserImpl implements QueryParser {
+
     private static final String FILTER_PATTERN = "\\$filter=([^&]+)";
     private static final String SORTING_PATTERN = "\\$orderBy=([^&]+)";
     private static final String TOP_PATTERN = "\\$top=(\\d+)";
     private static final String SKIP_PATTERN = "\\$skip=(\\d+)";
 
-    String query; // e.g. "$filter=name eq 'david'&$orderBy=hireDate"
+    @NonNull
+    private final String query; // e.g. "$filter=name eq 'david'&$orderBy=hireDate"
 
-    public QueryParserImpl(String query) {
-        this.query = query;
-    }
 
+    @NonNull
     public QueryNode parse() {
-        String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
-        String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
-        String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
-        String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
+        final String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
+        final String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
+        final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
+        final String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
 
-        FilterNode filterNode = new FilterParser(filterQuery).parse();
-        SortingNode sortingNode = new SortingParser(sortingQuery).parse();
-        PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
-        return new SuperQueryNode(filterNode, sortingNode, paginationNode);
+        final FilterNode filterNode = new FilterParser(filterQuery).parse();
+        final SortingNode sortingNode = new SortingParser(sortingQuery).parse();
+        final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
+
+        return SuperQueryNode.builder()
+                .filterNode(filterNode)
+                .sortingNode(sortingNode)
+                .paginationNode(paginationNode)
+                .build();
     }
 }

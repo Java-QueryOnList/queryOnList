@@ -1,15 +1,15 @@
 package org.example.query.queryParser.implementation.subClasses;
 
+import lombok.NonNull;
 import org.example.query.queryNode.implementation.sortingNode.SortingNode;
 import org.example.query.queryParser.implementation.QueryParserImpl;
 
 public class SortingParser extends QueryParserImpl {
-    String query;
-    int index;
 
     static public String pattern = "\\$orderBy=([^(&)]+)";
+    private int index;
 
-    public SortingParser(String query) {
+    public SortingParser(@NonNull final String query) {
         super(query);
         this.index = 0;
     }
@@ -18,7 +18,10 @@ public class SortingParser extends QueryParserImpl {
         super(query);
         this.index = index;
     }
+
+    @NonNull
     public SortingNode parse() {
         return null;
     }
+
 }

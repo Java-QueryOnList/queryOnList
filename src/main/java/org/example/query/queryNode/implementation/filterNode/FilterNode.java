@@ -1,5 +1,8 @@
 package org.example.query.queryNode.implementation.filterNode;
 
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.example.query.queryNode.QueryNode;
 import org.example.query.queryNode.implementation.filterNode.filterValue.FilterValue;
 import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.Operand;
@@ -11,44 +14,39 @@ import org.example.query.queryNode.implementation.filterNode.filterValue.subClas
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@RequiredArgsConstructor
 public class FilterNode implements QueryNode {
+
+    @NonNull
     private final FilterValue value;
-    public FilterNode left;
-    public FilterNode right;
+    private FilterNode left;
+    private FilterNode right;
 
-    public FilterNode(FilterValue value) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
-    }
-
-    public FilterValue getValue() {
-        return value;
-    }
-
+    @NonNull
     @Override
-    public <T> List<T> query(List<T> onList) throws NoSuchFieldException, IllegalAccessException {
+    public <T> List<T> query(@NonNull final List<T> onList) throws NoSuchFieldException, IllegalAccessException {
         List<T> result = new ArrayList<>();
 
         // If left and right is null, which should never happen
         if (left == null || right == null) return result;
 
-        if (value instanceof Comparator){
+        if (value instanceof Comparator) {
             // if the node is a comparator which always compares two operands values
-            for (T element : onList){
+            for (T element : onList) {
                 // prepare left and right value
-                Object leftValue = Operand.resolveOperand((left.getValue()), element);
-                Object rightValue = Operand.resolveOperand((right.getValue()), element);
+                final Object leftValue = Operand.resolveOperand((left.getValue()), element);
+                final Object rightValue = Operand.resolveOperand((right.getValue()), element);
 
                 // if condition is met add to result list
                 boolean conditionMet = ((Comparator) value).compare(leftValue, rightValue);
                 if (conditionMet) result.add(element);
             }
-        } else if (value instanceof Logician){
+        } else if (value instanceof Logician) {
             // if the node is a logical operator like e.g "AND" or "OR"
             if (value instanceof LogicalAnd) {
-                List<T> queriedLeft = left.query(onList);
-                List<T> queriedRight = right.query(onList);
+                final List<T> queriedLeft = left.query(onList);
+                final List<T> queriedRight = right.query(onList);
                 result = ((LogicalAnd) value).resolve(queriedLeft, queriedRight);
             } else if (value instanceof LogicalOr) {
                 result = ((LogicalOr) value).resolve(left.query(onList), right.query(onList));
@@ -59,4 +57,5 @@ public class FilterNode implements QueryNode {
 
         return result;
     }
+
 }

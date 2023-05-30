@@ -5,5 +5,7 @@ import org.example.query.queryNode.implementation.filterNode.filterValue.subClas
 import java.util.List;
 
 public interface Logician extends Operator {
-    <T> List<T> resolve(List<T> left, List<T> right);
+
+    <T> List<T> resolve(final List<T> left, final List<T> right);
+
 }

@@ -1,5 +1,6 @@
 package org.example.query.queryEngine.implementation;
 
+import lombok.NonNull;
 import org.example.query.queryEngine.QueryEngine;
 import org.example.query.queryNode.QueryNode;
 import org.example.query.queryParser.implementation.QueryParserImpl;
@@ -19,14 +20,16 @@ public class QueryEngineImpl implements QueryEngine {
      * @param <T>    The type of objects in the list.
      * @return The result of the query execution.
      */
-    public <T> List<T> run(String query, List<T> onList) {
+    @NonNull
+    public <T> List<T> run(@NonNull final String query, @NonNull final List<T> onList) {
         // parse query
-        QueryParserImpl queryParser = new QueryParserImpl(query);
-        QueryNode parsedQuery = queryParser.parse();
+        final QueryParserImpl queryParser = new QueryParserImpl(query);
+        final QueryNode parsedQuery = queryParser.parse();
         try {
             return parsedQuery.query(onList);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
+
 }
