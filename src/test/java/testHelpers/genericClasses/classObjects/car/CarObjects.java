@@ -6,7 +6,7 @@ import testHelpers.genericClasses.classDecleration.car.Engine;
 import java.util.ArrayList;
 import java.util.List;
 
-class CarObjects {
+public class CarObjects {
     public static final List<Car> TEST_OBJECTS = new ArrayList<>();
 
     static {
