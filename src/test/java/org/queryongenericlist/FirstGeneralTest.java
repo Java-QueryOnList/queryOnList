@@ -4,7 +4,7 @@ import testHelpers.genericClasses.classDecleration.car.Car;
 import testHelpers.genericClasses.classObjects.car.CarObjects;
 import org.queryongenericlist.query.queryEngine.implementation.QueryEngineImpl;
 import org.junit.jupiter.api.Test;
-import testHelpers.genericClasses.utils.TestHelper;
+import testHelpers.genericClasses.utils.LoggingUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +24,10 @@ public class FirstGeneralTest {
         // Query
         QueryEngineImpl engine = new QueryEngineImpl();
         List<Car> queriedList = engine.run(query, cars);
-
         System.out.println("Expected");
-        System.out.println(TestHelper.listToString(expectedList));
+        System.out.println(LoggingUtils.genericListToString(expectedList));
         System.out.println("Queried");
-        System.out.println(TestHelper.listToString(queriedList));
+        System.out.println(LoggingUtils.genericListToString(queriedList));
 
         assertEquals(expectedList, queriedList);
     }
