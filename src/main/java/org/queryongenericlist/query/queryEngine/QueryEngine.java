@@ -1,4 +1,4 @@
-package org.example.query.queryEngine;
+package org.queryongenericlist.query.queryEngine;
 
 import lombok.NonNull;
 

@@ -1,9 +1,9 @@
-package org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand;
+package org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand;
 
 import lombok.NonNull;
-import org.example.query.queryNode.implementation.filterNode.filterValue.FilterValue;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.ReferenceOperand;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.FilterValue;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.ReferenceOperand;
 
 public interface Operand extends FilterValue {
 

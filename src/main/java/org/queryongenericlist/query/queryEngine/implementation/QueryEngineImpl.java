@@ -1,9 +1,9 @@
-package org.example.query.queryEngine.implementation;
+package org.queryongenericlist.query.queryEngine.implementation;
 
 import lombok.NonNull;
-import org.example.query.queryEngine.QueryEngine;
-import org.example.query.queryNode.QueryNode;
-import org.example.query.queryParser.implementation.QueryParserImpl;
+import org.queryongenericlist.query.queryEngine.QueryEngine;
+import org.queryongenericlist.query.queryNode.QueryNode;
+import org.queryongenericlist.query.queryParser.implementation.QueryParserImpl;
 
 import java.util.List;
 

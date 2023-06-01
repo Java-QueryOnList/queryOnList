@@ -1,7 +1,7 @@
-package org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses;
+package org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses;
 
 import lombok.NonNull;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.Logician;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.Logician;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

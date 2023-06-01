@@ -1,7 +1,7 @@
-package org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator;
+package org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator;
 
 import lombok.NonNull;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.Operator;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.Operator;
 
 public abstract class Comparator implements Operator {
 

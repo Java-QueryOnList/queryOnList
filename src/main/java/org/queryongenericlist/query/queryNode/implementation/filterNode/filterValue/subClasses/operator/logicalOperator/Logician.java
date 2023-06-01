@@ -1,6 +1,6 @@
-package org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator;
+package org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator;
 
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.Operator;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.Operator;
 
 import java.util.List;
 

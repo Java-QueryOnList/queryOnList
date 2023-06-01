@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.queryongenericlist.utils;
 
 import lombok.NonNull;
 

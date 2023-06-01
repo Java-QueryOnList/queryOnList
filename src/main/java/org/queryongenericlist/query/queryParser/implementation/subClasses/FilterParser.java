@@ -1,16 +1,16 @@
-package org.example.query.queryParser.implementation.subClasses;
+package org.queryongenericlist.query.queryParser.implementation.subClasses;
 
 import lombok.NonNull;
-import org.example.query.queryNode.implementation.filterNode.FilterNode;
-import org.example.query.queryNode.implementation.filterNode.filterValue.FilterValue;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.ReferenceOperand;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.Operator;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.subClasses.*;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
-import org.example.query.queryParser.implementation.QueryParserImpl;
-import org.example.utils.StringParser;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNode;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.FilterValue;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.ReferenceOperand;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.Operator;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.subClasses.*;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
+import org.queryongenericlist.query.queryParser.implementation.QueryParserImpl;
+import org.queryongenericlist.utils.StringParser;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,7 +1,7 @@
-package org.example.query.queryNode.implementation.sortingNode;
+package org.queryongenericlist.query.queryNode.implementation.sortingNode;
 
 import lombok.NonNull;
-import org.example.query.queryNode.QueryNode;
+import org.queryongenericlist.query.queryNode.QueryNode;
 
 import java.util.List;
 

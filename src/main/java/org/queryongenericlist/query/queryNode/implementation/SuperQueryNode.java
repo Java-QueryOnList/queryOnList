@@ -1,10 +1,10 @@
-package org.example.query.queryNode.implementation;
+package org.queryongenericlist.query.queryNode.implementation;
 
 import lombok.*;
-import org.example.query.queryNode.QueryNode;
-import org.example.query.queryNode.implementation.filterNode.FilterNode;
-import org.example.query.queryNode.implementation.paginationNode.PaginationNode;
-import org.example.query.queryNode.implementation.sortingNode.SortingNode;
+import org.queryongenericlist.query.queryNode.QueryNode;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNode;
+import org.queryongenericlist.query.queryNode.implementation.paginationNode.PaginationNode;
+import org.queryongenericlist.query.queryNode.implementation.sortingNode.SortingNode;
 
 import java.util.List;
 

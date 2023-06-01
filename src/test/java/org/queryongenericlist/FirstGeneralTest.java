@@ -1,8 +1,8 @@
-package org.example;
+package org.queryongenericlist;
 
 import testHelpers.genericClasses.classDecleration.car.Car;
 import testHelpers.genericClasses.classObjects.car.CarObjects;
-import org.example.query.queryEngine.implementation.QueryEngineImpl;
+import org.queryongenericlist.query.queryEngine.implementation.QueryEngineImpl;
 import org.junit.jupiter.api.Test;
 import testHelpers.genericClasses.utils.TestHelper;
 

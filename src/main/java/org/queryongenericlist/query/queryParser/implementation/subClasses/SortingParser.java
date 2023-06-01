@@ -1,8 +1,8 @@
-package org.example.query.queryParser.implementation.subClasses;
+package org.queryongenericlist.query.queryParser.implementation.subClasses;
 
 import lombok.NonNull;
-import org.example.query.queryNode.implementation.sortingNode.SortingNode;
-import org.example.query.queryParser.implementation.QueryParserImpl;
+import org.queryongenericlist.query.queryNode.implementation.sortingNode.SortingNode;
+import org.queryongenericlist.query.queryParser.implementation.QueryParserImpl;
 
 public class SortingParser extends QueryParserImpl {
 

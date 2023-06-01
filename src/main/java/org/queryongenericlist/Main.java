@@ -1,6 +1,6 @@
-package org.example;
+package org.queryongenericlist;
 
-import org.example.utils.StringParser;
+import org.queryongenericlist.utils.StringParser;
 
 /**
  * Hello world!
@@ -8,11 +8,7 @@ import org.example.utils.StringParser;
 public class Main {
 
     public static void main(final String[] args) {
-        String subString = "";
-        final String FILTER_PATTERN = "\\$filter=([^&]+)";
-        final String query = "$filter=radius gt 5.0";
-        subString = StringParser.getFirst(query, FILTER_PATTERN);
-        System.out.println(subString);
+        System.out.println("Run Main");
     }
 
 }

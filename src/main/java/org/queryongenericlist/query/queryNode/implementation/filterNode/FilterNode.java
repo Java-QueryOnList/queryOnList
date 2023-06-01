@@ -1,15 +1,15 @@
-package org.example.query.queryNode.implementation.filterNode;
+package org.queryongenericlist.query.queryNode.implementation.filterNode;
 
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.example.query.queryNode.QueryNode;
-import org.example.query.queryNode.implementation.filterNode.filterValue.FilterValue;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.Operand;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.Comparator;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.Logician;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
+import org.queryongenericlist.query.queryNode.QueryNode;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.FilterValue;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.Operand;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.Comparator;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.Logician;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
 
 import java.util.ArrayList;
 import java.util.List;

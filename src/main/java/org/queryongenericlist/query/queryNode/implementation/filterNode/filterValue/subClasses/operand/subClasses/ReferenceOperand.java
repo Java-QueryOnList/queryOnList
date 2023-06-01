@@ -1,7 +1,7 @@
-package org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses;
+package org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses;
 
 import lombok.NonNull;
-import org.example.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.Operand;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.Operand;
 
 import java.lang.reflect.Field;
 

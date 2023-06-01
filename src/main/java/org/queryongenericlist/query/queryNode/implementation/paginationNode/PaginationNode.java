@@ -1,7 +1,7 @@
-package org.example.query.queryNode.implementation.paginationNode;
+package org.queryongenericlist.query.queryNode.implementation.paginationNode;
 
 import lombok.NonNull;
-import org.example.query.queryNode.QueryNode;
+import org.queryongenericlist.query.queryNode.QueryNode;
 
 import java.util.List;
 

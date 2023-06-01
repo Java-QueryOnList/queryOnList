@@ -1,18 +1,18 @@
-package org.example.query.queryParser.implementation;
+package org.queryongenericlist.query.queryParser.implementation;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.example.query.queryNode.QueryNode;
-import org.example.query.queryNode.implementation.SuperQueryNode;
-import org.example.query.queryNode.implementation.filterNode.FilterNode;
-import org.example.query.queryNode.implementation.paginationNode.PaginationNode;
-import org.example.query.queryNode.implementation.sortingNode.SortingNode;
-import org.example.query.queryParser.QueryParser;
-import org.example.query.queryParser.implementation.subClasses.FilterParser;
-import org.example.query.queryParser.implementation.subClasses.PaginationParser;
-import org.example.query.queryParser.implementation.subClasses.SortingParser;
-import org.example.utils.StringParser;
+import org.queryongenericlist.query.queryNode.QueryNode;
+import org.queryongenericlist.query.queryNode.implementation.SuperQueryNode;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNode;
+import org.queryongenericlist.query.queryNode.implementation.paginationNode.PaginationNode;
+import org.queryongenericlist.query.queryNode.implementation.sortingNode.SortingNode;
+import org.queryongenericlist.query.queryParser.QueryParser;
+import org.queryongenericlist.query.queryParser.implementation.subClasses.FilterParser;
+import org.queryongenericlist.query.queryParser.implementation.subClasses.PaginationParser;
+import org.queryongenericlist.query.queryParser.implementation.subClasses.SortingParser;
+import org.queryongenericlist.utils.StringParser;
 
 
 /**
