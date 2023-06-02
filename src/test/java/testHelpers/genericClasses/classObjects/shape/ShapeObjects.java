@@ -18,10 +18,8 @@ public final class ShapeObjects {
     }
 
     private static void initRawList() {
-        RAW_LIST.add((Shape) CircleObjects.getRawList());
-        RAW_LIST.add((Shape) RectangleObjects.getRawList());
-        RAW_LIST.add((Shape) SquareObjects.getRawList());
-
-        Collections.shuffle(RAW_LIST);
+        RAW_LIST.addAll(CircleObjects.getRawList());
+        RAW_LIST.addAll(RectangleObjects.getRawList());
+        RAW_LIST.addAll(SquareObjects.getRawList());
     }
 }

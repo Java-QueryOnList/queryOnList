@@ -19,25 +19,21 @@ public class CaseTester<T> {
         runOnEach(allCases);
     }
 
-    private static <T> void run(PreparedCase<T> preparedCase) {
+    private static <T> void test(PreparedCase<T> preparedCase) {
+        // Preparation of the objects to be compared
         List<T> expectedList = preparedCase.expectedList;
         List<T> queriedList = preparedCase.getQueriedList();
-        printResults(preparedCase.query, expectedList, queriedList);
+
+        // Preparation of Log of result
+        String testResultString = LoggingUtils.getTestResultString(preparedCase.query, expectedList, queriedList);
+        System.out.println(testResultString);
+
+        // Execute Assertion
         assertEquals(expectedList, queriedList);
     }
 
     private static <T> void runOnEach(List<PreparedCase<T>> preparedCases) {
-        preparedCases.forEach(CaseTester::run);
-    }
-
-    private static <T> void printResults(String query, List<T> expectedList, List<T> queriedList) {
-        System.out.println("########## NEW CASE ##########\n");
-        System.out.println("Query:");
-        System.out.println(query + "\n");
-        System.out.println("Expected:");
-        System.out.println(LoggingUtils.genericListToString(expectedList));
-        System.out.println("Queried:");
-        System.out.println(LoggingUtils.genericListToString(queriedList));
+        preparedCases.forEach(CaseTester::test);
     }
 
 }

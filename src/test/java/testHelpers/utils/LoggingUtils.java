@@ -4,6 +4,12 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class LoggingUtils {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+
+    private static final String SUCCEEDED_STRING = ANSI_GREEN + "SUCCEEDED" + ANSI_RESET;
+    private static final String FAILED_STRING = ANSI_RED + "FAILED" + ANSI_RESET;
 
     /**
      * Gets a list of Objects of type T and returns the list in form of String. Can be important to compare to lists of objects
@@ -18,6 +24,36 @@ public class LoggingUtils {
             String subResult = genericObjectToString(obj);
             result.append(subResult);
         }
+
+        return result.toString();
+    }
+
+
+    public static <T> String getTestResultString(String query, List<T> expectedList, List<T> queriedList) {
+        boolean testSucceeded = expectedList.equals(queriedList);
+        // Add title
+        StringBuilder result = new StringBuilder("########## NEW CASE: ");
+        result.append(testSucceeded ? SUCCEEDED_STRING : FAILED_STRING);
+        result.append(" ##########\n");
+        result.append("\n");
+
+        // Add query
+        result.append("Query:\n");
+        result.append("\'");
+        result.append(query);
+        result.append("\'");
+        result.append("\n");
+        result.append("\n");
+
+        // Add Expected
+        result.append("Expected List:\n");
+        result.append(genericListToString(expectedList));
+        result.append("\n");
+
+        // Add Actual
+        result.append("Actually Queried:\n");
+        result.append(genericListToString(queriedList));
+        result.append("\n");
 
         return result.toString();
     }
