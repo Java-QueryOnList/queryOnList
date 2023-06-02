@@ -20,7 +20,7 @@ public class FilterParser extends QueryParserImpl {
 
     private static final String SPLIT_PATTERN = "([\\w.]+|'.+?'|\\S)"; //regex for any token of the query, whether operator or operand
     int index;
-    private List<String> splitQuery;
+    final private List<String> splitQuery;
 
     public FilterParser(@NonNull final String query) {
         super(query);
@@ -95,6 +95,10 @@ public class FilterParser extends QueryParserImpl {
                 index += subParser.index;
             } else if (Objects.equals(subString, ")")) {
                 break;
+            } else if (subString.equals("true") || subString.equals("false")){
+                // if substring is boolean
+                final PrimitiveOperand booleanOperand = new PrimitiveOperand(subString.equals("true"));
+                operandStack.push(new FilterNode(booleanOperand));
             } else {
                 // if substring is field
                 final String[] fieldNames = subString.split("\\.");

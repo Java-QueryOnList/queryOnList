@@ -4,14 +4,12 @@ import org.junit.jupiter.api.Test;
 import testHelpers.genericClasses.classDecleration.car.Car;
 import testHelpers.genericClasses.classDecleration.dog.Dog;
 import testHelpers.genericClasses.classDecleration.shape.Shape;
-import testHelpers.genericClasses.classObjects.shape.ShapeObjects;
+import testHelpers.genericClasses.classDecleration.shoppingList.ShoppingList;
 import testHelpers.genericClasses.classTestCases.CaseTester;
 import testHelpers.genericClasses.classTestCases.car.CarTestCases;
 import testHelpers.genericClasses.classTestCases.dog.DogTestCases;
 import testHelpers.genericClasses.classTestCases.shape.ShapeTestCases;
-import testHelpers.utils.LoggingUtils;
-
-import java.util.List;
+import testHelpers.genericClasses.classTestCases.shoppingList.ShoppingListTestCases;
 
 public class GenericClassTests {
 
@@ -39,6 +37,15 @@ public class GenericClassTests {
 
         shapeCaseTester
                 .addCase(ShapeTestCases.case01)
+                .executeCases();
+    }
+
+    @Test
+    public void testOnShoppingListClass() {
+        CaseTester<ShoppingList> shoppingListCaseTester = new CaseTester<>();
+
+        shoppingListCaseTester
+                .addCase(ShoppingListTestCases.case01)
                 .executeCases();
     }
 }

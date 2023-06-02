@@ -1,8 +1,6 @@
 package testHelpers.genericClasses.classTestCases.shape;
 
-import testHelpers.genericClasses.classDecleration.dog.Dog;
 import testHelpers.genericClasses.classDecleration.shape.Shape;
-import testHelpers.genericClasses.classObjects.dog.DogObjects;
 import testHelpers.genericClasses.classObjects.shape.ShapeObjects;
 import testHelpers.genericClasses.classTestCases.PreparedCase;
 

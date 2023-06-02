@@ -16,6 +16,10 @@ public abstract class Comparator implements Operator {
             final String strValue1 = (String) value1;
             final String strValue2 = (String) value2;
             return strValue1.compareTo(strValue2);
+        } else if (value1 instanceof Boolean && value2 instanceof Boolean) {
+            final Boolean boolValue1 = (Boolean) value1;
+            final Boolean boolValue2 = (Boolean) value2;
+            return boolValue1.compareTo(boolValue2);
         } else if (value1 instanceof String && isNumeric(value2)) {
             final Double doubleValue1 = Double.parseDouble((String) value1);
             final Double doubleValue2 = Double.parseDouble(value2.toString());
