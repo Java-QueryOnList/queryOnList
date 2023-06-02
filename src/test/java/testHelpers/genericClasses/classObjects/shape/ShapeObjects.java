@@ -6,18 +6,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ShapeObjects {
-    public static final List<Shape> TEST_CASE_1 = new ArrayList<>();
+public final class ShapeObjects {
+    private static final List<Shape> RAW_LIST = new ArrayList<>();
 
     static {
-        prepTestCase01();
+        initRawList();
     }
 
-    private static void prepTestCase01() {
-        TEST_CASE_1.add((Shape) CircleObjects.TEST_CASE_1);
-        TEST_CASE_1.add((Shape) RectangleObjects.TEST_CASE_1);
-        TEST_CASE_1.add((Shape) SquareObjects.TEST_CASE_1);
+    public static List<Shape> getRawList() {
+        return RAW_LIST;
+    }
 
-        Collections.shuffle(TEST_CASE_1);
+    private static void initRawList() {
+        RAW_LIST.add((Shape) CircleObjects.getRawList());
+        RAW_LIST.add((Shape) RectangleObjects.getRawList());
+        RAW_LIST.add((Shape) SquareObjects.getRawList());
+
+        Collections.shuffle(RAW_LIST);
     }
 }

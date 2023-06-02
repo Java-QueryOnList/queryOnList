@@ -1,4 +1,4 @@
-package testHelpers.genericClasses.utils;
+package testHelpers.utils;
 
 import java.lang.reflect.Field;
 import java.util.List;

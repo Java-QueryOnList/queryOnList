@@ -6,14 +6,18 @@ import testHelpers.genericClasses.classDecleration.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RectangleObjects {
-    public static final List<Rectangle> TEST_CASE_1 = new ArrayList<>();
+public final class RectangleObjects {
+    private static final List<Rectangle> RAW_LIST = new ArrayList<>();
 
     static {
-        prepTestCase01();
+        initRawList();
     }
 
-    private static void prepTestCase01() {
+    public static List<Rectangle> getRawList() {
+        return RAW_LIST;
+    }
+
+    private static void initRawList() {
         Rectangle rectangle1 = new Rectangle("Red", 5.0, 10.0);
         Rectangle rectangle2 = new Rectangle("Blue", 7.0, 3.0);
         Rectangle rectangle3 = new Rectangle("Green", 4.0, 6.0);
@@ -24,14 +28,14 @@ public class RectangleObjects {
         Rectangle rectangle8 = new Rectangle("Brown", 8.0, 4.0);
         Rectangle rectangle9 = new Rectangle("Gray", 10.0, 2.0);
 
-        TEST_CASE_1.add(rectangle1);
-        TEST_CASE_1.add(rectangle2);
-        TEST_CASE_1.add(rectangle3);
-        TEST_CASE_1.add(rectangle4);
-        TEST_CASE_1.add(rectangle5);
-        TEST_CASE_1.add(rectangle6);
-        TEST_CASE_1.add(rectangle7);
-        TEST_CASE_1.add(rectangle8);
-        TEST_CASE_1.add(rectangle9);
+        RAW_LIST.add(rectangle1);
+        RAW_LIST.add(rectangle2);
+        RAW_LIST.add(rectangle3);
+        RAW_LIST.add(rectangle4);
+        RAW_LIST.add(rectangle5);
+        RAW_LIST.add(rectangle6);
+        RAW_LIST.add(rectangle7);
+        RAW_LIST.add(rectangle8);
+        RAW_LIST.add(rectangle9);
     }
 }
