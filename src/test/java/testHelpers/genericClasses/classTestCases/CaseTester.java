@@ -1,22 +1,20 @@
 package testHelpers.genericClasses.classTestCases;
 
-import testHelpers.utils.LoggingUtils;
+import testHelpers.utils.AssertionsExtended;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class CaseTester<T> {
-    private final List<PreparedCase<T>> allCases = new ArrayList<>();
+    private final List<PreparedCase<T>> cases = new ArrayList<>();
 
     public CaseTester<T> addCase(PreparedCase<T> preparedCase) {
-        allCases.add(preparedCase);
+        cases.add(preparedCase);
         return this;
     }
 
     public void executeCases() {
-        runOnEach(allCases);
+        runOnAll(cases);
     }
 
     private static <T> void test(PreparedCase<T> preparedCase) {
@@ -24,15 +22,10 @@ public class CaseTester<T> {
         List<T> expectedList = preparedCase.expectedList;
         List<T> queriedList = preparedCase.getQueriedList();
 
-        // Preparation of Log of result
-        String testResultString = LoggingUtils.getTestResultString(preparedCase.query, expectedList, queriedList);
-        System.out.println(testResultString);
-
-        // Execute Assertion
-        assertEquals(expectedList, queriedList);
+        AssertionsExtended.assertQuerySuccess(preparedCase, expectedList, queriedList);
     }
 
-    private static <T> void runOnEach(List<PreparedCase<T>> preparedCases) {
+    private static <T> void runOnAll(List<PreparedCase<T>> preparedCases) {
         preparedCases.forEach(CaseTester::test);
     }
 

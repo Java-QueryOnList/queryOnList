@@ -19,6 +19,8 @@ public class GenericClassTests {
 
         carCaseTester
                 .addCase(CarTestCases.case01)
+                .addCase(CarTestCases.case02)
+                //.addCase(CarTestCases.case03) // add test cases as you wish
                 .executeCases();
     }
 

@@ -29,8 +29,7 @@ public class LoggingUtils {
     }
 
 
-    public static <T> String getTestResultString(String query, List<T> expectedList, List<T> queriedList) {
-        boolean testSucceeded = expectedList.equals(queriedList);
+    public static <T> String getTestResultString(String query, List<T> expectedList, List<T> queriedList, Boolean testSucceeded) {
         // Add title
         StringBuilder result = new StringBuilder("########## NEW CASE: ");
         result.append(testSucceeded ? SUCCEEDED_STRING : FAILED_STRING);
@@ -39,9 +38,9 @@ public class LoggingUtils {
 
         // Add query
         result.append("Query:\n");
-        result.append("\'");
+        result.append("'");
         result.append(query);
-        result.append("\'");
+        result.append("'");
         result.append("\n");
         result.append("\n");
 
