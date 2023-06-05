@@ -13,20 +13,31 @@ public class CaseTester<T> {
         return this;
     }
 
-    public void executeCases() {
-        runOnAll(cases);
+    public void testCases() {
+        runTestOnAll(cases);
     }
 
-    private static <T> void test(PreparedCase<T> preparedCase) {
+    /**
+     * Running assertion test on a prepared case object
+     *
+     * @param preparedCase the case with all properties for the assertion test
+     * @param <T> type of the list where the assertion is tested on
+     */
+    private static <T> void unitTest(PreparedCase<T> preparedCase) {
         // Preparation of the objects to be compared
         List<T> expectedList = preparedCase.expectedList;
         List<T> queriedList = preparedCase.getQueriedList();
 
-        AssertionsExtended.assertQuerySuccess(preparedCase, expectedList, queriedList);
+        AssertionsExtended.assertQuerySuccess(
+                expectedList,
+                queriedList,
+                preparedCase.getIfOrderMatters(),
+                preparedCase.getQuery()
+        );
     }
 
-    private static <T> void runOnAll(List<PreparedCase<T>> preparedCases) {
-        preparedCases.forEach(CaseTester::test);
+    private static <T> void runTestOnAll(List<PreparedCase<T>> preparedCases) {
+        preparedCases.forEach(CaseTester::unitTest);
     }
 
 }

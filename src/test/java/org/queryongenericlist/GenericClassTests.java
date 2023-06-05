@@ -21,7 +21,7 @@ public class GenericClassTests {
                 .addCase(CarTestCases.case01)
                 .addCase(CarTestCases.case02)
                 //.addCase(CarTestCases.case03) // add test cases as you wish
-                .executeCases();
+                .testCases();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class GenericClassTests {
 
         dogCaseTester
                 .addCase(DogTestCases.case01)
-                .executeCases();
+                .testCases();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class GenericClassTests {
 
         shapeCaseTester
                 .addCase(ShapeTestCases.case01)
-                .executeCases();
+                .testCases();
     }
 
     @Test
@@ -48,6 +48,6 @@ public class GenericClassTests {
 
         shoppingListCaseTester
                 .addCase(ShoppingListTestCases.case01)
-                .executeCases();
+                .testCases();
     }
 }
