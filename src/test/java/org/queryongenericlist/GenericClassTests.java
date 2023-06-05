@@ -3,11 +3,13 @@ package org.queryongenericlist;
 import org.junit.jupiter.api.Test;
 import testHelpers.genericClasses.classDecleration.car.Car;
 import testHelpers.genericClasses.classDecleration.dog.Dog;
+import testHelpers.genericClasses.classDecleration.shape.Circle;
 import testHelpers.genericClasses.classDecleration.shape.Shape;
 import testHelpers.genericClasses.classDecleration.shoppingList.ShoppingList;
 import testHelpers.genericClasses.classTestCases.CaseTester;
 import testHelpers.genericClasses.classTestCases.car.CarTestCases;
 import testHelpers.genericClasses.classTestCases.dog.DogTestCases;
+import testHelpers.genericClasses.classTestCases.shape.CircleTestCases;
 import testHelpers.genericClasses.classTestCases.shape.ShapeTestCases;
 import testHelpers.genericClasses.classTestCases.shoppingList.ShoppingListTestCases;
 
@@ -39,6 +41,16 @@ public class GenericClassTests {
 
         shapeCaseTester
                 .addCase(ShapeTestCases.case01)
+                .testCases();
+    }
+
+    @Test
+    public void testOnCircleClass() {
+        CaseTester<Circle> circleCaseTester = new CaseTester<>();
+
+        circleCaseTester
+                // Case with complex query structure to exhaust precedence
+                .addCase(CircleTestCases.case01)
                 .testCases();
     }
 
