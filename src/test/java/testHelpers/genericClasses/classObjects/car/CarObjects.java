@@ -6,14 +6,18 @@ import testHelpers.genericClasses.classDecleration.car.Engine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarObjects {
-    public static final List<Car> TEST_OBJECTS = new ArrayList<>();
+public final class CarObjects {
+    private static final List<Car> RAW_LIST = new ArrayList<>();
 
     static {
-        prepTestCase01();
+        initRawList();
     }
 
-    private static void prepTestCase01() {
+    public static List<Car> getRawList() {
+        return RAW_LIST;
+    }
+
+    private static void initRawList() {
         Engine engine1 = new Engine("Gasoline", 200);
         Car car1 = new Car("Toyota", 2020, engine1);
 
@@ -41,14 +45,14 @@ public class CarObjects {
         Engine engine9 = new Engine("Diesel", 160);
         Car car9 = new Car("Mercedes-Benz", 2020, engine9);
 
-        TEST_OBJECTS.add(car1);
-        TEST_OBJECTS.add(car2);
-        TEST_OBJECTS.add(car3);
-        TEST_OBJECTS.add(car4);
-        TEST_OBJECTS.add(car5);
-        TEST_OBJECTS.add(car6);
-        TEST_OBJECTS.add(car7);
-        TEST_OBJECTS.add(car8);
-        TEST_OBJECTS.add(car9);
+        RAW_LIST.add(car1);
+        RAW_LIST.add(car2);
+        RAW_LIST.add(car3);
+        RAW_LIST.add(car4);
+        RAW_LIST.add(car5);
+        RAW_LIST.add(car6);
+        RAW_LIST.add(car7);
+        RAW_LIST.add(car8);
+        RAW_LIST.add(car9);
     }
 }

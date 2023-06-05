@@ -5,14 +5,18 @@ import testHelpers.genericClasses.classDecleration.shoppingList.ShoppingList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingListObjects {
-    public static final List<ShoppingList> TEST_CASE_1 = new ArrayList<>();
+public final class ShoppingListObjects {
+    private static final List<ShoppingList> RAW_LIST = new ArrayList<>();
 
     static {
-        prepTestCase01();
+        initRawList();
     }
 
-    private static void prepTestCase01() {
+    public static List<ShoppingList> getRawList() {
+        return RAW_LIST;
+    }
+
+    private static void initRawList() {
         // Create items
         ShoppingList.Item item1 = new ShoppingList.Item("Apple", 5);
         ShoppingList.Item item2 = new ShoppingList.Item("Banana", 3);
@@ -32,14 +36,14 @@ public class ShoppingListObjects {
         ShoppingList list9 = new ShoppingList("List 9", List.of(item1, item5));
 
         // Add to Test Case
-        TEST_CASE_1.add(list1);
-        TEST_CASE_1.add(list2);
-        TEST_CASE_1.add(list3);
-        TEST_CASE_1.add(list4);
-        TEST_CASE_1.add(list5);
-        TEST_CASE_1.add(list6);
-        TEST_CASE_1.add(list7);
-        TEST_CASE_1.add(list8);
-        TEST_CASE_1.add(list9);
+        RAW_LIST.add(list1);
+        RAW_LIST.add(list2);
+        RAW_LIST.add(list3);
+        RAW_LIST.add(list4);
+        RAW_LIST.add(list5);
+        RAW_LIST.add(list6);
+        RAW_LIST.add(list7);
+        RAW_LIST.add(list8);
+        RAW_LIST.add(list9);
     }
 }

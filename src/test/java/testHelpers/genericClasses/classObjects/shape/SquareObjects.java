@@ -5,13 +5,18 @@ import testHelpers.genericClasses.classDecleration.shape.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SquareObjects {
-    public static final List<Square> TEST_CASE_1 = new ArrayList<>();
+public final class SquareObjects {
+    private static final List<Square> RAW_LIST = new ArrayList<>();
+
     static {
-        prepTestCase01();
+        initRawList();
     }
 
-    private static void prepTestCase01() {
+    public static List<Square> getRawList() {
+        return RAW_LIST;
+    }
+
+    private static void initRawList() {
 
         // Creating objects of the Square class
         Square square1 = new Square("Red", 5.0);
@@ -24,14 +29,14 @@ public class SquareObjects {
         Square square8 = new Square("Gray", 3.7);
         Square square9 = new Square("Black", 8.0);
 
-        TEST_CASE_1.add(square1);
-        TEST_CASE_1.add(square2);
-        TEST_CASE_1.add(square3);
-        TEST_CASE_1.add(square4);
-        TEST_CASE_1.add(square5);
-        TEST_CASE_1.add(square6);
-        TEST_CASE_1.add(square7);
-        TEST_CASE_1.add(square8);
-        TEST_CASE_1.add(square9);
+        RAW_LIST.add(square1);
+        RAW_LIST.add(square2);
+        RAW_LIST.add(square3);
+        RAW_LIST.add(square4);
+        RAW_LIST.add(square5);
+        RAW_LIST.add(square6);
+        RAW_LIST.add(square7);
+        RAW_LIST.add(square8);
+        RAW_LIST.add(square9);
     }
 }

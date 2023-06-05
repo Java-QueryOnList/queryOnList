@@ -3,14 +3,14 @@ package testHelpers.genericClasses.classDecleration.shoppingList;
 import java.util.List;
 
 public class ShoppingList {
-    private String name;
-    private List<Item> items;
+    final private String name;
+    final private List<Item> items;
     private boolean isCompleted;
 
     public ShoppingList(String name, List<Item> items) {
         this.name = name;
         this.items = items;
-        this.isCompleted = false;
+        this.isCompleted = (items.isEmpty());
     }
 
     public String getName() {
@@ -30,8 +30,8 @@ public class ShoppingList {
     }
 
     public static class Item {
-        private String name;
-        private int quantity;
+        final private String name;
+        final private int quantity;
 
         public Item(String name, int quantity) {
             this.name = name;

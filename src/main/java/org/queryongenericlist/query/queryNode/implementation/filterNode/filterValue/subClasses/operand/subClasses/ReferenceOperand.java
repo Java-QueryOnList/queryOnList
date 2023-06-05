@@ -20,8 +20,14 @@ public class ReferenceOperand implements Operand {
         for (String currentFieldName : fieldNames) {
             final Class<?> currentObjectClass = currentObject.getClass();
 
-            // Find the field with the current field name
-            final Field field = currentObjectClass.getDeclaredField(currentFieldName);
+            Field field;
+            try {
+                // Find the field with the current field name
+                field = currentObjectClass.getDeclaredField(currentFieldName);
+            } catch (Exception e) {
+                // if field doesn't exist in current class search it recursively in parent classes
+                field = getFieldFromAnySuperclass(currentObjectClass, currentFieldName);
+            }
 
             // Set the field accessible if it's not public
             field.setAccessible(true);
@@ -35,5 +41,20 @@ public class ReferenceOperand implements Operand {
 
         final PrimitiveOperand primitiveOperand = new PrimitiveOperand(currentObject);
         return primitiveOperand.value();
+    }
+
+    private Field getFieldFromAnySuperclass(Class<?> currentObjectClass, String currentFieldName) {
+        Field field;
+        Class<?> superClass = currentObjectClass.getSuperclass();
+
+        try {
+            // try if field exists in current superclass
+            field = superClass.getDeclaredField(currentFieldName);
+        } catch (Exception e) {
+            // call method recursively to find a superclass where field exists
+            field = getFieldFromAnySuperclass(superClass, currentFieldName);
+        }
+
+        return field;
     }
 }

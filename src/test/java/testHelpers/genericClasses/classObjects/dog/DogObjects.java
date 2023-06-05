@@ -5,14 +5,18 @@ import testHelpers.genericClasses.classDecleration.dog.Dog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogObjects {
-    public static final List<Dog> TEST_CASE_1 = new ArrayList<>();
+public final class DogObjects {
+    private static final List<Dog> RAW_LIST = new ArrayList<>();
 
     static {
-        prepTestCase01();
+        initRawList();
     }
 
-    private static void prepTestCase01() {
+    public static List<Dog> getRawList() {
+        return RAW_LIST;
+    }
+
+    private static void initRawList() {
         // Create 30 Dog objects
         for (int i = 0; i < 30; i++) {
             String name = "Dog" + (i + 1);
@@ -23,7 +27,7 @@ public class DogObjects {
             favoriteToys.add("Toy3");
 
             Dog dog = new Dog(name, age, favoriteToys);
-            TEST_CASE_1.add(dog);
+            RAW_LIST.add(dog);
         }
     }
 }
