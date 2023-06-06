@@ -106,6 +106,7 @@ public class firstSketch {
                     final Predicate<TestItem> leftGroup1 = functionalEQPredicateBuilderPoweredBySchoenfinkel("field1", "value1");
                     final Predicate<TestItem> rightGroup1 = functionalEQPredicateBuilderPoweredBySchoenfinkel("field1", "value2");
                     final Predicate<TestItem> grouped = functionalOrGroupedPredicateBuilderPoweredBySchoenfinkel(leftGroup1, rightGroup1);
+
                     final Predicate<TestItem> group2 = functionalGTPredicateBuilderPoweredBySchoenfinkel("field2", "value2");
 
                     startPredicatePipeline
@@ -166,15 +167,6 @@ public class firstSketch {
     class TestItem {
         private String field1;
         private String field2;
-    }
-
-    @Data
-    @Builder
-    class ObjectFieldPackage {
-        @NonNull
-        final Object reflectionObject;
-        @NonNull
-        final String fieldName;
     }
 
     /*
