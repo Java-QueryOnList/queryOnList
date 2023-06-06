@@ -2,6 +2,7 @@ package examples;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.util.Comparator;
 import java.util.List;
@@ -75,7 +76,8 @@ public class firstSketch {
 
                     leftGroup1.or(rightGroup1).test("value 1");
 
-                    return leftGroup1.test(item.getField1()) || rightGroup1.test(item.getField1()); group2.test(item.getField2());
+                    return leftGroup1.test(item.getField1()) || rightGroup1.test(item.getField1());
+                    group2.test(item.getField2());
 
                 })
                 .sorted(
@@ -90,11 +92,89 @@ public class firstSketch {
                 .collect(Collectors.toList());
     }
 
+    void test4CurriedBySchoenfinkel() {
+        final String query = "filter=(TestItem.field1 eq 'value 1' or TestItem.field1 eq 'value 2' ) or TestItem.field2 gt 'value 2' $orderby=TestItem.field1 desc, TestItem.field2 desc"
+        List.of(
+                        TestItem.builder().field1("value1").field2("value2").build(),
+                        TestItem.builder().field1("value1").field2("value2").build()
+                ).stream()
+
+                .filter((final TestItem item) -> {
+                    // https://de.wikipedia.org/wiki/Currying / Schönfinkeln
+                    final Predicate<TestItem> startPredicatePipeline = (TestItem ignore) -> true;
+
+                    final Predicate<TestItem> leftGroup1 = functionalEQPredicateBuilderPoweredBySchoenfinkel("field1", "value1");
+                    final Predicate<TestItem> rightGroup1 = functionalEQPredicateBuilderPoweredBySchoenfinkel("field1", "value2");
+                    final Predicate<TestItem> grouped = functionalOrGroupedPredicateBuilderPoweredBySchoenfinkel(leftGroup1, rightGroup1);
+                    final Predicate<TestItem> group2 = functionalGTPredicateBuilderPoweredBySchoenfinkel("field2", "value2");
+
+                    startPredicatePipeline
+                            .and(grouped)
+                            .or(group2)
+                            .test(item);
+
+                    return leftGroup1.or(rightGroup1).or(group2).test(item);
+                })
+                .sorted(
+                        Comparator.comparing((final TestItem o1) -> {
+                                    return o1.getField1();
+
+                                }).reversed()
+                                .thenComparing((final TestItem o1) -> {
+                                    return o1.getField2();
+                                }).reversed()
+                )
+                .collect(Collectors.toList());
+    }
+
+    @NonNull
+    private Predicate<TestItem> functionalEQPredicateBuilderPoweredBySchoenfinkel(
+            @NonNull final String fieldName,
+            @NonNull final String value
+    ) {
+        return (reflectiveObject) -> extractFieldViaReflection(reflectiveObject, fieldName).equals(value);
+    }
+
+    @NonNull
+    private <T> Predicate<T> functionalOrGroupedPredicateBuilderPoweredBySchoenfinkel(
+            @NonNull final Predicate<T> leftGroup1,
+            @NonNull final Predicate<T> rightGroup1)
+    {
+        return leftGroup1.or(rightGroup1);
+    }
+
+    @NonNull
+    private Predicate<TestItem> functionalGTPredicateBuilderPoweredBySchoenfinkel(
+            @NonNull final String fieldName,
+            @NonNull final String value
+    ) {
+        return (reflectiveObject) -> extractFieldViaReflection(reflectiveObject, fieldName).compareTo(value) > 0;
+    }
+
+
+    // use reflection to get value of Object.fieldName
+    private String extractFieldViaReflection(
+            @NonNull final Object reflectionObject,
+            @NonNull final String fieldName
+    ) {
+        // pseudocode ....
+        return "";
+    }
+
     @Data
     @Builder
     class TestItem {
         private String field1;
         private String field2;
+    }
+
+    @Data
+    @Builder
+    class ObjectFieldPackage {
+        @NonNull
+        final Object reflectionObject;
+        @NonNull
+        final String fieldName;
     }
 
     /*
