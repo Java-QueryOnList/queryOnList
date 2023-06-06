@@ -3,11 +3,11 @@ package org.queryongenericlist.query.queryEngine.implementation.subEngine;
 import lombok.NonNull;
 import org.queryongenericlist.query.queryEngine.QueryEngine;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNode;
-import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.Operand;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.Comparator;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.Logician;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
+import org.queryongenericlist.utils.OperandHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +35,8 @@ public class FilterEngine implements QueryEngine<FilterNode> {
             // if the node is a comparator which always compares two operands values
             for (T element : onList) {
                 // prepare left and right value
-                final Object leftValue = Operand.resolveOperand((givenNode.getLeft().getValue()), element);
-                final Object rightValue = Operand.resolveOperand((givenNode.getRight().getValue()), element);
+                final Object leftValue = OperandHelper.resolveObject((givenNode.getLeft().getValue()), element);
+                final Object rightValue = OperandHelper.resolveObject((givenNode.getRight().getValue()), element);
 
                 // if condition is met add to result list
                 boolean conditionMet = ((Comparator) givenNode.getValue()).compare(leftValue, rightValue);
