@@ -109,12 +109,10 @@ public class firstSketch {
 
                     final Predicate<TestItem> group2 = functionalGTPredicateBuilderPoweredBySchoenfinkel("field2", "value2");
 
-                    startPredicatePipeline
+                    return startPredicatePipeline
                             .and(grouped)
                             .or(group2)
                             .test(item);
-
-                    return leftGroup1.or(rightGroup1).or(group2).test(item);
                 })
                 .sorted(
                         Comparator.comparing((final TestItem o1) -> {
