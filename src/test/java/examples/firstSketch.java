@@ -1,0 +1,107 @@
+package examples;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+/*
+ * only for sketching ideas
+ * no working code to find here
+ */
+public class firstSketch {
+
+    void test() {
+        final String query = "filter=TestItem.field1 eq 'value 1' and TestItem.field2 gt 'value 2' $orderby=TestItem.field1 desc, TestItem.field2 desc"
+        List.of(
+                        TestItem.builder().field1("value1").field2("value2").build(),
+                        TestItem.builder().field1("value1").field2("value2").build()
+                ).stream()
+
+                .filter((final TestItem item) -> item.getField1().equals("value 1"))
+                .filter((final TestItem item) -> item.getField2().compareTo("value 2") > 0)
+                .sorted(
+                        Comparator.comparing((final TestItem o1) -> {
+                                    return o1.getField1();
+
+                                }).reversed()
+                                .thenComparing((final TestItem o1) -> {
+                                    return o1.getField2();
+                                }).reversed()
+                )
+                .collect(Collectors.toList());
+    }
+
+
+    void test2() {
+        final String query = "filter=TestItem.field1 eq 'value 1' or TestItem.field2 gt 'value 2' $orderby=TestItem.field1 desc, TestItem.field2 desc"
+        List.of(
+                        TestItem.builder().field1("value1").field2("value2").build(),
+                        TestItem.builder().field1("value1").field2("value2").build()
+                ).stream()
+
+                .filter((final TestItem item) -> {
+                    // left             or                  // right
+                    return (item.getField1().equals("value 1")) || (item.getField2().compareTo("value 2") > 0);
+                })
+                .sorted(
+                        Comparator.comparing((final TestItem o1) -> {
+                                    return o1.getField1();
+
+                                }).reversed()
+                                .thenComparing((final TestItem o1) -> {
+                                    return o1.getField2();
+                                }).reversed()
+                )
+                .collect(Collectors.toList());
+    }
+
+
+    void test3() {
+        final String query = "filter=(TestItem.field1 eq 'value 1' or TestItem.field1 eq 'value 2' ) or TestItem.field2 gt 'value 2' $orderby=TestItem.field1 desc, TestItem.field2 desc"
+        List.of(
+                        TestItem.builder().field1("value1").field2("value2").build(),
+                        TestItem.builder().field1("value1").field2("value2").build()
+                ).stream()
+
+                .filter((final TestItem item) -> {
+
+                    final Predicate<String> leftGroup1 = (fieldValue) -> fieldValue.equals("value 1");
+                    final Predicate<String> rightGroup1 = (fieldValue) -> fieldValue.equals("value 2");
+                    final Predicate<String> group2 = (fieldValue) -> fieldValue.compareTo("value 2") > 0;
+
+                    leftGroup1.or(rightGroup1).test("value 1");
+
+                    return leftGroup1.test(item.getField1()) || rightGroup1.test(item.getField1()); group2.test(item.getField2());
+
+                })
+                .sorted(
+                        Comparator.comparing((final TestItem o1) -> {
+                                    return o1.getField1();
+
+                                }).reversed()
+                                .thenComparing((final TestItem o1) -> {
+                                    return o1.getField2();
+                                }).reversed()
+                )
+                .collect(Collectors.toList());
+    }
+
+    @Data
+    @Builder
+    class TestItem {
+        private String field1;
+        private String field2;
+    }
+
+    /*
+    - (node) price
+        -ascending
+        - name (node)
+            - descending
+     */
+
+}
