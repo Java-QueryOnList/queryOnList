@@ -13,7 +13,7 @@ public class ReferenceOperand implements Operand {
     }
 
     @NonNull
-    public Object getValue(@NonNull final Object obj) throws NoSuchFieldException, IllegalAccessException {
+    public Object getValue(@NonNull final Object obj) {
         Object currentObject = obj;
 
         // Traverse through the nested fields e.g. ["car", "engine", "horsepower"] for obj.element.engine.horsepower
@@ -33,7 +33,7 @@ public class ReferenceOperand implements Operand {
             field.setAccessible(true);
 
             // Get the value of the current field for the current object
-            final Object fieldValue = field.get(currentObject);
+            final Object fieldValue = getFieldValue(currentObject, field);
 
             // Update the current object to be the field value for the next iteration
             currentObject = fieldValue;
@@ -41,6 +41,16 @@ public class ReferenceOperand implements Operand {
 
         final PrimitiveOperand primitiveOperand = new PrimitiveOperand(currentObject);
         return primitiveOperand.value();
+    }
+
+    private static Object getFieldValue(Object currentObject, Field field) {
+        final Object fieldValue;
+        try {
+            fieldValue = field.get(currentObject);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        return fieldValue;
     }
 
     private Field getFieldFromAnySuperclass(Class<?> currentObjectClass, String currentFieldName) {

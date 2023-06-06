@@ -1,12 +1,12 @@
 package org.queryongenericlist.query.queryEngine;
 
 import lombok.NonNull;
+import org.queryongenericlist.query.queryNode.QueryNode;
 
 import java.util.List;
 
-public interface QueryEngine {
+public interface QueryEngine<N extends QueryNode > {
 
     @NonNull
-    <T> List<T> run(@NonNull final String query, List<T> onList);
-
+    <T> List<T> apply(N syntaxTree, List<T> onList);
 }

@@ -6,9 +6,7 @@ import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNo
 import org.queryongenericlist.query.queryNode.implementation.paginationNode.PaginationNode;
 import org.queryongenericlist.query.queryNode.implementation.sortingNode.SortingNode;
 
-import java.util.List;
-
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,14 +15,4 @@ public class SuperQueryNode implements QueryNode {
     private FilterNode filterNode;
     private SortingNode sortingNode;
     private PaginationNode paginationNode;
-
-    @NonNull
-    @Override
-    public <T> List<T> query(@NonNull final List<T> onList) throws NoSuchFieldException, IllegalAccessException {
-        List<T> result = onList;
-        if (filterNode != null) result = filterNode.query(result);
-        if (sortingNode != null) result = sortingNode.query(result);
-        if (paginationNode != null) result = paginationNode.query(result);
-        return result;
-    }
 }

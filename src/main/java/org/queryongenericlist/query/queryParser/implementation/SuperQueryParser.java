@@ -3,7 +3,6 @@ package org.queryongenericlist.query.queryParser.implementation;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.queryongenericlist.query.queryNode.QueryNode;
 import org.queryongenericlist.query.queryNode.implementation.SuperQueryNode;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNode;
 import org.queryongenericlist.query.queryNode.implementation.paginationNode.PaginationNode;
@@ -20,7 +19,7 @@ import org.queryongenericlist.utils.StringParser;
  */
 @SuperBuilder
 @RequiredArgsConstructor
-public class QueryParserImpl implements QueryParser {
+public class SuperQueryParser implements QueryParser<SuperQueryNode> {
 
     private static final String FILTER_PATTERN = "\\$filter=([^&]+)";
     private static final String SORTING_PATTERN = "\\$orderBy=([^&]+)";
@@ -32,7 +31,7 @@ public class QueryParserImpl implements QueryParser {
 
 
     @NonNull
-    public QueryNode parse() {
+    public SuperQueryNode parse() {
         final String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
         final String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
         final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);

@@ -9,33 +9,30 @@ import org.queryongenericlist.query.queryNode.implementation.filterNode.filterVa
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.subClasses.*;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
-import org.queryongenericlist.query.queryParser.implementation.QueryParserImpl;
+import org.queryongenericlist.query.queryParser.QueryParser;
 import org.queryongenericlist.utils.StringParser;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Stack;
 
-public class FilterParser extends QueryParserImpl {
+public class FilterParser implements QueryParser<FilterNode> {
 
     private static final String SPLIT_PATTERN = "([\\w.]+|'.+?'|\\S)"; //regex for any token of the query, whether operator or operand
     int index;
     final private List<String> splitQuery;
 
     public FilterParser(@NonNull final String query) {
-        super(query);
         this.splitQuery = StringParser.getAll(query, SPLIT_PATTERN);
         this.index = 0;
     }
 
     public FilterParser(@NonNull final String query, final int index) {
-        super(query);
         splitQuery = StringParser.getAll(query, SPLIT_PATTERN);
         this.index = index;
     }
 
     public FilterParser(@NonNull final List<String> splitQuery) {
-        super(String.join(" ", splitQuery));
         this.splitQuery = splitQuery;
         this.index = 0;
     }

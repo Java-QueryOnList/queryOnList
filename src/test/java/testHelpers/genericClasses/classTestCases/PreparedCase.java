@@ -1,7 +1,7 @@
 package testHelpers.genericClasses.classTestCases;
 
 import lombok.Getter;
-import org.queryongenericlist.query.queryEngine.implementation.QueryEngineImpl;
+import org.queryongenericlist.query.queryExecutor.implementation.SuperQueryExecutor;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class PreparedCase<T> {
      * @return the queried list.
      */
     public List<T> getQueriedList() {
-        QueryEngineImpl engine = new QueryEngineImpl();
-        return engine.run(query, rawList);
+        SuperQueryExecutor engine = new SuperQueryExecutor();
+        return engine.execute(query, rawList);
     }
 }
