@@ -9,6 +9,7 @@ import org.queryongenericlist.query.queryNode.implementation.filterNode.filterVa
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.subClasses.*;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalAnd;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.logicalOperator.subClasses.LogicalOr;
+import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.negatorOperator.NegatorOperator;
 import org.queryongenericlist.query.queryParser.QueryParser;
 import org.queryongenericlist.utils.StringParser;
 
@@ -20,21 +21,19 @@ public class FilterParser implements QueryParser<FilterNode> {
 
     private static final String SPLIT_PATTERN = "([\\w.]+|'.+?'|\\S)"; //regex for any token of the query, whether operator or operand
     int index;
+    int currentBoundary;
     final private List<String> splitQuery;
 
     public FilterParser(@NonNull final String query) {
         this.splitQuery = StringParser.getAll(query, SPLIT_PATTERN);
         this.index = 0;
-    }
-
-    public FilterParser(@NonNull final String query, final int index) {
-        splitQuery = StringParser.getAll(query, SPLIT_PATTERN);
-        this.index = index;
+        this.currentBoundary = splitQuery.size();
     }
 
     public FilterParser(@NonNull final List<String> splitQuery) {
         this.splitQuery = splitQuery;
         this.index = 0;
+        this.currentBoundary = splitQuery.size();
     }
 
     public static boolean isNumber(@NonNull final String input) {
@@ -60,31 +59,9 @@ public class FilterParser implements QueryParser<FilterNode> {
         final Stack<FilterNode> operatorStack = new Stack<>();
         final Stack<FilterNode> operandStack = new Stack<>();
 
-        while (index < splitQuery.size()) {
+        while (index < splitQuery.size() && index < currentBoundary) {
             final String subString = splitQuery.get(index);
-
-            if (isNumber(subString)) {
-                final Double number = Double.parseDouble(subString);
-                final PrimitiveOperand numberOperand = new PrimitiveOperand(number);
-                operandStack.push(new FilterNode(numberOperand));
-            } else if (isString(subString)) {
-
-                final String strWithoutQuotes = subString.substring(1, subString.length() - 1);
-                final PrimitiveOperand stringOperand = new PrimitiveOperand(strWithoutQuotes);
-                operandStack.push(new FilterNode(stringOperand));
-            } else if (isOperator(subString)) {
-                final Operator operator = operatorStringToObject(subString);
-                final FilterNode operatorNode = new FilterNode(operator);
-                // if last operator on stack has higher or equal precedence than current operator
-                while (!operatorStack.isEmpty() && precedence(operatorObjectToString(operatorStack.peek().getValue())) >= precedence(operatorObjectToString(operatorNode.getValue()))) {
-                    // apply operand
-                    final FilterNode poppedOperatorNode = operatorStack.pop();
-                    poppedOperatorNode.setRight(operandStack.pop());
-                    poppedOperatorNode.setLeft(operandStack.pop());
-                    operandStack.push(poppedOperatorNode);
-                }
-                operatorStack.push(operatorNode);
-            } else if (Objects.equals(subString, "(")) {
+            if (Objects.equals(subString, "(")) {
                 index++;
                 final FilterParser subParser = new FilterParser(splitQuery.subList(index, splitQuery.size()));
                 final FilterNode subTree = subParser.parse();
@@ -92,6 +69,36 @@ public class FilterParser implements QueryParser<FilterNode> {
                 index += subParser.index;
             } else if (Objects.equals(subString, ")")) {
                 break;
+            } else if (Objects.equals(subString, "not")) {
+                final FilterNode negationNode = new FilterNode(new NegatorOperator());
+                final int nextIndex = index + 1;
+                final FilterParser subParser = new FilterParser(splitQuery.subList(nextIndex, splitQuery.size()));
+                if (!splitQuery.get(nextIndex).equals("(")) {
+                    // if next token after "not" is not a bracket then limit the boundary of subParser to only 3 more
+                    subParser.currentBoundary = nextIndex + 3;
+                }
+                final FilterNode subTree = subParser.parse();
+                negationNode.setTailRight(subTree);
+                operandStack.push(negationNode);
+                index += subParser.index;
+            } else if (isOperator(subString)) {
+                final Operator operator = operatorStringToObject(subString);
+                final FilterNode operatorNode = new FilterNode(operator);
+                // if last operator on stack has higher or equal precedence than current operator
+                while (!operatorStack.isEmpty() && precedence(operatorObjectToString(operatorStack.peek().getHead())) >= precedence(operatorObjectToString(operatorNode.getHead()))) {
+                    // apply operand
+                    final FilterNode poppedOperatorNode = getNodeFromStacks(operatorStack, operandStack);
+                    operandStack.push(poppedOperatorNode);
+                }
+                operatorStack.push(operatorNode);
+            } else if (isNumber(subString)) {
+                final Double number = Double.parseDouble(subString);
+                final PrimitiveOperand numberOperand = new PrimitiveOperand(number);
+                operandStack.push(new FilterNode(numberOperand));
+            } else if (isString(subString)) {
+                final String strWithoutQuotes = subString.substring(1, subString.length() - 1);
+                final PrimitiveOperand stringOperand = new PrimitiveOperand(strWithoutQuotes);
+                operandStack.push(new FilterNode(stringOperand));
             } else if (subString.equals("true") || subString.equals("false")){
                 // if substring is boolean
                 final PrimitiveOperand booleanOperand = new PrimitiveOperand(subString.equals("true"));
@@ -107,13 +114,22 @@ public class FilterParser implements QueryParser<FilterNode> {
         }
 
         while (!operatorStack.isEmpty()) {
-            final FilterNode poppedOperatorNode = operatorStack.pop();
-            poppedOperatorNode.setRight(operandStack.pop());
-            poppedOperatorNode.setLeft(operandStack.pop());
+            final FilterNode poppedOperatorNode = getNodeFromStacks(operatorStack, operandStack);
             operandStack.push(poppedOperatorNode);
         }
 
         return operandStack.pop();
+    }
+
+    private static FilterNode getNodeFromStacks(Stack<FilterNode> operatorStack, Stack<FilterNode> operandStack) {
+        // get instance for node
+        FilterNode poppedOperatorNode = operatorStack.pop();
+
+        // set left and right of node
+        poppedOperatorNode.setTailRight(operandStack.pop());
+        poppedOperatorNode.setTailLeft(operandStack.pop());
+
+        return poppedOperatorNode;
     }
 
     private boolean isOperator(@NonNull final String subString) {
@@ -130,6 +146,7 @@ public class FilterParser implements QueryParser<FilterNode> {
             case "le" -> new LessOrEqual();
             case "lt" -> new LessThan();
             case "ne" -> new NotEqual();
+            case "not" -> new NegatorOperator();
             case "or" -> new LogicalOr();
             case "and" -> new LogicalAnd();
             default -> throw new IllegalStateException("Unexpected value: " + subString);
@@ -151,6 +168,8 @@ public class FilterParser implements QueryParser<FilterNode> {
             result = "lt";
         } else if (operator instanceof NotEqual) {
             result = "ne";
+        } else if (operator instanceof NegatorOperator) {
+            result = "not";
         } else if (operator instanceof LogicalOr) {
             result = "or";
         } else if (operator instanceof LogicalAnd) {
@@ -162,7 +181,8 @@ public class FilterParser implements QueryParser<FilterNode> {
 
     private int precedence(@NonNull final String operator) {
         return switch (operator) {
-            case "(", ")" -> 5;
+            case "(", ")" -> 6;
+            case "not" -> 5;
             case "gt", "ge", "lt", "le" -> 4;
             case "eq", "ne" -> 3;
             case "and" -> 2;

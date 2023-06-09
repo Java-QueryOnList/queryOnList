@@ -11,8 +11,8 @@ import org.queryongenericlist.query.queryNode.implementation.filterNode.filterVa
 public class FilterNode implements QueryNode {
 
     @NonNull
-    private final FilterValue value;
-    private FilterNode left;
-    private FilterNode right;
+    private final FilterValue head;
+    private FilterNode tailLeft;
+    private FilterNode tailRight;
 
 }

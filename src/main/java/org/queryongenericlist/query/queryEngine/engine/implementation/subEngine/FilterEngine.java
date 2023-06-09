@@ -26,7 +26,7 @@ public class FilterEngine implements QueryEngine<FilterNode> {
         return onList.stream()
                 .filter((final T element) -> {
                     FilterPipeline<T> filterPipeline = new FilterPipeline<>();
-                    final Predicate<T> predicatePipeline = filterPipeline.fromNode(givenNode, (T ignore) -> true);
+                    final Predicate<T> predicatePipeline = filterPipeline.fromNode(givenNode);
                     return predicatePipeline.test(element);
                 }).toList();
     }
