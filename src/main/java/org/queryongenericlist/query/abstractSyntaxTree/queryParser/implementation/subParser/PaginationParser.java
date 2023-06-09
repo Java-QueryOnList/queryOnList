@@ -1,4 +1,4 @@
-package org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.supParser;
+package org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.subParser;
 
 import lombok.NonNull;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.paginationNode.PaginationNode;

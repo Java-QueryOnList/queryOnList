@@ -7,10 +7,10 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.SuperQ
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.FilterNode;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.paginationNode.PaginationNode;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.sortingNode.SortingNode;
-import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.supParser.SortingParser;
+import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.subParser.SortingParser;
 import org.queryongenericlist.query.abstractSyntaxTree.queryParser.QueryParser;
-import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.supParser.FilterParser;
-import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.supParser.PaginationParser;
+import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.subParser.FilterParser;
+import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.subParser.PaginationParser;
 import org.queryongenericlist.utils.StringParser;
 
 
