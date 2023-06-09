@@ -1,23 +1,3 @@
-# Offene TODO'S:
-- filter queries:
-  - "not" berücksichtigen
-  - tests
-- orderBy queries:
-  - alles
-- pagination queries:
-  - alles
-
-***
-
-Die folgende Doku wurde mithilfe der gegebenen PDF erstellt, und wurde zum eigenen Verständnis erstellt. Muss auf jeden Fall noch angepasst, erweitert und verfeinert werden:
-
-- Readme file todos
-  - genau beschreiben was die library kann und was nicht
-  - beispiele wie man die methoden verwendet
-  - stihl spezfische Dinge rausnehmen
-
-***
-
 # QueryEngine
 
 The QueryEngine is a Java Library that provides functionality for parsing queries and retrieving queried lists based on the input query of type String.

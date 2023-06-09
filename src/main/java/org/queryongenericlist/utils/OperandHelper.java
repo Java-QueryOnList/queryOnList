@@ -24,14 +24,14 @@ public class OperandHelper {
 
     @NonNull
     public static <T> Object resolveObject(@NonNull final Object leafValue, T element) {
-        PrimitiveValue primitiveOperand = null;
+        PrimitiveValue primitiveValue = null;
         if (leafValue instanceof PrimitiveValue) {
-            primitiveOperand = (PrimitiveValue) leafValue;
+            primitiveValue = (PrimitiveValue) leafValue;
         } else if (leafValue instanceof ReferenceValue) {
-            primitiveOperand = GenericClassHelper.extractAllFields(element, ((ReferenceValue) leafValue).fieldNames());
+            primitiveValue = GenericClassHelper.extractAllFields(element, ((ReferenceValue) leafValue).fieldNames());
         }
 
-        assert primitiveOperand != null;
-        return primitiveOperand.value();
+        assert primitiveValue != null;
+        return primitiveValue.value();
     }
 }

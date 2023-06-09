@@ -14,6 +14,7 @@ public final class CarTestCases {
     public static final PreparedCase<Car> filterTrivialNot;
     public static final PreparedCase<Car> filterNotThenBrackets;
     public static final PreparedCase<Car> filterNotNot;
+    public static final PreparedCase<Car> orderByEnginetypeThenHorsepowerDesc;
 
     static {
         filterFieldExtraction = createCase01();
@@ -21,6 +22,7 @@ public final class CarTestCases {
         filterTrivialNot = createCase03();
         filterNotThenBrackets = createCase04();
         filterNotNot = createCase05();
+        orderByEnginetypeThenHorsepowerDesc = createCase06();
     }
 
     private static PreparedCase<Car> createCase01() {
@@ -97,5 +99,30 @@ public final class CarTestCases {
 
         // Return Created PreparedCase Object
         return new PreparedCase<>(rawList01, query, expectedList);
+    }
+
+    private static PreparedCase<Car> createCase06() {
+        // Create query
+        String query = "$orderBy=engine.type, engine.horsepower desc";
+
+        // prepare the List which is expected after the query
+        List<Car> expectedList = new ArrayList<>();
+        // Diesel
+        expectedList.add(rawList01.get(4));
+        expectedList.add(rawList01.get(1));
+        expectedList.add(rawList01.get(8));
+
+        // Electric
+        expectedList.add(rawList01.get(6));
+        expectedList.add(rawList01.get(2));
+
+        // Gasoline
+        expectedList.add(rawList01.get(7));
+        expectedList.add(rawList01.get(0));
+        expectedList.add(rawList01.get(5));
+        expectedList.add(rawList01.get(3));
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList, true);
     }
 }

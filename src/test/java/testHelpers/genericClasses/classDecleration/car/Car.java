@@ -1,9 +1,9 @@
 package testHelpers.genericClasses.classDecleration.car;
 
 public class Car {
-    private String brand;
-    private int year;
-    private Engine engine;
+    final private String brand;
+    final private int year;
+    final private Engine engine;
 
     public Car(String brand, int year, Engine engine) {
         this.brand = brand;

@@ -1,7 +1,5 @@
 package testHelpers.genericClasses.classDecleration.shape;
 
-import java.util.Objects;
-
 // Circle class
 public class Circle extends Shape {
     private final double radius;

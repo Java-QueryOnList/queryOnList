@@ -73,7 +73,7 @@ public class LoggingUtils {
                 Object value = fields[i].get(obj);
                 result.append(fields[i].getName())
                         .append(": ")
-                        .append(getLastPartAfterPoint(value.toString()));
+                        .append(value.toString());
                 if (i != fields.length - 1) result.append(", ");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

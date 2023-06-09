@@ -1,8 +1,7 @@
-package org.queryongenericlist.query.queryEngine.implementation.subEngine.filterEngine.predicateLogic.implementation;
+package org.queryongenericlist.query.queryEngine.implementation.subEngine.filterEngine;
 
 import lombok.NonNull;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.QueryNode;
-import org.queryongenericlist.query.queryEngine.implementation.subEngine.filterEngine.predicateLogic.PredicateLogic;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.FilterNode;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.filterOperator.comparativeOperator.ComparativeOperator;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.filterOperator.logicalOperator.LogicalOperator;
@@ -14,11 +13,10 @@ import org.queryongenericlist.utils.OperandHelper;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
+public class FilterPipeline<T> {
 
-    @Override
     public Predicate<T> fromNode(@NonNull FilterNode givenNode) {
-        Predicate<T> predicateToAdd = (T ignore) -> true;
+        Predicate<T> predicateResult = (T ignore) -> true;
 
         QueryNode head = givenNode.getHead();
 
@@ -26,7 +24,7 @@ public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
             // if the node is a comparator which always compares two operands values
 
             // expand Predicate
-            predicateToAdd = predicateToAdd.and((T element) -> {
+            predicateResult = predicateResult.and((T element) -> {
                 boolean conditionMet;
 
                 // prepare left and right value
@@ -49,22 +47,22 @@ public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
         } else if (head instanceof NegativeOperator) {
             // get the only existing tail, which is right
             final Predicate<T> predicateTail = fromNode(givenNode.getTailRight());
-            predicateToAdd = predicateTail.negate();
+            predicateResult = predicateTail.negate();
         } else if (head instanceof LogicalOperator) {
             // if the node is a logical operator like e.g "AND" or "OR"
             if (head instanceof LogicalAnd) {
                 final Predicate<T> predicateLeft = fromNode(givenNode.getTailLeft());
                 final Predicate<T> predicateRight = fromNode(givenNode.getTailRight());
-                predicateToAdd = predicateLeft.and(predicateRight);
+                predicateResult = predicateLeft.and(predicateRight);
             } else if (head instanceof LogicalOr) {
                 final Predicate<T> predicateLeft = fromNode(givenNode.getTailLeft());
                 final Predicate<T> predicateRight = fromNode(givenNode.getTailRight());
-                predicateToAdd = predicateLeft.or(predicateRight);
+                predicateResult = predicateLeft.or(predicateRight);
             } else {
                 System.out.println("Logical Operator not implemented yet");
             }
         }
 
-        return predicateToAdd;
+        return predicateResult;
     }
 }

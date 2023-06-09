@@ -33,7 +33,7 @@ public final class CircleTestCases {
 
     private static PreparedCase<Circle> createCase02() {
         // Create query
-        String query = "$orderBy=radius asc, person.name, dog.toy.name desc,fish,bowl";
+        String query = "$orderBy=radius";
 
         // prepare the List which is expected after the query
         List<Circle> expectedList = new ArrayList<>();

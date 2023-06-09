@@ -20,11 +20,12 @@ public class GenericClassTests {
         CaseTester<Car> carCaseTester = new CaseTester<>();
 
         carCaseTester
-                .addCase(CarTestCases.filterFieldExtraction)
+                .addCase(CarTestCases.filterFieldExtraction) // Add as many cases as you like
                 .addCase(CarTestCases.filterTrivialOr)
                 .addCase(CarTestCases.filterTrivialNot)
                 .addCase(CarTestCases.filterNotThenBrackets)
-                .addCase(CarTestCases.filterNotNot) // Add as many cases as you like
+                .addCase(CarTestCases.filterNotNot)
+                .addCase(CarTestCases.orderByEnginetypeThenHorsepowerDesc)
                 .testCases();
     }
 
@@ -35,6 +36,7 @@ public class GenericClassTests {
         dogCaseTester
                 .addCase(DogTestCases.filterTrivialEqualString)
                 .addCase(DogTestCases.filterTrivialListField)
+                .addCase(DogTestCases.orderByNameDesc)
                 .testCases();
     }
 
@@ -44,6 +46,7 @@ public class GenericClassTests {
 
         shapeCaseTester
                 .addCase(ShapeTestCases.filterSuperClassField)
+                .addCase(ShapeTestCases.OrderBySuperClassField)
                 .testCases();
     }
 
@@ -52,7 +55,7 @@ public class GenericClassTests {
         CaseTester<Circle> circleCaseTester = new CaseTester<>();
 
         circleCaseTester
-                //.addCase(CircleTestCases.filterComplexQueryPrecedence)
+                .addCase(CircleTestCases.filterComplexQueryPrecedence)
                 .addCase(CircleTestCases.orderByRadius)
                 .testCases();
     }

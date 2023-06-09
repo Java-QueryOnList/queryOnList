@@ -1,7 +1,5 @@
 package org.queryongenericlist;
 
-import org.queryongenericlist.utils.StringParser;
-
 /**
  * Hello world!
  */

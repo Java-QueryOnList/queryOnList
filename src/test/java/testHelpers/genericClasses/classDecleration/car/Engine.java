@@ -1,8 +1,8 @@
 package testHelpers.genericClasses.classDecleration.car;
 
 public class Engine {
-    private String type;
-    private int horsepower;
+    final private String type;
+    final private int horsepower;
 
     public Engine(String type, int horsepower) {
         this.type = type;
