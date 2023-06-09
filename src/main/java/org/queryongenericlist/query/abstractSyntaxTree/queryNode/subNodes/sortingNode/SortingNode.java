@@ -1,15 +1,19 @@
 package org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.sortingNode;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.QueryNode;
+import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.ReferenceValue;
 
 @Data
-@RequiredArgsConstructor
 public class SortingNode implements QueryNode {
 
     // head
-    private final boolean ascending;
+    private ReferenceValue head;
+    private boolean ascending;
     // tail
     private SortingNode nextSort;
+
+    public SortingNode() {
+        this.ascending = true;
+    }
 }

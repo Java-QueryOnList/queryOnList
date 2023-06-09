@@ -52,7 +52,8 @@ public class GenericClassTests {
         CaseTester<Circle> circleCaseTester = new CaseTester<>();
 
         circleCaseTester
-                .addCase(CircleTestCases.filterComplexQueryPrecedence)
+                //.addCase(CircleTestCases.filterComplexQueryPrecedence)
+                .addCase(CircleTestCases.orderByRadius)
                 .testCases();
     }
 

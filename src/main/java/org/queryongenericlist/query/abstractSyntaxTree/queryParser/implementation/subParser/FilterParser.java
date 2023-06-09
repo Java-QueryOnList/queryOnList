@@ -105,9 +105,8 @@ public class FilterParser implements QueryParser<FilterNode> {
                 operandStack.push(new FilterNode(booleanOperand));
             } else {
                 // if substring is field
-                final String[] fieldNames = subString.split("\\.");
-                final ReferenceValue referenceOperand = new ReferenceValue(fieldNames);
-                operandStack.push(new FilterNode(referenceOperand));
+                final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
+                operandStack.push(new FilterNode(referenceValue));
             }
 
             index++;
