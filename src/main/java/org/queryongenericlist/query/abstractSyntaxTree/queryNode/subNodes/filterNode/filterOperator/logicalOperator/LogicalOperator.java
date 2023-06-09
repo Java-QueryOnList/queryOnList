@@ -5,7 +5,4 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filter
 import java.util.List;
 
 public interface LogicalOperator extends FilterOperator {
-
-    <T> List<T> resolve(final List<T> left, final List<T> right);
-
 }
