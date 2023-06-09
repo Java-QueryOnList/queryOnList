@@ -7,7 +7,11 @@ import org.queryongenericlist.query.queryNode.implementation.filterNode.filterVa
 public class OperandHelper {
 
     public static boolean checkIfPrimitive(@NonNull final Object value) {
-        return value instanceof Integer || value instanceof Boolean || value instanceof Float || value instanceof Double || value instanceof String;
+        return value instanceof Integer
+                || value instanceof Boolean
+                || value instanceof Float
+                || value instanceof Double
+                || value instanceof String;
     }
 
     @NonNull
@@ -21,8 +25,7 @@ public class OperandHelper {
         if (leafValue instanceof PrimitiveOperand) {
             primitiveOperand = (PrimitiveOperand) leafValue;
         } else if (leafValue instanceof ReferenceOperand) {
-            Object currentObject = GenericClassHelper.extractField(element, ((ReferenceOperand) leafValue).fieldNames());
-            primitiveOperand = new PrimitiveOperand(currentObject);
+            primitiveOperand = GenericClassHelper.extractField(element, ((ReferenceOperand) leafValue).fieldNames());
         }
 
         assert primitiveOperand != null;
