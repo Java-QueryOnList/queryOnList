@@ -1,4 +1,4 @@
-package org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.subClasses;
+package org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.supParser;
 
 import lombok.NonNull;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.sortingNode.SortingNode;
