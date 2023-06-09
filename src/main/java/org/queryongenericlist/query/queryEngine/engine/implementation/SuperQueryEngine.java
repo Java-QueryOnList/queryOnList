@@ -1,10 +1,10 @@
-package org.queryongenericlist.query.queryEngine.implementation;
+package org.queryongenericlist.query.queryEngine.engine.implementation;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.queryEngine.QueryEngine;
-import org.queryongenericlist.query.queryEngine.implementation.subEngine.FilterEngine;
-import org.queryongenericlist.query.queryEngine.implementation.subEngine.PaginationEngine;
-import org.queryongenericlist.query.queryEngine.implementation.subEngine.SortingEngine;
+import org.queryongenericlist.query.queryEngine.engine.QueryEngine;
+import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.FilterEngine;
+import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.PaginationEngine;
+import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.SortingEngine;
 import org.queryongenericlist.query.queryNode.implementation.SuperQueryNode;
 
 import java.util.List;

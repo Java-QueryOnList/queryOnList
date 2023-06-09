@@ -1,7 +1,7 @@
-package org.queryongenericlist.query.queryEngine.implementation.subEngine;
+package org.queryongenericlist.query.queryEngine.engine.implementation.subEngine;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.queryEngine.QueryEngine;
+import org.queryongenericlist.query.queryEngine.engine.QueryEngine;
 import org.queryongenericlist.query.queryNode.implementation.paginationNode.PaginationNode;
 
 import java.util.List;
