@@ -2,7 +2,7 @@ package org.queryongenericlist.query.queryEngine.engine.implementation;
 
 import lombok.NonNull;
 import org.queryongenericlist.query.queryEngine.engine.QueryEngine;
-import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.FilterPipeline;
+import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.FilterEngine;
 import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.PaginationEngine;
 import org.queryongenericlist.query.queryEngine.engine.implementation.subEngine.SortingEngine;
 import org.queryongenericlist.query.queryNode.implementation.SuperQueryNode;
@@ -22,7 +22,7 @@ public class SuperQueryEngine implements QueryEngine<SuperQueryNode> {
             // Filter engine
             FilterNode filterNode = syntaxTree.getFilterNode();
             if (filterNode != null) {
-                FilterPipeline filterEngine = new FilterPipeline();
+                FilterEngine filterEngine = new FilterEngine();
                 queryResult = filterEngine.apply(filterNode, queryResult);
             }
 

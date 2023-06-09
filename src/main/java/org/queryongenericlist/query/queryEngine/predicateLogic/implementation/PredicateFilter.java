@@ -36,7 +36,9 @@ public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
                 if (leftValue instanceof List<?>) {
                     List<T> leftElements = (List<T>) leftValue;
                     return leftElements.stream()
-                            .anyMatch(leftElement -> ((Comparator) head).compare(element, rightValue));
+                            .anyMatch(leftElementValue ->
+                                    ((Comparator) head).compare(leftElementValue, rightValue)
+                            );
                 } else {
                     // if condition of the comparison is met
                     conditionMet = ((Comparator) head).compare(leftValue, rightValue);

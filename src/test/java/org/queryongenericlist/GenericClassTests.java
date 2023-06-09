@@ -34,7 +34,7 @@ public class GenericClassTests {
 
         dogCaseTester
                 .addCase(DogTestCases.case01)
-                //.addCase(DogTestCases.case02)
+                .addCase(DogTestCases.case02)
                 .testCases();
     }
 

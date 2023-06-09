@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class FilterPipeline implements QueryEngine<FilterNode> {
+public class FilterEngine implements QueryEngine<FilterNode> {
     @Override
     public @NonNull <T> List<T> apply(@NonNull FilterNode syntaxTree, @NonNull List<T> onList) {
         return onList.stream()
