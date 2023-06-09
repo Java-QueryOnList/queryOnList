@@ -4,10 +4,17 @@ import lombok.NonNull;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.ReferenceOperand;
 
+import java.util.List;
+
 public class OperandHelper {
 
     public static boolean checkIfPrimitive(@NonNull final Object value) {
-        return value instanceof Integer || value instanceof Boolean || value instanceof Float || value instanceof Double || value instanceof String;
+        return value instanceof Integer
+                || value instanceof Boolean
+                || value instanceof Float
+                || value instanceof Double
+                || value instanceof String
+                || value instanceof List<?>;
     }
 
     @NonNull
@@ -21,8 +28,7 @@ public class OperandHelper {
         if (leafValue instanceof PrimitiveOperand) {
             primitiveOperand = (PrimitiveOperand) leafValue;
         } else if (leafValue instanceof ReferenceOperand) {
-            Object currentObject = GenericClassHelper.extractField(element, ((ReferenceOperand) leafValue).fieldNames());
-            primitiveOperand = new PrimitiveOperand(currentObject);
+            primitiveOperand = GenericClassHelper.extractAllFields(element, ((ReferenceOperand) leafValue).fieldNames());
         }
 
         assert primitiveOperand != null;

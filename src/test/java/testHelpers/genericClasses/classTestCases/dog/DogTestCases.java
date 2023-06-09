@@ -10,9 +10,11 @@ import java.util.List;
 public final class DogTestCases {
     private static final List<Dog> rawList01 = DogObjects.getRawList();
     public static final PreparedCase<Dog> case01;
+    public static final PreparedCase<Dog> case02;
 
     static {
         case01 = createCase01();
+        case02 = createCase02();
     }
 
     private static PreparedCase<Dog> createCase01() {
@@ -22,6 +24,17 @@ public final class DogTestCases {
         // prepare the List which is expected after the query
         List<Dog> expectedList = new ArrayList<>();
         expectedList.add(rawList01.get(22));
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList);
+    }
+
+    private static PreparedCase<Dog> createCase02() {
+        // Create query
+        String query = "$filter=favoriteToys eq 'Toy1'";
+
+        // prepare the List which is expected after the query
+        List<Dog> expectedList = rawList01; // will be full list because every element has 'Toy1'
 
         // Return Created PreparedCase Object
         return new PreparedCase<>(rawList01, query, expectedList);

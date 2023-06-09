@@ -3,9 +3,9 @@ package testHelpers.genericClasses.classDecleration.dog;
 import java.util.List;
 
 public class Dog {
-    private String name;
-    private int age;
-    private List<String> favoriteToys;
+    private final String name;
+    private final int age;
+    private final List<String> favoriteToys;
 
     public Dog(String name, int age, List<String> favoriteToys) {
         this.name = name;

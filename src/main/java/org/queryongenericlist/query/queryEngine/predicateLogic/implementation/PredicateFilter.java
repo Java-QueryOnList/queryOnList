@@ -11,6 +11,7 @@ import org.queryongenericlist.query.queryNode.implementation.filterNode.filterVa
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.negatorOperator.NegatorOperator;
 import org.queryongenericlist.utils.OperandHelper;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
@@ -32,8 +33,16 @@ public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
                 final Object leftValue = OperandHelper.resolveObject((givenNode.getTailLeft().getHead()), element);
                 final Object rightValue = OperandHelper.resolveObject((givenNode.getTailRight().getHead()), element);
 
-                // if condition of the comparison is met
-                conditionMet = ((Comparator) head).compare(leftValue, rightValue);
+                if (leftValue instanceof List<?> leftElements) {
+                    return leftElements.stream()
+                            .anyMatch(leftElementValue ->
+                                    ((Comparator) head).compare(leftElementValue, rightValue)
+                            );
+                } else {
+                    // if condition of the comparison is met
+                    conditionMet = ((Comparator) head).compare(leftValue, rightValue);
+                }
+
 
                 return conditionMet;
             });
