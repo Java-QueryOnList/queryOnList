@@ -21,8 +21,8 @@ import org.queryongenericlist.utils.StringParser;
 @RequiredArgsConstructor
 public class SuperQueryParser implements QueryParser<SuperQueryNode> {
 
-    private static final String FILTER_PATTERN = "\\$filter=([^&]+)";
-    private static final String SORTING_PATTERN = "\\$orderBy=([^&]+)";
+    private static final String FILTER_PATTERN = "\\$filter=(.*?)(?=\\$|$)";
+    private static final String SORTING_PATTERN = "\\$orderBy=([^$]+)";
     private static final String TOP_PATTERN = "\\$top=(\\d+)";
     private static final String SKIP_PATTERN = "\\$skip=(\\d+)";
 

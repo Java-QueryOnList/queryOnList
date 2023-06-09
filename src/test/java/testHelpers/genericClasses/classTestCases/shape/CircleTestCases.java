@@ -11,10 +11,12 @@ public final class CircleTestCases {
     private static final List<Circle> rawList01 = CircleObjects.getRawList();
     public static final PreparedCase<Circle> filterComplexQueryPrecedence;
     public static final PreparedCase<Circle> orderByRadius;
+    public static final PreparedCase<Circle> orderByAndFilterComplexQuery;
 
     static {
         filterComplexQueryPrecedence = createCase01();
         orderByRadius = createCase02();
+        orderByAndFilterComplexQuery = createCase03();
     }
 
     private static PreparedCase<Circle> createCase01() {
@@ -44,6 +46,20 @@ public final class CircleTestCases {
         expectedList.add(rawList01.get(7));
         expectedList.add(rawList01.get(5));
         expectedList.add(rawList01.get(0));
+        expectedList.add(rawList01.get(4));
+        expectedList.add(rawList01.get(2));
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList, true);
+    }
+
+    private static PreparedCase<Circle> createCase03() {
+        // Create query
+        String query = "$filter=radius gt 5 or color eq 'Blue' and (radius le 5.00 or color eq 'Yellow')$orderBy=radius";
+
+        // prepare the List which is expected after the query
+        List<Circle> expectedList = new ArrayList<>();
+        expectedList.add(rawList01.get(1));
         expectedList.add(rawList01.get(4));
         expectedList.add(rawList01.get(2));
 
