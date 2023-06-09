@@ -33,8 +33,7 @@ public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
                 final Object leftValue = OperandHelper.resolveObject((givenNode.getTailLeft().getHead()), element);
                 final Object rightValue = OperandHelper.resolveObject((givenNode.getTailRight().getHead()), element);
 
-                if (leftValue instanceof List<?>) {
-                    List<T> leftElements = (List<T>) leftValue;
+                if (leftValue instanceof List<?> leftElements) {
                     return leftElements.stream()
                             .anyMatch(leftElementValue ->
                                     ((Comparator) head).compare(leftElementValue, rightValue)
