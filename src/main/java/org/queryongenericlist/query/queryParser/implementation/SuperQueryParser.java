@@ -32,19 +32,33 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
 
     @NonNull
     public SuperQueryNode parse() {
+        // init SuperQueryNode via Builder
+        SuperQueryNode.SuperQueryNodeBuilder nodeBuilder = SuperQueryNode.builder();
+
+        // filter query
         final String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
+        if (!filterQuery.isEmpty()) {
+            final FilterNode filterNode = new FilterParser(filterQuery).parse();
+            nodeBuilder.filterNode(filterNode);
+        }
+
+        // sorting query
         final String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
+        if (!sortingQuery.isEmpty()) {
+            final SortingNode sortingNode = new SortingParser(sortingQuery).parse();
+            nodeBuilder.sortingNode(sortingNode);
+        }
+
+        // pagination query
         final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
         final String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
+        if (!paginationTopQuery.isEmpty() && !paginationSkipQuery.isEmpty()) {
+            final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
+            nodeBuilder.paginationNode(paginationNode);
+        }
 
-        final FilterNode filterNode = new FilterParser(filterQuery).parse();
-        final SortingNode sortingNode = new SortingParser(sortingQuery).parse();
-        final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
 
-        return SuperQueryNode.builder()
-                .filterNode(filterNode)
-                .sortingNode(sortingNode)
-                .paginationNode(paginationNode)
-                .build();
+        // build and return SuperQueryNode
+        return nodeBuilder.build();
     }
 }

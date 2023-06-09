@@ -8,13 +8,9 @@ import java.util.List;
 
 public class PaginationEngine implements QueryEngine<PaginationNode> {
     @Override
-    public @NonNull <T> List<T> apply(PaginationNode syntaxTree, List<T> onList) {
-        List<T> queriedList = onList;
+    public @NonNull <T> List<T> apply(@NonNull PaginationNode syntaxTree, @NonNull List<T> onList) {
+        List<T> queryResult = onList;
 
-        if (syntaxTree != null) {
-            // TODO: Apply Engine
-        }
-
-        return queriedList;
+        return queryResult;
     }
 }

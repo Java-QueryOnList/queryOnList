@@ -23,15 +23,17 @@ public class SuperQueryExecutor implements QueryExecutor {
      */
     @NonNull
     public <T> List<T> execute(@NonNull final String query, @NonNull final List<T> onList) {
+        List<T> queryResult;
+
         // parse query
         final SuperQueryParser queryParser = new SuperQueryParser(query);
         final SuperQueryNode parsedQuery = queryParser.parse();
 
         // apply parsed query which is now an abstract syntax tree on the given list
         SuperQueryEngine queryEngine = new SuperQueryEngine();
-        List<T> queriedList = queryEngine.apply(parsedQuery, onList);
+        queryResult = queryEngine.apply(parsedQuery, onList);
 
-        return queriedList;
+        return queryResult;
     }
 
 }

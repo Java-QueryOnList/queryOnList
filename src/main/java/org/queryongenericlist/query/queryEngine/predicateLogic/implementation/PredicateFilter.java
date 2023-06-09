@@ -1,7 +1,7 @@
-package org.queryongenericlist.query.queryEngine.pipeline.implementation;
+package org.queryongenericlist.query.queryEngine.predicateLogic.implementation;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.queryEngine.pipeline.PredicatePipeline;
+import org.queryongenericlist.query.queryEngine.predicateLogic.PredicateLogic;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.FilterNode;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.FilterValue;
 import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operator.comparisonOperator.Comparator;
@@ -13,7 +13,7 @@ import org.queryongenericlist.utils.OperandHelper;
 
 import java.util.function.Predicate;
 
-public class FilterPipeline<T> implements PredicatePipeline<T, FilterNode> {
+public class PredicateFilter<T> implements PredicateLogic<T, FilterNode> {
 
     @Override
     public Predicate<T> fromNode(@NonNull FilterNode givenNode) {

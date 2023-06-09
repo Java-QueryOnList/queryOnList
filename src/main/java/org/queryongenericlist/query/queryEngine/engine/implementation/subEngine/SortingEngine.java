@@ -8,13 +8,9 @@ import java.util.List;
 
 public class SortingEngine implements QueryEngine<SortingNode> {
     @Override
-    public @NonNull <T> List<T> apply(SortingNode syntaxTree, List<T> onList) {
-        List<T> queriedList = onList;
+    public @NonNull <T> List<T> apply(@NonNull SortingNode syntaxTree, @NonNull List<T> onList) {
+        List<T> queryResult = onList;
 
-        if (syntaxTree != null) {
-            // TODO: Apply Engine
-        }
-
-        return queriedList;
+        return queryResult;
     }
 }
