@@ -20,11 +20,11 @@ public class GenericClassTests {
         CaseTester<Car> carCaseTester = new CaseTester<>();
 
         carCaseTester
-                .addCase(CarTestCases.caseFieldExtraction)
-                .addCase(CarTestCases.caseTrivialOr)
-                .addCase(CarTestCases.caseTrivialNot)
-                .addCase(CarTestCases.caseNotThenBrackets)
-                .addCase(CarTestCases.caseNotNot) // Add as many cases as you like
+                .addCase(CarTestCases.filterFieldExtraction)
+                .addCase(CarTestCases.filterTrivialOr)
+                .addCase(CarTestCases.filterTrivialNot)
+                .addCase(CarTestCases.filterNotThenBrackets)
+                .addCase(CarTestCases.filterNotNot) // Add as many cases as you like
                 .testCases();
     }
 
@@ -33,8 +33,8 @@ public class GenericClassTests {
         CaseTester<Dog> dogCaseTester = new CaseTester<>();
 
         dogCaseTester
-                .addCase(DogTestCases.caseTrivialEqualString)
-                .addCase(DogTestCases.caseTrivialListField)
+                .addCase(DogTestCases.filterTrivialEqualString)
+                .addCase(DogTestCases.filterTrivialListField)
                 .testCases();
     }
 
@@ -43,7 +43,7 @@ public class GenericClassTests {
         CaseTester<Shape> shapeCaseTester = new CaseTester<>();
 
         shapeCaseTester
-                .addCase(ShapeTestCases.caseSuperClassField)
+                .addCase(ShapeTestCases.filterSuperClassField)
                 .testCases();
     }
 
@@ -52,7 +52,7 @@ public class GenericClassTests {
         CaseTester<Circle> circleCaseTester = new CaseTester<>();
 
         circleCaseTester
-                .addCase(CircleTestCases.caseComplexQueryPrecedence)
+                .addCase(CircleTestCases.filterComplexQueryPrecedence)
                 .testCases();
     }
 
@@ -61,8 +61,8 @@ public class GenericClassTests {
         CaseTester<ShoppingList> shoppingListCaseTester = new CaseTester<>();
 
         shoppingListCaseTester
-                .addCase(ShoppingListTestCases.caseTrivialBoolean)
-                .addCase(ShoppingListTestCases.caseExtractFieldInList)
+                .addCase(ShoppingListTestCases.filterTrivialBoolean)
+                .addCase(ShoppingListTestCases.filterExtractFieldInList)
                 .testCases();
     }
 }

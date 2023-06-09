@@ -9,10 +9,10 @@ import java.util.List;
 
 public final class ShapeTestCases {
     private static final List<Shape> rawList01 = ShapeObjects.getRawList();
-    public static final PreparedCase<Shape> caseSuperClassField;
+    public static final PreparedCase<Shape> filterSuperClassField;
 
     static {
-        caseSuperClassField = createCase01();
+        filterSuperClassField = createCase01();
     }
 
     private static PreparedCase<Shape> createCase01() {

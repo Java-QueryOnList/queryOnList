@@ -1,8 +1,8 @@
 package org.queryongenericlist.utils;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
-import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.ReferenceOperand;
+import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.PrimitiveValue;
+import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.ReferenceValue;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ public class OperandHelper {
 
     @NonNull
     public static <T> Object resolveObject(@NonNull final Object leafValue, T element) {
-        PrimitiveOperand primitiveOperand = null;
-        if (leafValue instanceof PrimitiveOperand) {
-            primitiveOperand = (PrimitiveOperand) leafValue;
-        } else if (leafValue instanceof ReferenceOperand) {
-            primitiveOperand = GenericClassHelper.extractAllFields(element, ((ReferenceOperand) leafValue).fieldNames());
+        PrimitiveValue primitiveOperand = null;
+        if (leafValue instanceof PrimitiveValue) {
+            primitiveOperand = (PrimitiveValue) leafValue;
+        } else if (leafValue instanceof ReferenceValue) {
+            primitiveOperand = GenericClassHelper.extractAllFields(element, ((ReferenceValue) leafValue).fieldNames());
         }
 
         assert primitiveOperand != null;

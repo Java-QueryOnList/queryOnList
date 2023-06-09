@@ -1,7 +1,7 @@
 package org.queryongenericlist.utils;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.queryNode.implementation.filterNode.filterValue.subClasses.operand.subClasses.PrimitiveOperand;
+import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.PrimitiveValue;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -20,7 +20,7 @@ public class GenericClassHelper {
      * @return The value of the nested field.
      */
     @NonNull
-    static public PrimitiveOperand extractAllFields(@NonNull final Object obj, @NonNull String[] fieldNames) {
+    static public PrimitiveValue extractAllFields(@NonNull final Object obj, @NonNull String[] fieldNames) {
 
         Object currentObject = obj;
 
@@ -33,7 +33,7 @@ public class GenericClassHelper {
             }
         }
 
-        return new PrimitiveOperand(currentObject);
+        return new PrimitiveValue(currentObject);
     }
 
     private static List<Object> extractForAllElements(String currentFieldName, List<?> currentList) {

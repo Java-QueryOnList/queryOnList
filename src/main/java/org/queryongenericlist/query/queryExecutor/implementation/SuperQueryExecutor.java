@@ -1,10 +1,10 @@
 package org.queryongenericlist.query.queryExecutor.implementation;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.queryEngine.engine.implementation.SuperQueryEngine;
+import org.queryongenericlist.query.queryEngine.implementation.SuperQueryEngine;
 import org.queryongenericlist.query.queryExecutor.QueryExecutor;
-import org.queryongenericlist.query.queryNode.implementation.SuperQueryNode;
-import org.queryongenericlist.query.queryParser.implementation.SuperQueryParser;
+import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.SuperQueryNode;
+import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.SuperQueryParser;
 
 import java.util.List;
 

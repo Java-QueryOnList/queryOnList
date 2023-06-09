@@ -9,12 +9,12 @@ import java.util.List;
 
 public final class DogTestCases {
     private static final List<Dog> rawList01 = DogObjects.getRawList();
-    public static final PreparedCase<Dog> caseTrivialEqualString;
-    public static final PreparedCase<Dog> caseTrivialListField;
+    public static final PreparedCase<Dog> filterTrivialEqualString;
+    public static final PreparedCase<Dog> filterTrivialListField;
 
     static {
-        caseTrivialEqualString = createCase01();
-        caseTrivialListField = createCase02();
+        filterTrivialEqualString = createCase01();
+        filterTrivialListField = createCase02();
     }
 
     private static PreparedCase<Dog> createCase01() {
