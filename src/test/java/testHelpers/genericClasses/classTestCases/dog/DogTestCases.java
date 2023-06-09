@@ -12,11 +12,14 @@ public final class DogTestCases {
     public static final PreparedCase<Dog> filterTrivialEqualString;
     public static final PreparedCase<Dog> filterTrivialListField;
     public static final PreparedCase<Dog> orderByNameDesc;
+    public static final PreparedCase<Dog> pagination10skip10top;
 
     static {
         filterTrivialEqualString = createCase01();
         filterTrivialListField = createCase02();
         orderByNameDesc = createCase03();
+        pagination10skip10top = createCase04();
+
     }
 
     private static PreparedCase<Dog> createCase01() {
@@ -78,6 +81,17 @@ public final class DogTestCases {
         expectedList.add(rawList01.get(10));
         expectedList.add(rawList01.get(9));
         expectedList.add(rawList01.get(0));
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList, true);
+    }
+
+    private static PreparedCase<Dog> createCase04() {
+        // Create query
+        String query = "$top=10$skip=10";
+
+        // prepare the List which is expected after the query
+        List<Dog> expectedList = rawList01.subList(10, 10 + 10);
 
         // Return Created PreparedCase Object
         return new PreparedCase<>(rawList01, query, expectedList, true);

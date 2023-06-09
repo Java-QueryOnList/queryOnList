@@ -5,21 +5,21 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.pagina
 import org.queryongenericlist.query.abstractSyntaxTree.queryParser.QueryParser;
 
 public class PaginationParser implements QueryParser<PaginationNode> {
-    /// TODO: Implement this
-    static public String patternTop = "\\$top=(\\d+)";
-    static public String patternSkip = "\\skip=(\\d+)";
     private final String top;
     private final String skip;
     int index;
 
-    public PaginationParser(@NonNull final String top, @NonNull final String skip) {
+    public PaginationParser(final String top, final String skip) {
         this.top = top;
         this.skip = skip;
     }
 
     @NonNull
     public PaginationNode parse() {
-        return null;
+        int top = this.top != null ? Integer.parseInt(this.top) : 0;
+        int skip = this.skip != null ? Integer.parseInt(this.skip) : 0;
+        PaginationNode paginationNode = new PaginationNode(top, skip);
+        return paginationNode;
     }
 
 }

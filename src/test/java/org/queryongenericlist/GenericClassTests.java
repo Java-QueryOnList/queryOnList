@@ -37,6 +37,7 @@ public class GenericClassTests {
                 .addCase(DogTestCases.filterTrivialEqualString)
                 .addCase(DogTestCases.filterTrivialListField)
                 .addCase(DogTestCases.orderByNameDesc)
+                .addCase(DogTestCases.pagination10skip10top)
                 .testCases();
     }
 
@@ -55,8 +56,8 @@ public class GenericClassTests {
         CaseTester<Circle> circleCaseTester = new CaseTester<>();
 
         circleCaseTester
-                //.addCase(CircleTestCases.filterComplexQueryPrecedence)
-                //.addCase(CircleTestCases.orderByRadius)
+                .addCase(CircleTestCases.filterComplexQueryPrecedence)
+                .addCase(CircleTestCases.orderByRadius)
                 .addCase(CircleTestCases.orderByAndFilterComplexQuery)
                 .testCases();
     }

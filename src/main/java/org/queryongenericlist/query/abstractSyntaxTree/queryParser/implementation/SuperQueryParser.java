@@ -58,7 +58,7 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
         // pagination query
         final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
         final String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
-        if (!paginationTopQuery.isEmpty() && !paginationSkipQuery.isEmpty()) {
+        if (!paginationTopQuery.isEmpty() || !paginationSkipQuery.isEmpty()) {
             final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
             nodeBuilder.paginationNode(paginationNode);
         }
