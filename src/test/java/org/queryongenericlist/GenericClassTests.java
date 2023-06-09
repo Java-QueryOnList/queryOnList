@@ -20,11 +20,11 @@ public class GenericClassTests {
         CaseTester<Car> carCaseTester = new CaseTester<>();
 
         carCaseTester
-                .addCase(CarTestCases.case01)
-                .addCase(CarTestCases.case02)
-                .addCase(CarTestCases.case03)
-                .addCase(CarTestCases.case04)
-                .addCase(CarTestCases.case05) // Add as many cases as you like
+                .addCase(CarTestCases.caseFieldExtraction)
+                .addCase(CarTestCases.caseTrivialOr)
+                .addCase(CarTestCases.caseTrivialNot)
+                .addCase(CarTestCases.caseNotThenBrackets)
+                .addCase(CarTestCases.caseNotNot) // Add as many cases as you like
                 .testCases();
     }
 
@@ -33,8 +33,8 @@ public class GenericClassTests {
         CaseTester<Dog> dogCaseTester = new CaseTester<>();
 
         dogCaseTester
-                .addCase(DogTestCases.case01)
-                .addCase(DogTestCases.case02)
+                .addCase(DogTestCases.caseTrivialEqualString)
+                .addCase(DogTestCases.caseTrivialListField)
                 .testCases();
     }
 
@@ -43,7 +43,7 @@ public class GenericClassTests {
         CaseTester<Shape> shapeCaseTester = new CaseTester<>();
 
         shapeCaseTester
-                .addCase(ShapeTestCases.case01)
+                .addCase(ShapeTestCases.caseSuperClassField)
                 .testCases();
     }
 
@@ -52,8 +52,7 @@ public class GenericClassTests {
         CaseTester<Circle> circleCaseTester = new CaseTester<>();
 
         circleCaseTester
-                // Case with complex query structure to exhaust precedence
-                .addCase(CircleTestCases.case01)
+                .addCase(CircleTestCases.caseComplexQueryPrecedence)
                 .testCases();
     }
 
@@ -62,8 +61,8 @@ public class GenericClassTests {
         CaseTester<ShoppingList> shoppingListCaseTester = new CaseTester<>();
 
         shoppingListCaseTester
-                .addCase(ShoppingListTestCases.case01)
-                .addCase(ShoppingListTestCases.case02)
+                .addCase(ShoppingListTestCases.caseTrivialBoolean)
+                .addCase(ShoppingListTestCases.caseExtractFieldInList)
                 .testCases();
     }
 }

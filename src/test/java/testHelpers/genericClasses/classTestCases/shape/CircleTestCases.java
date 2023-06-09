@@ -9,10 +9,10 @@ import java.util.List;
 
 public final class CircleTestCases {
     private static final List<Circle> rawList01 = CircleObjects.getRawList();
-    public static final PreparedCase<Circle> case01;
+    public static final PreparedCase<Circle> caseComplexQueryPrecedence;
 
     static {
-        case01 = createCase01();
+        caseComplexQueryPrecedence = createCase01();
     }
 
     private static PreparedCase<Circle> createCase01() {

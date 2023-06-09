@@ -9,12 +9,12 @@ import java.util.List;
 
 public final class ShoppingListTestCases {
     private static final List<ShoppingList> rawList01 = ShoppingListObjects.getRawList();
-    public static final PreparedCase<ShoppingList> case01;
-    public static final PreparedCase<ShoppingList> case02;
+    public static final PreparedCase<ShoppingList> caseTrivialBoolean;
+    public static final PreparedCase<ShoppingList> caseExtractFieldInList;
 
     static {
-        case01 = createCase01();
-        case02 = createCase02();
+        caseTrivialBoolean = createCase01();
+        caseExtractFieldInList = createCase02();
     }
 
     private static PreparedCase<ShoppingList> createCase01() {

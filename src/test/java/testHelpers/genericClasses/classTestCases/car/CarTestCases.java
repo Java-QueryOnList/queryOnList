@@ -9,18 +9,18 @@ import java.util.List;
 
 public final class CarTestCases {
     private static final List<Car> rawList01 = CarObjects.getRawList();
-    public static final PreparedCase<Car> case01;
-    public static final PreparedCase<Car> case02;
-    public static final PreparedCase<Car> case03;
-    public static final PreparedCase<Car> case04;
-    public static final PreparedCase<Car> case05;
+    public static final PreparedCase<Car> caseFieldExtraction;
+    public static final PreparedCase<Car> caseTrivialOr;
+    public static final PreparedCase<Car> caseTrivialNot;
+    public static final PreparedCase<Car> caseNotThenBrackets;
+    public static final PreparedCase<Car> caseNotNot;
 
     static {
-        case01 = createCase01();
-        case02 = createCase02();
-        case03 = createCase03();
-        case04 = createCase04();
-        case05 = createCase05();
+        caseFieldExtraction = createCase01();
+        caseTrivialOr = createCase02();
+        caseTrivialNot = createCase03();
+        caseNotThenBrackets = createCase04();
+        caseNotNot = createCase05();
     }
 
     private static PreparedCase<Car> createCase01() {
