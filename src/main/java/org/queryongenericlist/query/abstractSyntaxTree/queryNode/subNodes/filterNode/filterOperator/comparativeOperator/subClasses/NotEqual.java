@@ -2,12 +2,13 @@ package org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filte
 
 import lombok.NonNull;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.filterOperator.comparativeOperator.ComparativeOperator;
+import org.queryongenericlist.utils.ComparativeHelper;
 
-public class NotEqual extends ComparativeOperator {
+public class NotEqual implements ComparativeOperator {
 
     @Override
     public boolean compare(@NonNull final Object value1, @NonNull final Object value2) {
-        return super.relation(value1, value2) != 0;
+        return ComparativeHelper.relation(value1, value2) != 0;
     }
 
 }
