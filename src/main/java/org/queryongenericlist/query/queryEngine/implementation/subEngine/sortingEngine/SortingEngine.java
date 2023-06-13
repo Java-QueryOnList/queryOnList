@@ -6,16 +6,16 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.sortin
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SortingEngine implements QueryEngine<SortingNode> {
     @Override
-    public @NonNull <T> List<T> apply(@NonNull SortingNode syntaxTree, @NonNull List<T> onList) {
-        List<T> queryResult;
+    public @NonNull <T> Stream<T> apply(@NonNull SortingNode syntaxTree, @NonNull Stream<T> onStream) {
+        Stream<T> queryResult;
 
         SortingPipeline<T> sortingPipeline = new SortingPipeline<>();
-        queryResult = onList.stream()
-                .sorted(sortingPipeline.fromNode(syntaxTree))
-                .collect(Collectors.toList());
+        queryResult = onStream
+                .sorted(sortingPipeline.fromNode(syntaxTree));
 
         return queryResult;
     }

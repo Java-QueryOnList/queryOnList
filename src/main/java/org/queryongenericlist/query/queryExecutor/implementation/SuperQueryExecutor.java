@@ -7,6 +7,8 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.SuperQ
 import org.queryongenericlist.query.abstractSyntaxTree.queryParser.implementation.SuperQueryParser;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The implementation of the QueryEngine interface that runs the engine for querying a given list.
@@ -31,7 +33,8 @@ public class SuperQueryExecutor implements QueryExecutor {
 
         // apply parsed query which is now an abstract syntax tree on the given list
         SuperQueryEngine queryEngine = new SuperQueryEngine();
-        queryResult = queryEngine.apply(parsedQuery, onList);
+        Stream<T> queryStream = queryEngine.apply(parsedQuery, onList.stream());
+        queryResult = queryStream.collect(Collectors.toList());
 
         return queryResult;
     }

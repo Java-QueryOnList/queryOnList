@@ -11,11 +11,12 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.pagina
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.sortingNode.SortingNode;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class SuperQueryEngine implements QueryEngine<SuperQueryNode> {
     @Override
-    public @NonNull <T> List<T> apply(SuperQueryNode syntaxTree, List<T> onList) {
-        List<T> queryResult = onList;
+    public @NonNull <T> Stream<T> apply(SuperQueryNode syntaxTree, Stream<T> onStream) {
+        Stream<T> queryResult = onStream;
 
         if (syntaxTree != null) {
 

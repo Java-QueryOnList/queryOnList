@@ -11,10 +11,14 @@ public final class ShapeTestCases {
     private static final List<Shape> rawList01 = ShapeObjects.getRawList();
     public static final PreparedCase<Shape> filterSuperClassField;
     public static final PreparedCase<Shape> OrderBySuperClassField;
+    public static final PreparedCase<Shape> filterAndOrderByEmptyQuery;
+    public static final PreparedCase<Shape> emptyQuery;
 
     static {
         filterSuperClassField = createCase01();
         OrderBySuperClassField = createCase02();
+        filterAndOrderByEmptyQuery = createCase03();
+        emptyQuery = createCase04();
     }
 
     private static PreparedCase<Shape> createCase01() {
@@ -89,5 +93,27 @@ public final class ShapeTestCases {
 
         // Return Created PreparedCase Object
         return new PreparedCase<>(rawList01, query, expectedList, true);
+    }
+
+    private static PreparedCase<Shape> createCase03() {
+        // Create query
+        String query = "$filter=$orderBy=";
+
+        // prepare the List which is expected after the query
+        List<Shape> expectedList = rawList01;
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList);
+    }
+
+    private static PreparedCase<Shape> createCase04() {
+        // Create query
+        String query = "";
+
+        // prepare the List which is expected after the query
+        List<Shape> expectedList = rawList01;
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList);
     }
 }

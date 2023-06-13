@@ -48,6 +48,8 @@ public class GenericClassTests {
         shapeCaseTester
                 .addCase(ShapeTestCases.filterSuperClassField)
                 .addCase(ShapeTestCases.OrderBySuperClassField)
+                .addCase(ShapeTestCases.filterAndOrderByEmptyQuery)
+                .addCase(ShapeTestCases.emptyQuery)
                 .testCases();
     }
 
@@ -58,6 +60,7 @@ public class GenericClassTests {
         circleCaseTester
                 .addCase(CircleTestCases.filterComplexQueryPrecedence)
                 .addCase(CircleTestCases.orderByRadius)
+                .addCase(CircleTestCases.filterAndOrderByComplexQuery)
                 .addCase(CircleTestCases.orderByAndFilterComplexQuery)
                 .testCases();
     }

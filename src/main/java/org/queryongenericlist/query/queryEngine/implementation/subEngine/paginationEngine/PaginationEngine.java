@@ -6,16 +6,14 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.pagina
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PaginationEngine implements QueryEngine<PaginationNode> {
     @Override
-    public @NonNull <T> List<T> apply(@NonNull PaginationNode syntaxTree, @NonNull List<T> onList) {
-        List<T> queryResult;
-
-        queryResult = onList.stream()
+    public @NonNull <T> Stream<T> apply(@NonNull PaginationNode syntaxTree, @NonNull Stream<T> onStream) {
+        Stream<T> queryResult = onStream
                 .skip(syntaxTree.getSkip())
-                .limit(syntaxTree.getTop())
-                .collect(Collectors.toList());
+                .limit(syntaxTree.getTop());
 
         return queryResult;
     }

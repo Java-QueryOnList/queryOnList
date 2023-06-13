@@ -7,15 +7,15 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filter
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FilterEngine implements QueryEngine<FilterNode> {
     @Override
-    public @NonNull <T> List<T> apply(@NonNull FilterNode syntaxTree, @NonNull List<T> onList) {
-        return onList.stream()
-                .filter((final T element) -> {
-                    FilterPipeline<T> filterPipeline = new FilterPipeline<>();
-                    final Predicate<T> predicatePipeline = filterPipeline.fromNode(syntaxTree);
-                    return predicatePipeline.test(element);
-                }).collect(Collectors.toList());
+    public @NonNull <T> Stream<T> apply(@NonNull FilterNode syntaxTree, @NonNull Stream<T> onList) {
+        return onList.filter((final T element) -> {
+            FilterPipeline<T> filterPipeline = new FilterPipeline<>();
+            final Predicate<T> predicatePipeline = filterPipeline.fromNode(syntaxTree);
+            return predicatePipeline.test(element);
+        });
     }
 }
