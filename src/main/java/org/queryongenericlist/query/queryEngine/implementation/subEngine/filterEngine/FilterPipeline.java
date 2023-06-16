@@ -27,10 +27,14 @@ public class FilterPipeline<T> {
             predicateResult = predicateResult.and((T element) -> {
                 boolean conditionMet;
 
-                // prepare left and right value
-                final Object leftValue = OperandHelper.resolveObject((givenNode.getTailLeft().getHead()), element);
+                // prepare left and right value (e.g. "price gt 5" -> left: price; right: 5)
+                Object leftValue = OperandHelper.resolveObject((givenNode.getTailLeft().getHead()), element);
                 final Object rightValue = OperandHelper.resolveObject((givenNode.getTailRight().getHead()), element);
 
+                if (leftValue.getClass().isArray()) {
+                    // if leftValue is array, convert to list
+                    leftValue = OperandHelper.convertArrayToList(leftValue);
+                }
                 if (leftValue instanceof List<?> leftElements) {
                     return leftElements.stream()
                             .anyMatch(leftElementValue ->

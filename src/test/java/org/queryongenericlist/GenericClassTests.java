@@ -3,12 +3,14 @@ package org.queryongenericlist;
 import org.junit.jupiter.api.Test;
 import testHelpers.genericClasses.classDecleration.car.Car;
 import testHelpers.genericClasses.classDecleration.dog.Dog;
+import testHelpers.genericClasses.classDecleration.pokemon.PokemonTrainer;
 import testHelpers.genericClasses.classDecleration.shape.Circle;
 import testHelpers.genericClasses.classDecleration.shape.Shape;
 import testHelpers.genericClasses.classDecleration.shoppingList.ShoppingList;
 import testHelpers.genericClasses.classTestCases.CaseTester;
 import testHelpers.genericClasses.classTestCases.car.CarTestCases;
 import testHelpers.genericClasses.classTestCases.dog.DogTestCases;
+import testHelpers.genericClasses.classTestCases.pokemon.PokemonTrainerTestCases;
 import testHelpers.genericClasses.classTestCases.shape.CircleTestCases;
 import testHelpers.genericClasses.classTestCases.shape.ShapeTestCases;
 import testHelpers.genericClasses.classTestCases.shoppingList.ShoppingListTestCases;
@@ -72,6 +74,16 @@ public class GenericClassTests {
         shoppingListCaseTester
                 .addCase(ShoppingListTestCases.filterTrivialBoolean)
                 .addCase(ShoppingListTestCases.filterExtractFieldInList)
+                .testCases();
+    }
+
+    @Test
+    public void testOnPokemonTrainerClass() {
+        CaseTester<PokemonTrainer> pokemonTrainerCaseTester = new CaseTester<>();
+
+        pokemonTrainerCaseTester
+                //.addCase(PokemonTrainerTestCases.filterOperatorOnIntArray)
+                .addCase(PokemonTrainerTestCases.sortingOperatorOnIntArray)
                 .testCases();
     }
 }
