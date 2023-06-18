@@ -22,10 +22,10 @@ public class PreparedCase<T> {
     /**
      * PreparedCase Constructor for creating Test Cases with expected state of a list before and after a given query
      *
-     * @param rawList the full list with elements which the query is run on
-     * @param query the query itself of type String
-     * @param expectedList the expected list after the rawList getting queried
-     * @param gettersForOrderBy
+     * @param rawList           the full list with elements which the query is run on
+     * @param query             the query itself of type String
+     * @param expectedList      the expected list after the rawList getting queried
+     * @param gettersForOrderBy all getters to check order
      */
     public PreparedCase(List<T> rawList, String query, List<T> expectedList, List<Function<T, ?>> gettersForOrderBy) {
         this.rawList = rawList;
@@ -37,8 +37,8 @@ public class PreparedCase<T> {
     /**
      * PreparedCase Constructor with default Value for checkOrder = false
      *
-     * @param rawList the full list with elements which the query is run on
-     * @param query the query itself of type String
+     * @param rawList      the full list with elements which the query is run on
+     * @param query        the query itself of type String
      * @param expectedList the expected list after the rawList getting queried
      */
     public PreparedCase(List<T> rawList, String query, List<T> expectedList) {

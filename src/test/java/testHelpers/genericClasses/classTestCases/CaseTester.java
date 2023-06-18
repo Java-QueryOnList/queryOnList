@@ -28,7 +28,7 @@ public class CaseTester<T> {
         List<T> expectedList = preparedCase.expectedList;
         List<T> queriedList = preparedCase.getQueriedList();
 
-        AssertionsExtended.assertQuerySuccess2(
+        AssertionsExtended.assertQuerySuccess(
                 preparedCase.getQuery(),
                 expectedList,
                 queriedList,
