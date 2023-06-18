@@ -1,11 +1,13 @@
 package testHelpers.genericClasses.classTestCases.car;
 
 import testHelpers.genericClasses.classDecleration.car.Car;
+import testHelpers.genericClasses.classDecleration.car.Engine;
 import testHelpers.genericClasses.classObjects.car.CarObjects;
 import testHelpers.genericClasses.classTestCases.PreparedCase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public final class CarTestCases {
     private static final List<Car> rawList01 = CarObjects.getRawList();
@@ -122,7 +124,15 @@ public final class CarTestCases {
         expectedList.add(rawList01.get(5));
         expectedList.add(rawList01.get(3));
 
+        // Prepare getters for order check
+        Function<Car, Engine> getEngine = Car::getEngine;
+        Function<Engine, String> getType = Engine::getType;
+        Function<Engine, Integer> getHorsepower = Engine::getHorsepower;
+        Function<Car, String> typeGetter = getEngine.andThen(getType);
+        Function<Car, Integer> horsepowerGetter = getEngine.andThen(getHorsepower);
+        List<Function<Car, ?>> gettersForOrderBy = List.of(typeGetter, horsepowerGetter);
+
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
     }
 }

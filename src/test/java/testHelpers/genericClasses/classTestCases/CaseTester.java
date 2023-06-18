@@ -28,11 +28,11 @@ public class CaseTester<T> {
         List<T> expectedList = preparedCase.expectedList;
         List<T> queriedList = preparedCase.getQueriedList();
 
-        AssertionsExtended.assertQuerySuccess(
+        AssertionsExtended.assertQuerySuccess2(
+                preparedCase.getQuery(),
                 expectedList,
                 queriedList,
-                preparedCase.getIfOrderMatters(),
-                preparedCase.getQuery()
+                preparedCase.gettersForOrderBy
         );
     }
 

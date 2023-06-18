@@ -6,6 +6,7 @@ import testHelpers.genericClasses.classTestCases.PreparedCase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public final class DogTestCases {
     private static final List<Dog> rawList01 = DogObjects.getRawList();
@@ -82,8 +83,11 @@ public final class DogTestCases {
         expectedList.add(rawList01.get(9));
         expectedList.add(rawList01.get(0));
 
+        // Prepare getters for order check
+        List<Function<Dog, ?>> gettersForOrderBy = List.of(Dog::getName);
+
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
     }
 
     private static PreparedCase<Dog> createCase04() {
@@ -91,9 +95,11 @@ public final class DogTestCases {
         String query = "$top=10$skip=10";
 
         // prepare the List which is expected after the query
-        List<Dog> expectedList = rawList01.subList(10, 10 + 10);
+        int top = 10;
+        int skip = 10;
+        List<Dog> expectedList = rawList01.subList(top, (top + skip));
 
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList);
     }
 }

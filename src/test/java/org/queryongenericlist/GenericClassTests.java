@@ -82,8 +82,10 @@ public class GenericClassTests {
         CaseTester<PokemonTrainer> pokemonTrainerCaseTester = new CaseTester<>();
 
         pokemonTrainerCaseTester
-                //.addCase(PokemonTrainerTestCases.filterOperatorOnIntArray)
-                .addCase(PokemonTrainerTestCases.sortingOperatorOnIntArray)
+                .addCase(PokemonTrainerTestCases.filterOnIntArray)
+                .addCase(PokemonTrainerTestCases.orderByOnIntArray)
+                .addCase(PokemonTrainerTestCases.filterOnObjectArray)
+                .addCase(PokemonTrainerTestCases.sortingOnObjectArray)
                 .testCases();
     }
 }

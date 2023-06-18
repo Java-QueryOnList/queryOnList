@@ -6,6 +6,7 @@ import testHelpers.genericClasses.classTestCases.PreparedCase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public final class ShapeTestCases {
     private static final List<Shape> rawList01 = ShapeObjects.getRawList();
@@ -90,9 +91,12 @@ public final class ShapeTestCases {
         expectedList.add(rawList01.get(12));
         expectedList.add(rawList01.get(21));
 
+        // Prepare getters for order check
+        List<Function<Shape, ?>> gettersForOrderBy = List.of(Shape::getColor);
+
 
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
     }
 
     private static PreparedCase<Shape> createCase03() {

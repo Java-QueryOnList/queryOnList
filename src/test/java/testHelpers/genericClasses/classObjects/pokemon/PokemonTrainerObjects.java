@@ -33,7 +33,7 @@ public class PokemonTrainerObjects {
         RAW_LIST.add(new PokemonTrainer(new int[]{3, 4, 5}, new Pokemon[]{availablePokemon.get(2), availablePokemon.get(18)}));
         RAW_LIST.add(new PokemonTrainer(new int[]{6, 7}, new Pokemon[]{availablePokemon.get(3), availablePokemon.get(17)}));
         RAW_LIST.add(new PokemonTrainer(new int[]{8}, new Pokemon[]{availablePokemon.get(4), availablePokemon.get(16)}));
-        RAW_LIST.add(new PokemonTrainer());
+        RAW_LIST.add(new PokemonTrainer(new int[]{}, new Pokemon[]{}));
         RAW_LIST.add(new PokemonTrainer(new int[]{2, 4, 6}, new Pokemon[]{availablePokemon.get(5), availablePokemon.get(15)}));
         RAW_LIST.add(new PokemonTrainer(new int[]{}, new Pokemon[]{availablePokemon.get(6), availablePokemon.get(13)}));
         RAW_LIST.add(new PokemonTrainer(new int[]{2, 5, 6}, new Pokemon[]{availablePokemon.get(7), availablePokemon.get(12)}));

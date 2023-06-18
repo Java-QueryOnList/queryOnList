@@ -6,6 +6,7 @@ import testHelpers.genericClasses.classTestCases.PreparedCase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public final class CircleTestCases {
     private static final List<Circle> rawList01 = CircleObjects.getRawList();
@@ -51,8 +52,11 @@ public final class CircleTestCases {
         expectedList.add(rawList01.get(4));
         expectedList.add(rawList01.get(2));
 
+        // Prepare getters for order check
+        List<Function<Circle, ?>> gettersForOrderBy = List.of(Circle::getRadius);
+
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
     }
 
     private static PreparedCase<Circle> createCase03() {
@@ -65,8 +69,11 @@ public final class CircleTestCases {
         expectedList.add(rawList01.get(4));
         expectedList.add(rawList01.get(2));
 
+        // Prepare getters for order check
+        List<Function<Circle, ?>> gettersForOrderBy = List.of(Circle::getRadius);
+
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
     }
 
     private static PreparedCase<Circle> createCase04() {
@@ -79,7 +86,10 @@ public final class CircleTestCases {
         expectedList.add(rawList01.get(4));
         expectedList.add(rawList01.get(2));
 
+        // Prepare getters for order check
+        List<Function<Circle, ?>> gettersForOrderBy = List.of(Circle::getRadius);
+
         // Return Created PreparedCase Object
-        return new PreparedCase<>(rawList01, query, expectedList, true);
+        return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
     }
 }
