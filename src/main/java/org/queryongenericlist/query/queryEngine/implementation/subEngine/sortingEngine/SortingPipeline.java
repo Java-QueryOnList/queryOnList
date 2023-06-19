@@ -40,12 +40,13 @@ public class SortingPipeline<T> {
 
     /**
      * If object is list or array retrieve the max or min element of that list for comparison
+     *
      * @param isAscendingOrder describes order of sorting pipeline which uses this method
-     * @param resolvedObject the object which is getting singularized if it is an array or list
+     * @param resolvedObject   the object which is getting singularized if it is an array or list
      * @return return a single instance of the object, could be min, max or untouched
      */
     @NonNull
-    private static Object singularizeIfIsCollection(@NonNull boolean isAscendingOrder, @NonNull Object resolvedObject) {
+    private static Object singularizeIfIsCollection(@NonNull boolean isAscendingOrder, Object resolvedObject) {
         // TODO: Rethink if it is correct to use OperandHelper from Filter inside here.
         //  Maybe complete redesign recommended
         if (resolvedObject.getClass().isArray()) {

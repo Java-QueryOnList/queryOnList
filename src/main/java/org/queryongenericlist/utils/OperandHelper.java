@@ -16,8 +16,9 @@ public class OperandHelper {
      * @param value the object which is getting checked
      * @return whether the given object is primitive or not
      */
-    public static boolean checkIfPrimitive(@NonNull final Object value) {
-        return value instanceof Integer
+    public static boolean checkIfPrimitive(final Object value) {
+        return value == null
+                || value instanceof Integer
                 || value instanceof Boolean
                 || value instanceof Float
                 || value instanceof Double
@@ -39,7 +40,6 @@ public class OperandHelper {
      * @param <T>       class type of the object which is going to be resolved
      * @return return the value of the given object which is primitive which we checked via {@link OperandHelper#checkIfPrimitive(Object)}
      */
-    @NonNull
     public static <T> Object resolveObject(@NonNull final Object leafValue, @NonNull T element) {
         PrimitiveValue primitiveValue = null;
         if (leafValue instanceof PrimitiveValue) {
@@ -48,7 +48,6 @@ public class OperandHelper {
             primitiveValue = GenericClassHelper.extractAllFields(element, ((ReferenceValue) leafValue).fieldNames());
         }
 
-        assert primitiveValue != null;
         return primitiveValue.value();
     }
 

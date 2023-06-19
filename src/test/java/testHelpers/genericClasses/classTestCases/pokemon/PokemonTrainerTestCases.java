@@ -15,13 +15,13 @@ public final class PokemonTrainerTestCases {
     public static final PreparedCase<PokemonTrainer> filterOnIntArray;
     public static final PreparedCase<PokemonTrainer> orderByOnIntArray;
     public static final PreparedCase<PokemonTrainer> filterOnObjectArray;
-    public static final PreparedCase<PokemonTrainer> sortingOnObjectArray;
+    public static final PreparedCase<PokemonTrainer> orderByOnObjectArray;
 
     static {
         filterOnIntArray = case01();
         orderByOnIntArray = case02();
         filterOnObjectArray = case03();
-        sortingOnObjectArray = case04();
+        orderByOnObjectArray = case04();
     }
 
     private static PreparedCase<PokemonTrainer> case01() {

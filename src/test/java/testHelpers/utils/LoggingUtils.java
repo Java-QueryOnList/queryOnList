@@ -73,7 +73,7 @@ public class LoggingUtils {
                 Object value = fields[i].get(obj);
                 result.append(fields[i].getName())
                         .append(": ")
-                        .append(value.toString());
+                        .append(nullOrString(value));
                 if (i != fields.length - 1) result.append(", ");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -88,5 +88,9 @@ public class LoggingUtils {
 
     private static String getLastPartAfterPoint(String str) {
         return str.substring(str.lastIndexOf('.') + 1);
+    }
+
+    private static String nullOrString(Object value) {
+        return (value == null) ? "null" : value.toString();
     }
 }

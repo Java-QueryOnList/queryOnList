@@ -25,10 +25,13 @@ public class FilterPipeline<T> {
 
             // expand Predicate
             predicateResult = predicateResult.and((T element) -> {
+                if (element == null) return false;
+
                 boolean conditionMet;
 
                 // prepare left and right value (e.g. "price gt 5" -> left: price; right: 5)
                 Object leftValue = OperandHelper.resolveObject((givenNode.getTailLeft().getHead()), element);
+                if (leftValue == null) return false;
                 final Object rightValue = OperandHelper.resolveObject((givenNode.getTailRight().getHead()), element);
 
                 if (leftValue.getClass().isArray()) {

@@ -6,7 +6,7 @@ import org.queryongenericlist.utils.OperandHelper;
 
 public record PrimitiveValue(Object value) implements LeafNode {
 
-    public PrimitiveValue(@NonNull final Object value) {
+    public PrimitiveValue(final Object value) {
         if (OperandHelper.checkIfPrimitive(value)) {
             this.value = value;
         } else {

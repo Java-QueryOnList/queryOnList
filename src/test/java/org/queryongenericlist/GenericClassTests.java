@@ -2,6 +2,7 @@ package org.queryongenericlist;
 
 import org.junit.jupiter.api.Test;
 import testHelpers.genericClasses.classDecleration.car.Car;
+import testHelpers.genericClasses.classDecleration.developer.Developer;
 import testHelpers.genericClasses.classDecleration.dog.Dog;
 import testHelpers.genericClasses.classDecleration.pokemon.PokemonTrainer;
 import testHelpers.genericClasses.classDecleration.shape.Circle;
@@ -9,6 +10,7 @@ import testHelpers.genericClasses.classDecleration.shape.Shape;
 import testHelpers.genericClasses.classDecleration.shoppingList.ShoppingList;
 import testHelpers.genericClasses.classTestCases.CaseTester;
 import testHelpers.genericClasses.classTestCases.car.CarTestCases;
+import testHelpers.genericClasses.classTestCases.developer.DeveloperTestCases;
 import testHelpers.genericClasses.classTestCases.dog.DogTestCases;
 import testHelpers.genericClasses.classTestCases.pokemon.PokemonTrainerTestCases;
 import testHelpers.genericClasses.classTestCases.shape.CircleTestCases;
@@ -85,7 +87,18 @@ public class GenericClassTests {
                 .addCase(PokemonTrainerTestCases.filterOnIntArray)
                 .addCase(PokemonTrainerTestCases.orderByOnIntArray)
                 .addCase(PokemonTrainerTestCases.filterOnObjectArray)
-                .addCase(PokemonTrainerTestCases.sortingOnObjectArray)
+                .addCase(PokemonTrainerTestCases.orderByOnObjectArray)
+                .testCases();
+    }
+
+    @Test
+    public void testOnDeveloperClass() {
+        CaseTester<Developer> developerCaseTester = new CaseTester<>();
+
+        developerCaseTester
+                .addCase(DeveloperTestCases.filterWithNullAgeBetween30And40)
+                .addCase(DeveloperTestCases.filterWithNullOnSubclass)
+                //.addCase(DeveloperTestCases.filterAndOrderByWithNullOnList)
                 .testCases();
     }
 }

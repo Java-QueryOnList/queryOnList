@@ -34,6 +34,7 @@ public class GenericClassHelper {
             } else {
                 currentObject = extractForOneElement(currentObject, currentFieldName);
             }
+            if (currentObject == null) return new PrimitiveValue(null);
         }
 
         return new PrimitiveValue(currentObject);
