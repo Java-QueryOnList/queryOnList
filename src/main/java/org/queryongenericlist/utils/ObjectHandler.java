@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OperandHelper {
+public class ObjectHandler {
 
     /**
      * Check if the given object is 'primitive' and suitable for further operations
@@ -39,7 +39,7 @@ public class OperandHelper {
      * @param leafValue the value of the last node of an abstract syntax tree
      * @param element   an object of the class of the element whose field has to be extracted
      * @param <T>       class type of the object which is going to be resolved
-     * @return return the value of the given object which is primitive which we checked via {@link OperandHelper#checkIfPrimitive(Object)}
+     * @return return the value of the given object which is primitive which we checked via {@link ObjectHandler#checkIfPrimitive(Object)}
      */
     public static <T> Object resolveObject(@NonNull final Object leafValue, @NonNull T element) {
         PrimitiveValue primitiveValue = null;

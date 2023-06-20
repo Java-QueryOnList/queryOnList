@@ -3,7 +3,7 @@ package org.queryongenericlist.query.queryEngine.implementation.subEngine.sortin
 import lombok.NonNull;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.sortingNode.SortingNode;
 import org.queryongenericlist.utils.ComparativeHelper;
-import org.queryongenericlist.utils.OperandHelper;
+import org.queryongenericlist.utils.ObjectHandler;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,7 +17,7 @@ public class SortingPipeline<T> {
             Comparable<? super Object> comparable;
 
             // resolve object from node value
-            Object resolvedObject = OperandHelper.resolveObject(sortingNode.getHead(), element);
+            Object resolvedObject = ObjectHandler.resolveObject(sortingNode.getHead(), element);
 
             // take singular object if resolved object is array or list
             resolvedObject = singularizeIfIsCollection(sortingNode.isAscending(), resolvedObject);
@@ -55,7 +55,7 @@ public class SortingPipeline<T> {
         //  Maybe complete redesign recommended
         if (resolvedObject != null) {
             // if is array of any type, convert to list for next transformation
-            resolvedObject = OperandHelper.ifArrayConvertToList(resolvedObject);
+            resolvedObject = ObjectHandler.ifArrayConvertToList(resolvedObject);
             if (resolvedObject instanceof List<?>) {
                 // if is list get max or min according to requested order
                 List<Comparable<? super Object>> listRO = (List<Comparable<? super Object>>) resolvedObject;

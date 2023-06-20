@@ -26,7 +26,7 @@ public class GenericClassHelper {
 
         // Traverse through the nested fields e.g. ["car", "engine", "horsepower"] for obj.element.engine.horsepower
         for (String currentFieldName : fieldNames) {
-            currentObject = OperandHelper.ifArrayConvertToList(currentObject);
+            currentObject = ObjectHandler.ifArrayConvertToList(currentObject);
             if (currentObject instanceof List<?> currentList) {
                 currentObject = extractForAllElements(currentFieldName, currentList);
             } else {

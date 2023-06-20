@@ -8,7 +8,7 @@ import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filter
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.filterOperator.logicalOperator.subClasses.LogicalAnd;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.filterOperator.logicalOperator.subClasses.LogicalOr;
 import org.queryongenericlist.query.abstractSyntaxTree.queryNode.subNodes.filterNode.filterOperator.negativeOperator.NegativeOperator;
-import org.queryongenericlist.utils.OperandHelper;
+import org.queryongenericlist.utils.ObjectHandler;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -30,13 +30,13 @@ public class FilterPipeline<T> {
                 boolean conditionMet;
 
                 // prepare left and right value (e.g. "price gt 5" -> left: price; right: 5)
-                Object leftValue = OperandHelper.resolveObject((givenNode.getTailLeft().getHead()), element);
+                Object leftValue = ObjectHandler.resolveObject((givenNode.getTailLeft().getHead()), element);
                 if (leftValue == null) return false;
-                final Object rightValue = OperandHelper.resolveObject((givenNode.getTailRight().getHead()), element);
+                final Object rightValue = ObjectHandler.resolveObject((givenNode.getTailRight().getHead()), element);
 
 
                 // if leftValue is array, convert to list
-                leftValue = OperandHelper.ifArrayConvertToList(leftValue);
+                leftValue = ObjectHandler.ifArrayConvertToList(leftValue);
                 if (leftValue instanceof List<?> leftElements) {
                     return leftElements.stream()
                             .anyMatch(leftElementValue ->
