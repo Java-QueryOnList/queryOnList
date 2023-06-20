@@ -7,7 +7,6 @@ import org.queryongenericlist.query.abstractsyntaxtree.queryparser.QueryParser;
 public class PaginationParser implements QueryParser<PaginationNode> {
     private final String top;
     private final String skip;
-    int index;
 
     public PaginationParser(final String top, final String skip) {
         this.top = top;
