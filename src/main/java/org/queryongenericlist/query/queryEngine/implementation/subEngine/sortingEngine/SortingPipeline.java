@@ -54,10 +54,8 @@ public class SortingPipeline<T> {
         // TODO: Rethink if it is correct to use OperandHelper from Filter inside here.
         //  Maybe complete redesign recommended
         if (resolvedObject != null) {
-            if (resolvedObject.getClass().isArray()) {
-                // if is array of any type, convert to list for next transformation
-                resolvedObject = OperandHelper.convertArrayToList(resolvedObject);
-            }
+            // if is array of any type, convert to list for next transformation
+            resolvedObject = OperandHelper.ifArrayConvertToList(resolvedObject);
             if (resolvedObject instanceof List<?>) {
                 // if is list get max or min according to requested order
                 List<Comparable<? super Object>> listRO = (List<Comparable<? super Object>>) resolvedObject;

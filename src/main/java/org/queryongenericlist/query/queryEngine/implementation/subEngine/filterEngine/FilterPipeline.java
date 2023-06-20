@@ -34,10 +34,9 @@ public class FilterPipeline<T> {
                 if (leftValue == null) return false;
                 final Object rightValue = OperandHelper.resolveObject((givenNode.getTailRight().getHead()), element);
 
-                if (leftValue.getClass().isArray()) {
-                    // if leftValue is array, convert to list
-                    leftValue = OperandHelper.convertArrayToList(leftValue);
-                }
+
+                // if leftValue is array, convert to list
+                leftValue = OperandHelper.ifArrayConvertToList(leftValue);
                 if (leftValue instanceof List<?> leftElements) {
                     return leftElements.stream()
                             .anyMatch(leftElementValue ->

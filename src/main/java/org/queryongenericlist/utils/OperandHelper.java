@@ -49,17 +49,21 @@ public class OperandHelper {
             primitiveValue = GenericClassHelper.extractAllFields(element, ((ReferenceValue) leafValue).fieldNames());
         }
 
+        assert primitiveValue != null;
         return primitiveValue.value();
     }
 
     @NonNull
-    public static List<Object> convertArrayToList(@NonNull Object array) {
-        List<Object> list = new ArrayList<>();
-        int length = Array.getLength(array);
-        for (int i = 0; i < length; i++) {
-            Object item = Array.get(array, i);
-            list.add(item);
+    public static Object ifArrayConvertToList(@NonNull Object maybeArray) {
+        if (maybeArray.getClass().isArray()) {
+            List<Object> list = new ArrayList<>();
+            int length = Array.getLength(maybeArray);
+            for (int i = 0; i < length; i++) {
+                Object item = Array.get(maybeArray, i);
+                list.add(item);
+            }
+            maybeArray = list;
         }
-        return list;
+        return maybeArray;
     }
 }
