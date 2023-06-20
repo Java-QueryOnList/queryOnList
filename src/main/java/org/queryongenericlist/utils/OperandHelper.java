@@ -23,6 +23,7 @@ public class OperandHelper {
                 || value instanceof Float
                 || value instanceof Double
                 || value instanceof String
+                || value instanceof Enum
                 || value instanceof List<?>
                 || value.getClass().isArray();
     }

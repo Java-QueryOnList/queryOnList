@@ -16,12 +16,14 @@ public final class DeveloperTestCases {
     public static final PreparedCase<Developer> filterWithNullOnSubclass;
     public static final PreparedCase<Developer> orderByLanguagesWithNullOnList;
     public static final PreparedCase<Developer> orderByLanguagesThenProjects;
+    public static final PreparedCase<Developer> filterRoleEnum;
 
     static {
         filterWithNullAgeBetween30And40 = createCase01();
         filterWithNullOnSubclass = createCase02();
         orderByLanguagesWithNullOnList = createCase03();
         orderByLanguagesThenProjects = createCase04();
+        filterRoleEnum = createCase05();
     }
 
     private static PreparedCase<Developer> createCase01() {
@@ -132,5 +134,19 @@ public final class DeveloperTestCases {
 
         // Return Created PreparedCase Object
         return new PreparedCase<>(rawList01, query, expectedList, gettersForOrderBy);
+    }
+
+    private static PreparedCase<Developer> createCase05() {
+        // Create query
+        String query = "$filter=role eq 'SENIOR_DEVELOPER'";
+
+        // prepare the List which is expected after the query
+        List<Developer> expectedList = new ArrayList<>();
+        expectedList.add(rawList01.get(0));
+        expectedList.add(rawList01.get(6));
+        expectedList.add(rawList01.get(8));
+
+        // Return Created PreparedCase Object
+        return new PreparedCase<>(rawList01, query, expectedList);
     }
 }

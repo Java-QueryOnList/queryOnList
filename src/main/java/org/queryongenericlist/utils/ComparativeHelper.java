@@ -30,6 +30,9 @@ public class ComparativeHelper implements Comparator<Object> {
             final Double doubleValue1 = Double.parseDouble(value1.toString());
             final Double doubleValue2 = Double.parseDouble((String) value2);
             return doubleValue1.compareTo(doubleValue2);
+        } else if (value1 instanceof Enum<?> && value2 instanceof String stringValue2) {
+            String stringValue1 = value1.toString();
+            return stringValue1.compareTo(stringValue2);
         } else {
             throw new IllegalArgumentException("Unsupported value types");
         }

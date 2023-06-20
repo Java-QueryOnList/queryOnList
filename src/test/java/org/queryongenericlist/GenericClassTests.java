@@ -100,6 +100,7 @@ public class GenericClassTests {
                 .addCase(DeveloperTestCases.filterWithNullOnSubclass)
                 .addCase(DeveloperTestCases.orderByLanguagesWithNullOnList)
                 .addCase(DeveloperTestCases.orderByLanguagesThenProjects)
+                .addCase(DeveloperTestCases.filterRoleEnum)
                 .testCases();
     }
 }
