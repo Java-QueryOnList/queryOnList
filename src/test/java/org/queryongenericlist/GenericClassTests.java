@@ -98,7 +98,8 @@ public class GenericClassTests {
         developerCaseTester
                 .addCase(DeveloperTestCases.filterWithNullAgeBetween30And40)
                 .addCase(DeveloperTestCases.filterWithNullOnSubclass)
-                //.addCase(DeveloperTestCases.filterAndOrderByWithNullOnList)
+                .addCase(DeveloperTestCases.orderByLanguagesWithNullOnList)
+                .addCase(DeveloperTestCases.orderByLanguagesThenProjects)
                 .testCases();
     }
 }

@@ -8,7 +8,8 @@ public class GreaterOrEqual implements ComparativeOperator {
 
     @Override
     public boolean compare(@NonNull final Object value1, @NonNull final Object value2) {
-        return ComparativeHelper.relation(value1, value2) >= 0;
+        ComparativeHelper comparator = new ComparativeHelper();
+        return comparator.compare(value1, value2) >= 0;
     }
 
 }

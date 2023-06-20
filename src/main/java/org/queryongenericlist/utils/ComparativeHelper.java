@@ -2,10 +2,19 @@ package org.queryongenericlist.utils;
 
 import lombok.NonNull;
 
-public abstract class ComparativeHelper {
+import java.util.Comparator;
 
-    public static int relation(@NonNull final Object value1, @NonNull final Object value2) {
-        if (isNumeric(value1) && isNumeric(value2)) {
+public class ComparativeHelper implements Comparator<Object> {
+
+    @Override
+    public int compare(final Object value1, final Object value2) {
+        if (value1 == value2) {
+            return 0;
+        } else if (value1 == null) {
+            return 1;
+        } else if (value2 == null) {
+            return -1;
+        } else if (isNumeric(value1) && isNumeric(value2)) {
             final Double intValue1 = Double.parseDouble(value1.toString());
             final Double intValue2 = Double.parseDouble(value2.toString());
             return intValue1.compareTo(intValue2);

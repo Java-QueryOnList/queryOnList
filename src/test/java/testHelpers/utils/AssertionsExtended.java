@@ -44,11 +44,12 @@ public class AssertionsExtended extends Assertions {
             List<Function<T, ?>> gettersForOrderBy
     ) {
         // init variables
-        boolean testSucceeded = true;
+        boolean testSucceeded;
         boolean orderMatters = gettersForOrderBy.size() > 0;
 
         // Two sublists size should always be equal
-        assert (expectedSubLists.size() == queriedSubLists.size());
+        testSucceeded = expectedSubLists.size() == queriedSubLists.size();
+        if (!testSucceeded) return false;
 
         // check every sublist for same elements and same order according to getter
         for (int i = 0; i < expectedSubLists.size(); i++) {
@@ -72,23 +73,47 @@ public class AssertionsExtended extends Assertions {
             } else {
                 // first check for same elements
                 testSucceeded = hasSameListElements(expectedSubList, queriedSubList);
+                if (!testSucceeded) break;
             }
         }
 
         return testSucceeded;
     }
 
-    private static <T> List<List<T>> divideIntoSubListsByGetter(List<T> ParentList, Function<T, ?> getter) {
-        Map<Object, List<T>> map = new HashMap<>();
-        for (T element : ParentList) {
-            var key = getter.apply(element);
-            map.computeIfAbsent(key, k -> new ArrayList<>()).add(element);
-        }
-        return new ArrayList<>(map.values());
-    }
-
     private static <T> boolean hasSameListElements(List<T> expectedList, List<T> queriedList) {
         return expectedList.containsAll(queriedList) && queriedList.containsAll(expectedList);
+    }
+
+    /**
+     * Divides a given list into sublists based on the values obtained by applying a getter function to the elements.
+     *
+     * @param parentList the list to be divided into sublists
+     * @param getter     the function that extracts a value from an element
+     * @param <T>        the type of elements in the list
+     * @return a list of sublists, where elements with the same getter value and being next each other are grouped together
+     */
+    private static <T> List<List<T>> divideIntoSubListsByGetter(List<T> parentList, Function<T, ?> getter) {
+        // Create a new list to hold the sublists
+        List<List<T>> subLists = new ArrayList<>();
+
+        // Represents the current sublist being processed
+        List<T> currentSubList = null;
+
+        // Iterate over each element in the parentList
+        for (T element : parentList) {
+            // Check if we need to start a new sublist
+            if (currentSubList == null || (getter.apply(element) != (getter.apply(currentSubList.get(0))))) {
+                // Create a new sublist and add it to subLists
+                currentSubList = new ArrayList<>();
+                subLists.add(currentSubList);
+            }
+
+            // Add the current element to the currentSubList
+            currentSubList.add(element);
+        }
+
+        // Return the list of sublists
+        return subLists;
     }
 
 }
