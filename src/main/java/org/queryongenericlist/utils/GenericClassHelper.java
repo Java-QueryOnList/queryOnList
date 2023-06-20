@@ -1,7 +1,7 @@
 package org.queryongenericlist.utils;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.PrimitiveValue;
+import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.PrimitiveValue;
 
 import java.lang.reflect.Field;
 import java.util.List;

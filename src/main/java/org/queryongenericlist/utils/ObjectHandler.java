@@ -1,8 +1,8 @@
 package org.queryongenericlist.utils;
 
 import lombok.NonNull;
-import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.PrimitiveValue;
-import org.queryongenericlist.query.abstractSyntaxTree.queryNode.leafNode.subClasses.ReferenceValue;
+import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.PrimitiveValue;
+import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.ReferenceValue;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
