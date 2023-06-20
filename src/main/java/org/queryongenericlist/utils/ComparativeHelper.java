@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 public class ComparativeHelper implements Comparator<Object> {
 
+    @NonNull
     @Override
     public int compare(final Object value1, final Object value2) {
         if (value1 == value2) {

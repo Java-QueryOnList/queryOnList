@@ -6,8 +6,9 @@ import org.queryongenericlist.utils.ComparativeHelper;
 
 public class GreaterThan implements ComparativeOperator {
 
+    @NonNull
     @Override
-    public boolean compare(@NonNull final Object value1, @NonNull final Object value2) {
+    public boolean compare(final Object value1, @NonNull final Object value2) {
         ComparativeHelper comparator = new ComparativeHelper();
         return comparator.compare(value1, value2) > 0;
     }

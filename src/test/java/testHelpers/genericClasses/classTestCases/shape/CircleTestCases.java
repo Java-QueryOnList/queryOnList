@@ -61,7 +61,7 @@ public final class CircleTestCases {
 
     private static PreparedCase<Circle> createCase03() {
         // Create query
-        String query = "$filter=radius gt 5 or color eq 'Blue' and (radius le 5.00 or color eq 'Yellow')$orderBy=radius";
+        String query = "$filter=radius gt 5 or color eq 'Blue' and (radius le 5.00 or color eq 'Yellow')&$orderBy=radius";
 
         // prepare the List which is expected after the query
         List<Circle> expectedList = new ArrayList<>();
@@ -78,7 +78,7 @@ public final class CircleTestCases {
 
     private static PreparedCase<Circle> createCase04() {
         // Create query
-        String query = "$orderBy=radius$filter=radius gt 5 or color eq 'Blue' and (radius le 5.00 or color eq 'Yellow')";
+        String query = "$orderBy=radius&$filter=radius gt 5 or color eq 'Blue' and (radius le 5.00 or color eq 'Yellow')";
 
         // prepare the List which is expected after the query
         List<Circle> expectedList = new ArrayList<>();

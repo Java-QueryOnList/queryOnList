@@ -25,12 +25,12 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
      * Regex explanation example filter "\\$filter=(.*?)(?:\\$|$)":
      * \\$filter= -> Matches the literal string "$filter=".
      * (.*?) -> Matches any characters (non-greedy) and captures them in a group.
-     * (?:\\$|$) -> Matches either the literal character "$" or the end of the string, but doesn't capture it.
+     * (?:\$|&|$) -> Matches either the literal character "$" or "&" or the end of the string, but doesn't capture these.
      */
-    private static final String FILTER_PATTERN = "\\$filter=(.*?)(?:\\$|$)";
-    private static final String SORTING_PATTERN = "\\$orderBy=(.*?)(?:\\$|$)";
-    private static final String TOP_PATTERN = "\\$top=(.*?)(?:\\$|$)";
-    private static final String SKIP_PATTERN = "\\$skip=(.*?)(?:\\$|$)";
+    private static final String FILTER_PATTERN = "\\$filter=(.*?)(?:\\$|&|$)";
+    private static final String SORTING_PATTERN = "\\$orderBy=(.*?)(?:\\$|&|$)";
+    private static final String TOP_PATTERN = "\\$top=(.*?)(?:\\$|&|$)";
+    private static final String SKIP_PATTERN = "\\$skip=(.*?)(?:\\$|&|$)";
 
     @NonNull
     private final String query; // e.g. "$filter=name eq 'david'&$orderBy=hireDate"

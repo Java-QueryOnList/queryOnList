@@ -8,6 +8,7 @@ public record ReferenceValue(String[] fieldNames) implements LeafNode {
         this.fieldNames = fieldNames;
     }
 
+    @NonNull
     public static ReferenceValue fromSubstring(String subString) {
         String[] fieldNames = subString.split("\\.");
         return new ReferenceValue(fieldNames);

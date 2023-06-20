@@ -11,35 +11,12 @@ import java.util.List;
 public class ObjectHandler {
 
     /**
-     * Check if the given object is 'primitive' and suitable for further operations
-     *
-     * @param value the object which is getting checked
-     * @return whether the given object is primitive or not
-     */
-    public static boolean checkIfPrimitive(final Object value) {
-        return value == null
-                || value instanceof Integer
-                || value instanceof Boolean
-                || value instanceof Float
-                || value instanceof Double
-                || value instanceof String
-                || value instanceof Enum
-                || value instanceof List<?>
-                || value.getClass().isArray();
-    }
-
-    @NonNull
-    public static IllegalArgumentException throwUnsupportedValueTypeException() {
-        return new IllegalArgumentException("Invalid value type. Supported types are int, boolean, float, double, String, List and Array.");
-    }
-
-    /**
      * returns the primitive value of a given object from the leafValue object
      *
      * @param leafValue the value of the last node of an abstract syntax tree
      * @param element   an object of the class of the element whose field has to be extracted
      * @param <T>       class type of the object which is going to be resolved
-     * @return return the value of the given object which is primitive which we checked via {@link ObjectHandler#checkIfPrimitive(Object)}
+     * @return return the value of the given object which is primitive which we checked via {@link Primitives#isPrimitive(Object)}
      */
     public static <T> Object resolveObject(@NonNull final Object leafValue, @NonNull T element) {
         PrimitiveValue primitiveValue = null;
