@@ -2,6 +2,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/src/test/java/cust/
+/src/test/resources/maintenanceDocuments.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -41,3 +43,5 @@ build/
 /.idea/encodings.xml
 /.idea/misc.xml
 /.idea/uiDesigner.xml
+
+
