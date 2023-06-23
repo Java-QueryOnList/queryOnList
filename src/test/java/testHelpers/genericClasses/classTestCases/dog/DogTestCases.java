@@ -92,7 +92,7 @@ public final class DogTestCases {
 
     private static PreparedCase<Dog> createCase04() {
         // Create query
-        String query = "$top=10$skip=10";
+        String query = "$top=10&$skip=10";
 
         // prepare the List which is expected after the query
         int top = 10;

@@ -1,7 +1,7 @@
 package testHelpers.genericClasses.classTestCases;
 
 import lombok.Getter;
-import org.queryongenericlist.query.queryExecutor.implementation.SuperQueryExecutor;
+import org.queryongenericlist.query.queryexecutor.implementation.SuperQueryExecutor;
 
 import java.util.Collections;
 import java.util.List;

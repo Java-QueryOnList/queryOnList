@@ -101,7 +101,7 @@ public final class ShapeTestCases {
 
     private static PreparedCase<Shape> createCase03() {
         // Create query
-        String query = "$filter=$orderBy=";
+        String query = "$filter=&$orderBy=";
 
         // prepare the List which is expected after the query
         List<Shape> expectedList = rawList01;
