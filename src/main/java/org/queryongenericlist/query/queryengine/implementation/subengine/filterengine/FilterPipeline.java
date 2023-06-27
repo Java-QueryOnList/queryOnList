@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.QueryNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.FilterNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.comparativeoperator.ComparativeOperator;
+import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.comparativeoperator.subclasses.NotEqual;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.logicaloperator.LogicalOperator;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.logicaloperator.subclasses.LogicalAnd;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.logicaloperator.subclasses.LogicalOr;
@@ -12,6 +13,7 @@ import org.queryongenericlist.utils.ObjectHandler;
 
 import java.util.Collection;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class FilterPipeline<T> {
 
@@ -34,19 +36,16 @@ public class FilterPipeline<T> {
                 if (leftValue == null) return false;
                 final Object rightValue = ObjectHandler.resolveObject((givenNode.getTailRight().getHead()), element);
 
-
                 // if leftValue is array, convert to list
                 leftValue = ObjectHandler.ifArrayConvertToList(leftValue);
                 if (leftValue instanceof Collection<?> leftElements) {
-                    return leftElements.stream()
-                            .anyMatch(leftElementValue ->
-                                    ((ComparativeOperator) head).compare(leftElementValue, rightValue)
-                            );
+                    Stream<?> elementsStream = leftElements.stream();
+                    Predicate<? super Object> predicate = leftElementValue -> ((ComparativeOperator) head).compare(leftElementValue, rightValue);
+                    return (head instanceof NotEqual) ? elementsStream.allMatch(predicate) : elementsStream.anyMatch(predicate);
                 } else {
                     // if condition of the comparison is met
                     conditionMet = ((ComparativeOperator) head).compare(leftValue, rightValue);
                 }
-
 
                 return conditionMet;
             });

@@ -2,7 +2,9 @@ package org.queryongenericlist.utils;
 
 import lombok.NonNull;
 
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class ComparativeHelper implements Comparator<Object> {
 
@@ -52,5 +54,13 @@ public class ComparativeHelper implements Comparator<Object> {
         }
 
         return false;
+    }
+
+    public <T> boolean anyOrAllMatch(Collection<T> collection, Predicate<T> predicate, boolean allMatch) {
+        if (allMatch) {
+            return collection.stream().allMatch(predicate);
+        } else {
+            return collection.stream().anyMatch(predicate);
+        }
     }
 }
