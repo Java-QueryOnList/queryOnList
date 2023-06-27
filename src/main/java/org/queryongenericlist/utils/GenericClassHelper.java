@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.PrimitiveValue;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class GenericClassHelper {
         // Traverse through the nested fields e.g. ["car", "engine", "horsepower"] for obj.element.engine.horsepower
         for (String currentFieldName : fieldNames) {
             currentObject = ObjectHandler.ifArrayConvertToList(currentObject);
-            if (currentObject instanceof List<?> currentList) {
+            if (currentObject instanceof Collection<?> currentList) {
                 currentObject = extractForAllElements(currentFieldName, currentList);
             } else {
                 currentObject = extractForOneElement(currentObject, currentFieldName);
@@ -38,7 +39,7 @@ public class GenericClassHelper {
         return new PrimitiveValue(currentObject);
     }
 
-    private static List<Object> extractForAllElements(String currentFieldName, List<?> currentList) {
+    private static List<Object> extractForAllElements(String currentFieldName, Collection<?> currentList) {
         return currentList.stream()
                 .map(elementOfCurrentList -> extractForOneElement(elementOfCurrentList, currentFieldName))
                 .collect(Collectors.toList());

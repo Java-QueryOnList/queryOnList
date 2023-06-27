@@ -31,16 +31,16 @@ public class ObjectHandler {
     }
 
     @NonNull
-    public static Object ifArrayConvertToList(@NonNull Object maybeArray) {
-        if (maybeArray.getClass().isArray()) {
+    public static Object ifArrayConvertToList(@NonNull Object maybeArrayOrSet) {
+        if (maybeArrayOrSet.getClass().isArray()) {
             List<Object> list = new ArrayList<>();
-            int length = Array.getLength(maybeArray);
+            int length = Array.getLength(maybeArrayOrSet);
             for (int i = 0; i < length; i++) {
-                Object item = Array.get(maybeArray, i);
+                Object item = Array.get(maybeArrayOrSet, i);
                 list.add(item);
             }
-            maybeArray = list;
+            maybeArrayOrSet = list;
         }
-        return maybeArray;
+        return maybeArrayOrSet;
     }
 }

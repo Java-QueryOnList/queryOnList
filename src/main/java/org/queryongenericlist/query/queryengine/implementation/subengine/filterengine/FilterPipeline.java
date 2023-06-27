@@ -10,7 +10,7 @@ import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filter
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.negativeoperator.NegativeOperator;
 import org.queryongenericlist.utils.ObjectHandler;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.function.Predicate;
 
 public class FilterPipeline<T> {
@@ -37,7 +37,7 @@ public class FilterPipeline<T> {
 
                 // if leftValue is array, convert to list
                 leftValue = ObjectHandler.ifArrayConvertToList(leftValue);
-                if (leftValue instanceof List<?> leftElements) {
+                if (leftValue instanceof Collection<?> leftElements) {
                     return leftElements.stream()
                             .anyMatch(leftElementValue ->
                                     ((ComparativeOperator) head).compare(leftElementValue, rightValue)

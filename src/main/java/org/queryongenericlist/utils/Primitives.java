@@ -2,9 +2,7 @@ package org.queryongenericlist.utils;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -19,7 +17,7 @@ public class Primitives {
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Double", value -> value instanceof Double));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("String", value -> value instanceof String));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Enum", value -> value instanceof Enum));
-        SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("List", value -> value instanceof List));
+        SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Collection", value -> value instanceof Collection));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Array", value -> value.getClass().isArray()));
     }
 

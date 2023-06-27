@@ -5,6 +5,7 @@ import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.sortin
 import org.queryongenericlist.utils.ComparativeHelper;
 import org.queryongenericlist.utils.ObjectHandler;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -56,7 +57,7 @@ public class SortingPipeline<T> {
         if (resolvedObject != null) {
             // if is array of any type, convert to list for next transformation
             resolvedObject = ObjectHandler.ifArrayConvertToList(resolvedObject);
-            if (resolvedObject instanceof List<?>) {
+            if (resolvedObject instanceof Collection<?>) {
                 // if is list get max or min according to requested order
                 List<Comparable<? super Object>> listRO = (List<Comparable<? super Object>>) resolvedObject;
                 // According to the sorting order the value might change

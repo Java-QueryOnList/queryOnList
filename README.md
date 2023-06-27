@@ -23,22 +23,22 @@ With the current implementation `QueryParserImpl` and `QueryEngineImpl` the Quer
 
 #### Examples
 ```
-GET https://api.stihl.cloud/v1.0/people?$orderBy=name
+GET https://api.cust.cloud/v1.0/people?$orderBy=name
 ```
 Will return all people sorted by name in ascending order.
 
 ```
-GET https://api.stihl.cloud/v1.0/people?$orderBy=name desc
+GET https://api.cust.cloud/v1.0/people?$orderBy=name desc
 ```
 Will return all people sorted by name in descending order.
 
 Sub-sorts can be specified by a comma-separated list of property names with OPTIONAL direction qualifier.
 ```
-GET https://api.stihl.cloud/v1.0/people?$orderBy=name desc,hireDate
+GET https://api.cust.cloud/v1.0/people?$orderBy=name desc,hireDate
 ```
 Will return all people sorted by name in descending order and a secondary sort order of hireDate in ascending order. Sorting MUST compose with filtering such that:
 ```
-GET https://api.stihl.cloud/v1.0/people?$filter=name eq 'david'&$orderBy=hireDate
+GET https://api.cust.cloud/v1.0/people?$filter=name eq 'david'&$orderBy=hireDate
 ```
 Will return all people whose name is David sorted in ascending order by hireDate.
 
@@ -52,7 +52,7 @@ Will return all people whose name is David sorted in ascending order by hireDate
 #### Examples
 
 ```
-GET https://api.stihl.cloud/v1.0/products?$filter=price lt 10.00
+GET https://api.cust.cloud/v1.0/products?$filter=price lt 10.00
 ```
 Will return all Products whose Price is less than $10.00
 
@@ -91,6 +91,6 @@ Ranking of precedence (descending):
 #### Examples
 
 ```
-GET https://api.stihl.cloud/v1.0/products?TODO
+GET https://api.cust.cloud/v1.0/products?TODO
 ```
 Will return TODO
