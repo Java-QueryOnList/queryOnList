@@ -1,6 +1,7 @@
 package testHelpers.utils;
 
 import org.junit.jupiter.api.Assertions;
+import org.queryongenericlist.utils.ComparativeHelper;
 
 import java.util.*;
 import java.util.function.Function;
@@ -101,8 +102,9 @@ public class AssertionsExtended extends Assertions {
 
         // Iterate over each element in the parentList
         for (T element : parentList) {
+
             // Check if we need to start a new sublist
-            if (currentSubList == null || (getter.apply(element) != (getter.apply(currentSubList.get(0))))) {
+            if (currentSubList == null || elementWithNewValue(getter, currentSubList, element)) {
                 // Create a new sublist and add it to subLists
                 currentSubList = new ArrayList<>();
                 subLists.add(currentSubList);
@@ -114,6 +116,11 @@ public class AssertionsExtended extends Assertions {
 
         // Return the list of sublists
         return subLists;
+    }
+
+    private static <T> boolean elementWithNewValue(Function<T, ?> getter, List<T> currentSubList, T element) {
+        ComparativeHelper comparativeHelper = new ComparativeHelper();
+        return comparativeHelper.compare(getter.apply(element), getter.apply(currentSubList.get(0))) != 0;
     }
 
 }

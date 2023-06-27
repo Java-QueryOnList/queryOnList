@@ -36,6 +36,8 @@ public class ComparativeHelper implements Comparator<Object> {
         } else if (value1 instanceof Enum<?> && value2 instanceof String stringValue2) {
             String stringValue1 = value1.toString();
             return stringValue1.compareTo(stringValue2);
+        } else if (!value1.equals(value2)){
+            return -1000; // just a distinct number to distinguish from other cases
         } else {
             throw new IllegalArgumentException("Unsupported value types");
         }
