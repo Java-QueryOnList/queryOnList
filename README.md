@@ -16,7 +16,7 @@ import org.queryongenericlist.query.queryexecutor.implementation.SuperQueryExecu
 public class Example {
   public static void main(String[] args) {
     SuperQueryExecutor superQueryExecutor = new SuperQueryExecutor();
-    String query = "$filter=name eq 'david'&$orderBy=hireDate";
+    String query = "$filter=name eq 'David'&$orderBy=hireDate";
     List<Person> rawList = List.of(new Person("David", 2010), new Person("John", 2015), new Person("David", 2009));
     List<Person> queriedList = superQueryExecutor.execute(query, rawList);
   }
@@ -25,60 +25,19 @@ public class Example {
 
 You can also get the same query from a full url:
 ```
-String query = superQueryExecutor.getQueryFromUrl("https://api.cust.cloud/v1.0/people?$filter=name eq 'david'&$orderBy=hireDate");
+String query = superQueryExecutor.getQueryFromUrl("https://api.cust.cloud/v1.0/people?$filter=name eq 'David'&$orderBy=hireDate");
 ```
 
 ## Features
 
-- Parses queries of type String (e.g. `"$filter=name eq 'david'&$orderBy=hireDate"`), you can also get a query from a
+- Parses queries of type String (e.g. `"$filter=name eq 'David'&$orderBy=hireDate"`), you can also get a query from a
   full url
 - Supports querying lists of any type (`List<T>`)
-- Custom queries can be implemented by extending the `QueryEngine` and/or `QueryParser` class
+- Custom queries possible by implementing [QueryExecutor](src/main/java/org/queryongenericlist/query/queryexecutor/QueryExecutor.java), [QueryEngine](src/main/java/org/queryongenericlist/query/queryengine/QueryEngine.java) and/or [QueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/QueryParser.java)
 
 ## Implemented Queries
 
-With the current implementation [SuperQueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/implementation/SuperQueryParser.java) and [SuperQueryEngine](src/main/java/org/queryongenericlist/query/queryengine/implementation/SuperQueryEngine.java) the Java-QueryOnList supports the following queries:
-
-### Sorting
-
-#### Definition
-
-- Determined by the value of the `$orderBy` query parameter.
-- Contains a comma-separated list of expressions used to sort the items
-- A special case of such an expression is a property path terminating on a primitive property
-- NULL values are sorted as "less than" non-NULL values.
-- MAY include the suffix "asc" for ascending (default) or "desc" for descending (separated from the property name by one
-  or more spaces)
-- items with the same value for the first expression are sorted by the result value of the second expression, and so on
-
-#### Examples
-
-```
-String query = "$orderBy=name"
-```
-
-Will return all people sorted by name in ascending order.
-
-```
-String query = "$orderBy=name desc"
-```
-
-Will return all people sorted by name in descending order.
-
-Sub-sorts can be specified by a comma-separated list of property names with OPTIONAL direction qualifier.
-
-```
-String query = "$orderBy=name desc,hireDate"
-```
-
-Will return all people sorted by name in descending order and a secondary sort order of hireDate in ascending order.
-Sorting MUST compose with filtering such that:
-
-```
-String query = "$filter=name eq 'david'&$orderBy=hireDate"
-```
-
-Will return all people whose name is David sorted in ascending order by hireDate.
+The Java-QueryOnList library currently supports the following queries when using the default implementations of [SuperQueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/implementation/SuperQueryParser.java) and [SuperQueryEngine](src/main/java/org/queryongenericlist/query/queryengine/implementation/SuperQueryEngine.java):
 
 ### Filtering
 
@@ -134,6 +93,47 @@ Ranking of precedence (descending):
 2. **Conditional AND:** and
 1. **Conditional OR:** or
 
+### Sorting
+
+#### Definition
+
+- Determined by the value of the `$orderBy` query parameter.
+- Contains a comma-separated list of expressions used to sort the items
+- A special case of such an expression is a property path terminating on a primitive property
+- NULL values are sorted as "less than" non-NULL values.
+- MAY include the suffix "asc" for ascending (default) or "desc" for descending (separated from the property name by one
+  or more spaces)
+- items with the same value for the first expression are sorted by the result value of the second expression, and so on
+
+#### Examples
+
+```
+String query = "$orderBy=name"
+```
+
+Will return all people sorted by name in ascending order.
+
+```
+String query = "$orderBy=name desc"
+```
+
+Will return all people sorted by name in descending order.
+
+Sub-sorts can be specified by a comma-separated list of property names with OPTIONAL direction qualifier.
+
+```
+String query = "$orderBy=name desc,hireDate"
+```
+
+Will return all people sorted by name in descending order and a secondary sort order of hireDate in ascending order.
+Sorting MUST compose with filtering such that:
+
+```
+String query = "$filter=name eq 'David'&$orderBy=hireDate"
+```
+
+Will return all people whose name is David sorted in ascending order by hireDate.
+
 ### Pagination
 
 #### Definition
@@ -168,7 +168,7 @@ Will return the 5 Products starting from the 10th Product.
 
 ### Building Custom Queries
 
-The Java-QueryOnList supports extending the [QueryExecutor](src/main/java/org/queryongenericlist/query/queryexecutor/QueryExecutor.java), the [QueryEngine](src/main/java/org/queryongenericlist/query/queryengine/QueryEngine.java) and/or the [QueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/QueryParser.java) interfaces to support custom queries. This can be useful when you need to support different or more complex scenarios that aren't covered by the built-in functionality.
+The Java-QueryOnList supports custom implementations of [QueryExecutor](src/main/java/org/queryongenericlist/query/queryexecutor/QueryExecutor.java), [QueryEngine](src/main/java/org/queryongenericlist/query/queryengine/QueryEngine.java) and/or [QueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/QueryParser.java) to support custom queries. This can be useful when you need to support different or more complex scenarios that aren't covered by the built-in functionality.
 
 ## Testing
 
