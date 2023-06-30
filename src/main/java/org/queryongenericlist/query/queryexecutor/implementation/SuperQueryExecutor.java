@@ -5,6 +5,7 @@ import org.queryongenericlist.query.queryengine.implementation.SuperQueryEngine;
 import org.queryongenericlist.query.queryexecutor.QueryExecutor;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.SuperQueryNode;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.SuperQueryParser;
+import org.queryongenericlist.utils.StringParser;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,5 +39,15 @@ public class SuperQueryExecutor implements QueryExecutor {
 
         return queryResult;
     }
+
+    /**
+     * Get query from full url
+     * @param fullURL e.g.: "https://www.example.com/?$filter=name eq 'david'&$orderBy=hireDate" to get "$filter=name eq 'david'&$orderBy=hireDate"
+     * @return query string
+     */
+    public String getQueryFromURL(@NonNull final String fullURL) {
+        return StringParser.getFirst(fullURL, "\\?(.*)");
+    }
+
 
 }

@@ -66,6 +66,7 @@ public class GenericClassTests {
                 .addCase(CircleTestCases.orderByRadius)
                 .addCase(CircleTestCases.filterAndOrderByComplexQuery)
                 .addCase(CircleTestCases.orderByAndFilterComplexQuery)
+                .addCase(CircleTestCases.filterAndOrderByComplexFullURL)
                 .testCases();
     }
 
