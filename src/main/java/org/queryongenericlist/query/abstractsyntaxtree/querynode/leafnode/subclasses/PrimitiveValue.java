@@ -1,6 +1,6 @@
 package org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses;
 
-import org.queryongenericlist.exceptions.abstractsyntaxtree.InvalidPrimitiveValueException;
+import org.queryongenericlist.exceptions.query.abstractsyntaxtree.InvalidPrimitiveValueException;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.LeafNode;
 import org.queryongenericlist.utils.Primitives;
 

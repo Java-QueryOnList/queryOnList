@@ -1,6 +1,7 @@
 package org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser;
 
 import lombok.NonNull;
+import org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.implementation.subparser.sortingparser.SortingParserException;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.ReferenceValue;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.sortingnode.SortingNode;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.QueryParser;
@@ -26,28 +27,32 @@ public class SortingParser implements QueryParser<SortingNode> {
 
     @Override
     public @NonNull SortingNode parse() {
-        SortingNode resultNode = new SortingNode();
-        while(index < splitQuery.size()) {
-            String subString = splitQuery.get(index);
+        try {
+            SortingNode resultNode = new SortingNode();
+            while(index < splitQuery.size()) {
+                String subString = splitQuery.get(index);
 
-            switch (subString) {
-                case "asc" -> resultNode.setAscending(true);
-                case "desc" -> resultNode.setAscending(false);
-                case "," -> {
-                    index++;
-                    SortingParser subParser = new SortingParser(splitQuery.subList(index, splitQuery.size()));
-                    resultNode.setNextSort(subParser.parse());
-                    index += subParser.index;
+                switch (subString) {
+                    case "asc" -> resultNode.setAscending(true);
+                    case "desc" -> resultNode.setAscending(false);
+                    case "," -> {
+                        index++;
+                        SortingParser subParser = new SortingParser(splitQuery.subList(index, splitQuery.size()));
+                        resultNode.setNextSort(subParser.parse());
+                        index += subParser.index;
+                    }
+                    default -> {
+                        // if substring is field
+                        final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
+                        resultNode.setHead(referenceValue);
+                    }
                 }
-                default -> {
-                    // if substring is field
-                    final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
-                    resultNode.setHead(referenceValue);
-                }
+
+                index++;
             }
-
-            index++;
+            return resultNode;
+        } catch (SortingParserException e) {
+            throw new SortingParserException("Error parsing sorting token at index " + index + ": " + splitQuery.get(index) + " of " + String.join(", ", splitQuery), e);
         }
-        return resultNode;
     }
 }

@@ -1,4 +1,4 @@
-package org.queryongenericlist.exceptions.abstractsyntaxtree;
+package org.queryongenericlist.exceptions.query.abstractsyntaxtree;
 
 import java.util.List;
 

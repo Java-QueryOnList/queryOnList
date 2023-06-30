@@ -3,6 +3,7 @@ package org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementati
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.implementation.SuperQueryParserException;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.SuperQueryNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.FilterNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.paginationnode.PaginationNode;
@@ -38,33 +39,37 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
 
     @NonNull
     public SuperQueryNode parse() {
-        // init SuperQueryNode via Builder
-        SuperQueryNode.SuperQueryNodeBuilder nodeBuilder = SuperQueryNode.builder();
+        try {
+            // init SuperQueryNode via Builder
+            SuperQueryNode.SuperQueryNodeBuilder nodeBuilder = SuperQueryNode.builder();
 
-        // filter query
-        final String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
-        if (!filterQuery.isEmpty()) {
-            final FilterNode filterNode = new FilterParser(filterQuery).parse();
-            nodeBuilder.filterNode(filterNode);
+            // filter query
+            final String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
+            if (!filterQuery.isEmpty()) {
+                final FilterNode filterNode = new FilterParser(filterQuery).parse();
+                nodeBuilder.filterNode(filterNode);
+            }
+
+            // sorting query
+            final String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
+            if (!sortingQuery.isEmpty()) {
+                final SortingNode sortingNode = new SortingParser(sortingQuery).parse();
+                nodeBuilder.sortingNode(sortingNode);
+            }
+
+            // pagination query
+            final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
+            final String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
+            if (!paginationTopQuery.isEmpty() || !paginationSkipQuery.isEmpty()) {
+                final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
+                nodeBuilder.paginationNode(paginationNode);
+            }
+
+
+            // build and return SuperQueryNode
+            return nodeBuilder.build();
+        } catch (SuperQueryParserException e) {
+            throw new SuperQueryParserException("Failed to parse query with SuperQueryParser: " + query, e);
         }
-
-        // sorting query
-        final String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
-        if (!sortingQuery.isEmpty()) {
-            final SortingNode sortingNode = new SortingParser(sortingQuery).parse();
-            nodeBuilder.sortingNode(sortingNode);
-        }
-
-        // pagination query
-        final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
-        final String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
-        if (!paginationTopQuery.isEmpty() || !paginationSkipQuery.isEmpty()) {
-            final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
-            nodeBuilder.paginationNode(paginationNode);
-        }
-
-
-        // build and return SuperQueryNode
-        return nodeBuilder.build();
     }
 }

@@ -1,6 +1,8 @@
 package org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser;
 
 import lombok.NonNull;
+import org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.implementation.subparser.filterparser.FilterParserException;
+import org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.implementation.subparser.filterparser.filtersubparser.*;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.QueryNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.FilterNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.PrimitiveValue;
@@ -46,78 +48,121 @@ public class FilterParser implements QueryParser<FilterNode> {
     }
 
     public static boolean isString(@NonNull final String input) {
-        if (input.length() > 0) {
-            final char firstChar = input.charAt(0);
-            final char lastChar = input.charAt(input.length() - 1);
-            return firstChar == '\'' && lastChar == '\'';
+        try {
+            if (input.length() > 0) {
+                final char firstChar = input.charAt(0);
+                final char lastChar = input.charAt(input.length() - 1);
+                return firstChar == '\'' && lastChar == '\'';
+            }
+            return false;
+        } catch (InvalidStringInputException e) {
+            return false;
         }
-        return false;
     }
 
     @Override
     public @NonNull FilterNode parse() {
-        final Stack<FilterNode> operatorStack = new Stack<>();
-        final Stack<FilterNode> operandStack = new Stack<>();
+        try {
+            final Stack<FilterNode> operatorStack = new Stack<>();
+            final Stack<FilterNode> operandStack = new Stack<>();
 
-        while (index < splitQuery.size() && index < currentBoundary) {
-            final String subString = splitQuery.get(index);
-            if (Objects.equals(subString, "(")) {
-                index++;
-                final FilterParser subParser = new FilterParser(splitQuery.subList(index, splitQuery.size()));
-                final FilterNode subTree = subParser.parse();
-                operandStack.push(subTree);
-                index += subParser.index;
-            } else if (Objects.equals(subString, ")")) {
-                break;
-            } else if (Objects.equals(subString, "not")) {
-                final FilterNode negationNode = new FilterNode(new NegativeOperator());
-                final int nextIndex = index + 1;
-                final FilterParser subParser = new FilterParser(splitQuery.subList(nextIndex, splitQuery.size()));
-                if (!splitQuery.get(nextIndex).equals("(")) {
-                    // if next token after "not" is not a bracket then limit the boundary of subParser to only 3 more
-                    subParser.currentBoundary = nextIndex + 3;
+            while (index < splitQuery.size() && index < currentBoundary) {
+                final String subString = splitQuery.get(index);
+                if (Objects.equals(subString, "(")) {
+                    try {
+
+                        index++;
+                        final FilterParser subParser = new FilterParser(splitQuery.subList(index, splitQuery.size()));
+                        final FilterNode subTree = subParser.parse();
+                        operandStack.push(subTree);
+                        index += subParser.index;
+                    } catch (OpenBracketParserException e) {
+                        throw new OpenBracketParserException("Exception when parsing open bracket '('. ", e);
+                    }
+                } else if (Objects.equals(subString, ")")) {
+                    break;
+                } else if (Objects.equals(subString, "not")) {
+                    try {
+
+                        final FilterNode negationNode = new FilterNode(new NegativeOperator());
+                        final int nextIndex = index + 1;
+                        final FilterParser subParser = new FilterParser(splitQuery.subList(nextIndex, splitQuery.size()));
+                        if (!splitQuery.get(nextIndex).equals("(")) {
+                            // if next token after "not" is not a bracket then limit the boundary of subParser to only 3 more
+                            subParser.currentBoundary = nextIndex + 3;
+                        }
+                        final FilterNode subTree = subParser.parse();
+                        negationNode.setTailRight(subTree);
+                        operandStack.push(negationNode);
+                        index += subParser.index;
+                    } catch (NotParserException e) {
+                        throw new NotParserException("Exception when parsing 'not'. ", e);
+                    }
+                } else if (isOperator(subString)) {
+                    try {
+                        final FilterOperator operator = operatorStringToObject(subString);
+                        final FilterNode operatorNode = new FilterNode(operator);
+                        // if last operator on stack has higher or equal precedence than current operator
+                        while (!operatorStack.isEmpty() && precedence(operatorObjectToString(operatorStack.peek().getHead())) >= precedence(operatorObjectToString(operatorNode.getHead()))) {
+                            // apply operand
+                            final FilterNode poppedOperatorNode = getNodeFromStacks(operatorStack, operandStack);
+                            operandStack.push(poppedOperatorNode);
+                        }
+                        operatorStack.push(operatorNode);
+                    } catch (OperatorParserException e) {
+                        throw new OperatorParserException("Exception when parsing operator. ", e);
+                    }
+                } else if (isNumber(subString)) {
+                    try {
+                        final Double number = Double.parseDouble(subString);
+                        final PrimitiveValue numberOperand = new PrimitiveValue(number);
+                        operandStack.push(new FilterNode(numberOperand));
+                    } catch (NumberParserException e) {
+                        throw new NumberParserException("Exception when parsing number. ", e);
+                    }
+                } else if (isString(subString)) {
+                    try {
+                        final String strWithoutQuotes = subString.substring(1, subString.length() - 1);
+                        final PrimitiveValue stringOperand = new PrimitiveValue(strWithoutQuotes);
+                        operandStack.push(new FilterNode(stringOperand));
+                    } catch (StringParserException e) {
+                        throw new StringParserException("Exception when parsing string. ", e);
+                    }
+                } else if (subString.equals("true") || subString.equals("false")) {
+                    try {
+                        // if substring is boolean
+                        final PrimitiveValue booleanOperand = new PrimitiveValue(subString.equals("true"));
+                        operandStack.push(new FilterNode(booleanOperand));
+                    } catch (BooleanParserException e) {
+                        throw new BooleanParserException("Exception when parsing boolean. ", e);
+                    }
+                } else {
+                    try {
+                        // if substring is field
+                        final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
+                        operandStack.push(new FilterNode(referenceValue));
+                    } catch (FieldParserException e) {
+                        throw new FieldParserException("Exception when parsing field. ", e);
+                    }
                 }
-                final FilterNode subTree = subParser.parse();
-                negationNode.setTailRight(subTree);
-                operandStack.push(negationNode);
-                index += subParser.index;
-            } else if (isOperator(subString)) {
-                final FilterOperator operator = operatorStringToObject(subString);
-                final FilterNode operatorNode = new FilterNode(operator);
-                // if last operator on stack has higher or equal precedence than current operator
-                while (!operatorStack.isEmpty() && precedence(operatorObjectToString(operatorStack.peek().getHead())) >= precedence(operatorObjectToString(operatorNode.getHead()))) {
-                    // apply operand
+
+                index++;
+            }
+
+            try {
+                // pop all remaining operators on operandStack
+                while (!operatorStack.isEmpty()) {
                     final FilterNode poppedOperatorNode = getNodeFromStacks(operatorStack, operandStack);
                     operandStack.push(poppedOperatorNode);
                 }
-                operatorStack.push(operatorNode);
-            } else if (isNumber(subString)) {
-                final Double number = Double.parseDouble(subString);
-                final PrimitiveValue numberOperand = new PrimitiveValue(number);
-                operandStack.push(new FilterNode(numberOperand));
-            } else if (isString(subString)) {
-                final String strWithoutQuotes = subString.substring(1, subString.length() - 1);
-                final PrimitiveValue stringOperand = new PrimitiveValue(strWithoutQuotes);
-                operandStack.push(new FilterNode(stringOperand));
-            } else if (subString.equals("true") || subString.equals("false")){
-                // if substring is boolean
-                final PrimitiveValue booleanOperand = new PrimitiveValue(subString.equals("true"));
-                operandStack.push(new FilterNode(booleanOperand));
-            } else {
-                // if substring is field
-                final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
-                operandStack.push(new FilterNode(referenceValue));
+            } catch (PopOperatorsStackException e) {
+                throw new PopOperatorsStackException("Exception when popping operators stack. ", e);
             }
 
-            index++;
+            return operandStack.pop();
+        } catch (FilterParserException e) {
+            throw new FilterParserException("Error parsing filter token at index " + index + ": " + splitQuery.get(index) + " of " + String.join(", ", splitQuery), e);
         }
-
-        while (!operatorStack.isEmpty()) {
-            final FilterNode poppedOperatorNode = getNodeFromStacks(operatorStack, operandStack);
-            operandStack.push(poppedOperatorNode);
-        }
-
-        return operandStack.pop();
     }
 
     private static FilterNode getNodeFromStacks(Stack<FilterNode> operatorStack, Stack<FilterNode> operandStack) {
