@@ -1,13 +1,13 @@
 # Java-QueryOnList
 
-The Java-QueryOnList is a Java Library that provides functionality for parsing queries and retrieving queried lists based on
+The Java-QueryOnList library is a Java Library that provides functionality for parsing queries and retrieving queried lists based on
 the input query of type String.
 
 ## Usage
 
 ### Example
 
-To use the Java-QueryOnList library you need to create a `QueryExecutor` and call the `execute` method with the query and the class.
+To use the Java-QueryOnList library you need to create a [SuperQueryExecutor](src/main/java/org/queryongenericlist/query/queryexecutor/implementation/SuperQueryExecutor.java) (or your custom implementation of `QueryExecutor`) and call the `execute` method with the query and the class.
 
 For example this will return a list of people called David and sort them by hireDate in ascending order:
 ```java
@@ -37,7 +37,7 @@ String query = superQueryExecutor.getQueryFromUrl("https://api.cust.cloud/v1.0/p
 
 ## Implemented Queries
 
-With the current implementation `QueryParserImpl` and `QueryEngineImpl` the Query Engine supports the following queries:
+With the current implementation [SuperQueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/implementation/SuperQueryParser.java) and [SuperQueryEngine](src/main/java/org/queryongenericlist/query/queryengine/implementation/SuperQueryEngine.java) the Java-QueryOnList supports the following queries:
 
 ### Sorting
 
@@ -54,13 +54,13 @@ With the current implementation `QueryParserImpl` and `QueryEngineImpl` the Quer
 #### Examples
 
 ```
-String query = "https://api.cust.cloud/v1.0/people?$orderBy=name"
+String query = "$orderBy=name"
 ```
 
 Will return all people sorted by name in ascending order.
 
 ```
-String query = "https://api.cust.cloud/v1.0/people?$orderBy=name desc"
+String query = "$orderBy=name desc"
 ```
 
 Will return all people sorted by name in descending order.
@@ -68,14 +68,14 @@ Will return all people sorted by name in descending order.
 Sub-sorts can be specified by a comma-separated list of property names with OPTIONAL direction qualifier.
 
 ```
-String query = "https://api.cust.cloud/v1.0/people?$orderBy=name desc,hireDate"
+String query = "$orderBy=name desc,hireDate"
 ```
 
 Will return all people sorted by name in descending order and a secondary sort order of hireDate in ascending order.
 Sorting MUST compose with filtering such that:
 
 ```
-String query = "https://api.cust.cloud/v1.0/people?$filter=name eq 'david'&$orderBy=hireDate"
+String query = "$filter=name eq 'david'&$orderBy=hireDate"
 ```
 
 Will return all people whose name is David sorted in ascending order by hireDate.
@@ -92,7 +92,7 @@ Will return all people whose name is David sorted in ascending order by hireDate
 #### Examples
 
 ```
-String query = "https://api.cust.cloud/v1.0/products?$filter=price lt 10.00"
+String query = "$filter=price lt 10.00"
 ```
 
 Will return all Products whose Price is less than $10.00
@@ -147,19 +147,19 @@ Ranking of precedence (descending):
 #### Examples
 
 ```
-String query = "https://api.cust.cloud/v1.0/products?$skip=10"
+String query = "$skip=10"
 ```
 
 Will return all Products starting from the 10th Product.
 
 ```
-String query = "https://api.cust.cloud/v1.0/products?$top=5"
+String query = "$top=5"
 ```
 
 Will return the first 5 Products.
 
 ```
-String query = "https://api.cust.cloud/v1.0/products?$skip=10&$top=5"
+String query = "$skip=10&$top=5"
 ```
 
 Will return the 5 Products starting from the 10th Product.
@@ -168,11 +168,11 @@ Will return the 5 Products starting from the 10th Product.
 
 ### Building Custom Queries
 
-The Java-QueryOnList supports extending the QueryEngine and/or QueryParser classes for creating custom queries. This can be useful when you need to support different or more complex scenarios that aren't covered by the built-in functionality.
+The Java-QueryOnList supports extending the [QueryExecutor](src/main/java/org/queryongenericlist/query/queryexecutor/QueryExecutor.java), the [QueryEngine](src/main/java/org/queryongenericlist/query/queryengine/QueryEngine.java) and/or the [QueryParser](src/main/java/org/queryongenericlist/query/abstractsyntaxtree/queryparser/QueryParser.java) interfaces to support custom queries. This can be useful when you need to support different or more complex scenarios that aren't covered by the built-in functionality.
 
 ## Testing
 
-To verify the correct functionality of the QueryEngine, we provide a testing framework which includes two main classes: `CaseTester` and `PreparedCase`.
+To verify the correct functionality of the Java-QueryOnList library, we provide a testing framework which includes two main classes: `CaseTester` and `PreparedCase`.
 
 ### CaseTester
 
@@ -227,7 +227,7 @@ carCaseTester
     .testCases();
 ```
 
-These test classes provide a convenient and flexible way to ensure that the QueryEngine is working as expected. By creating a `PreparedCase` for each scenario that needs to be tested, you can ensure that all edge cases are covered and that any regressions will be caught immediately.
+These test classes provide a convenient and flexible way to ensure that the Java-QueryOnList library is working as expected. By creating a `PreparedCase` for each scenario that needs to be tested, you can ensure that all edge cases are covered and that any regressions will be caught immediately.
 
 For test examples see the [GenericClassTest](src/test/java/org/queryongenericlist/GenericClassTests.java) class.
 
@@ -235,6 +235,17 @@ For test examples see the [GenericClassTest](src/test/java/org/queryongenericlis
 
 Contributions are welcome! Please submit a pull request on our GitHub repository.
 
+## Acknowledgments
+
+This project greatly appreciates the contributions of:
+
+- [svencc](https://github.com/orgs/Java-QueryOnList/people/svencc) - svencc led the implementation, DevOps setup, and managed client communication. His ability to translate customer requirements into executable tasks and provide crucial support to smartkanak was invaluable. His diverse skill set has been a cornerstone of the project.
+
+- [smartkanak](https://github.com/orgs/Java-QueryOnList/people/smartkanak) - Masterminded the project's core functionalities. Meticulously developed the parsing logic, engine implementation, execution flow, and ensured robust testing. His technical acumen has been pivotal to the project's success.
+
+Our sincere thanks go to both of them for their indispensable contributions. This appreciation is a tribute to their dedication and hard work, of course without the intention of praising themselves, as this was written by ChatGPT and not by them.
+
+
 ## License
 
-QueryEngine is released under the MIT License. Please see the `LICENSE` file for more details.
+Java-QueryOnList is released under the MIT License. Please see the [LICENSE](LICENSE) file for more details.
