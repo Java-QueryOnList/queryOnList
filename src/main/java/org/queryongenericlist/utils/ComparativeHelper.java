@@ -2,9 +2,7 @@ package org.queryongenericlist.utils;
 
 import lombok.NonNull;
 
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.function.Predicate;
 
 public class ComparativeHelper implements Comparator<Object> {
 
@@ -22,7 +20,7 @@ public class ComparativeHelper implements Comparator<Object> {
             final Double intValue2 = Double.parseDouble(value2.toString());
             return intValue1.compareTo(intValue2);
         } else if (value1 instanceof String strValue1 && value2 instanceof String strValue2) {
-            return strValue1.compareTo(strValue2);
+            return strValue1.toLowerCase().compareTo(strValue2.toLowerCase());
         } else if (value1 instanceof Boolean boolValue1 && value2 instanceof Boolean boolValue2) {
             return boolValue1.compareTo(boolValue2);
         } else if (value1 instanceof String && isNumeric(value2)) {
@@ -36,7 +34,7 @@ public class ComparativeHelper implements Comparator<Object> {
         } else if (value1 instanceof Enum<?> && value2 instanceof String stringValue2) {
             String stringValue1 = value1.toString();
             return stringValue1.compareTo(stringValue2);
-        } else if (!value1.equals(value2)){
+        } else if (!value1.equals(value2)) {
             return -1000; // just a distinct number to distinguish from other cases
         } else {
             throw new IllegalArgumentException("Unsupported value types");
@@ -56,13 +54,5 @@ public class ComparativeHelper implements Comparator<Object> {
         }
 
         return false;
-    }
-
-    public <T> boolean anyOrAllMatch(Collection<T> collection, Predicate<T> predicate, boolean allMatch) {
-        if (allMatch) {
-            return collection.stream().allMatch(predicate);
-        } else {
-            return collection.stream().anyMatch(predicate);
-        }
     }
 }

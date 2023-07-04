@@ -21,8 +21,12 @@ public class PaginationParser implements QueryParser<PaginationNode> {
             int skip = this.skip != null && !this.skip.isEmpty() ? Integer.parseInt(this.skip) : 0;
             PaginationNode paginationNode = new PaginationNode(top, skip);
             return paginationNode;
-        } catch (PaginationParserException e) {
-            throw new PaginationParserException("Error parsing pagination", e);
+        } catch (Throwable throwable) {
+            if (throwable instanceof PaginationParserException) {
+                throw throwable;
+            } else {
+                throw new PaginationParserException("Error parsing pagination", throwable);
+            }
         }
     }
 

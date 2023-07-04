@@ -2,12 +2,12 @@ package org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.i
 
 import org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.implementation.subparser.filterparser.FilterParserException;
 
-public class FieldParserException extends FilterParserException {
-    public FieldParserException(String message) {
+public class FilterFieldParserException extends FilterParserException {
+    public FilterFieldParserException(String message) {
         super(message);
     }
 
-    public FieldParserException(String message, Throwable cause) {
+    public FilterFieldParserException(String message, Throwable cause) {
         super(message, cause);
     }
 }

@@ -48,16 +48,12 @@ public class FilterParser implements QueryParser<FilterNode> {
     }
 
     public static boolean isString(@NonNull final String input) {
-        try {
-            if (input.length() > 0) {
-                final char firstChar = input.charAt(0);
-                final char lastChar = input.charAt(input.length() - 1);
-                return firstChar == '\'' && lastChar == '\'';
-            }
-            return false;
-        } catch (InvalidStringInputException e) {
-            return false;
+        if (input.length() > 0) {
+            final char firstChar = input.charAt(0);
+            final char lastChar = input.charAt(input.length() - 1);
+            return firstChar == '\'' && lastChar == '\'';
         }
+        return false;
     }
 
     @Override
@@ -70,13 +66,12 @@ public class FilterParser implements QueryParser<FilterNode> {
                 final String subString = splitQuery.get(index);
                 if (Objects.equals(subString, "(")) {
                     try {
-
                         index++;
                         final FilterParser subParser = new FilterParser(splitQuery.subList(index, splitQuery.size()));
                         final FilterNode subTree = subParser.parse();
                         operandStack.push(subTree);
                         index += subParser.index;
-                    } catch (OpenBracketParserException e) {
+                    } catch (Exception e) {
                         throw new OpenBracketParserException("Exception when parsing open bracket '('. ", e);
                     }
                 } else if (Objects.equals(subString, ")")) {
@@ -95,7 +90,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         negationNode.setTailRight(subTree);
                         operandStack.push(negationNode);
                         index += subParser.index;
-                    } catch (NotParserException e) {
+                    } catch (Exception e) {
                         throw new NotParserException("Exception when parsing 'not'. ", e);
                     }
                 } else if (isOperator(subString)) {
@@ -109,7 +104,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                             operandStack.push(poppedOperatorNode);
                         }
                         operatorStack.push(operatorNode);
-                    } catch (OperatorParserException e) {
+                    } catch (Exception e) {
                         throw new OperatorParserException("Exception when parsing operator. ", e);
                     }
                 } else if (isNumber(subString)) {
@@ -117,7 +112,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         final Double number = Double.parseDouble(subString);
                         final PrimitiveValue numberOperand = new PrimitiveValue(number);
                         operandStack.push(new FilterNode(numberOperand));
-                    } catch (NumberParserException e) {
+                    } catch (Exception e) {
                         throw new NumberParserException("Exception when parsing number. ", e);
                     }
                 } else if (isString(subString)) {
@@ -125,7 +120,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         final String strWithoutQuotes = subString.substring(1, subString.length() - 1);
                         final PrimitiveValue stringOperand = new PrimitiveValue(strWithoutQuotes);
                         operandStack.push(new FilterNode(stringOperand));
-                    } catch (StringParserException e) {
+                    } catch (Exception e) {
                         throw new StringParserException("Exception when parsing string. ", e);
                     }
                 } else if (subString.equals("true") || subString.equals("false")) {
@@ -133,7 +128,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         // if substring is boolean
                         final PrimitiveValue booleanOperand = new PrimitiveValue(subString.equals("true"));
                         operandStack.push(new FilterNode(booleanOperand));
-                    } catch (BooleanParserException e) {
+                    } catch (Exception e) {
                         throw new BooleanParserException("Exception when parsing boolean. ", e);
                     }
                 } else {
@@ -141,8 +136,8 @@ public class FilterParser implements QueryParser<FilterNode> {
                         // if substring is field
                         final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
                         operandStack.push(new FilterNode(referenceValue));
-                    } catch (FieldParserException e) {
-                        throw new FieldParserException("Exception when parsing field. ", e);
+                    } catch (Exception e) {
+                        throw new FilterFieldParserException("Exception when parsing field. ", e);
                     }
                 }
 
@@ -155,13 +150,17 @@ public class FilterParser implements QueryParser<FilterNode> {
                     final FilterNode poppedOperatorNode = getNodeFromStacks(operatorStack, operandStack);
                     operandStack.push(poppedOperatorNode);
                 }
-            } catch (PopOperatorsStackException e) {
+            } catch (Exception e) {
                 throw new PopOperatorsStackException("Exception when popping operators stack. ", e);
             }
 
             return operandStack.pop();
-        } catch (FilterParserException e) {
-            throw new FilterParserException("Error parsing filter token at index " + index + ": " + splitQuery.get(index) + " of " + String.join(", ", splitQuery), e);
+        } catch (Throwable throwable) {
+            if (throwable instanceof FilterParserException) {
+                throw throwable;
+            } else {
+                throw new FilterParserException("Exception parsing filter token at index " + index + ": " + splitQuery.get(index) + " of " + String.join(", ", splitQuery), throwable);
+            }
         }
     }
 
