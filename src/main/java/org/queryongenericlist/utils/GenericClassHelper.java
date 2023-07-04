@@ -1,6 +1,7 @@
 package org.queryongenericlist.utils;
 
 import lombok.NonNull;
+import org.queryongenericlist.exceptions.utils.GenericClassHelperException;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.leafnode.subclasses.PrimitiveValue;
 
 import java.lang.reflect.Field;
@@ -23,20 +24,28 @@ public class GenericClassHelper {
     @NonNull
     static public PrimitiveValue extractAllFields(@NonNull final Object obj, @NonNull String[] fieldNames) {
 
-        Object currentObject = obj;
+        try {
+            Object currentObject = obj;
 
-        // Traverse through the nested fields e.g. ["car", "engine", "horsepower"] for obj.element.engine.horsepower
-        for (String currentFieldName : fieldNames) {
-            currentObject = ObjectHandler.ifArrayConvertToList(currentObject);
-            if (currentObject instanceof Collection<?> currentList) {
-                currentObject = extractForAllElements(currentFieldName, currentList);
-            } else {
-                currentObject = extractForOneElement(currentObject, currentFieldName);
+            // Traverse through the nested fields e.g. ["car", "engine", "horsepower"] for obj.element.engine.horsepower
+            for (String currentFieldName : fieldNames) {
+                currentObject = ObjectHandler.ifArrayConvertToList(currentObject);
+                if (currentObject instanceof Collection<?> currentList) {
+                    currentObject = extractForAllElements(currentFieldName, currentList);
+                } else {
+                    currentObject = extractForOneElement(currentObject, currentFieldName);
+                }
+                if (currentObject == null) return new PrimitiveValue(null);
             }
-            if (currentObject == null) return new PrimitiveValue(null);
-        }
 
-        return new PrimitiveValue(currentObject);
+            return new PrimitiveValue(currentObject);
+        } catch (Throwable throwable) {
+            if (throwable instanceof GenericClassHelperException) {
+                throw throwable;
+            } else {
+                throw new GenericClassHelperException("Error while extracting fields from object: " + obj, throwable);
+            }
+        }
     }
 
     private static List<Object> extractForAllElements(String currentFieldName, Collection<?> currentList) {

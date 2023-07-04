@@ -13,6 +13,7 @@ import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filter
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.logicaloperator.subclasses.LogicalOr;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.negativeoperator.NegativeOperator;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.QueryParser;
+import org.queryongenericlist.utils.LoggingHelper;
 import org.queryongenericlist.utils.StringParser;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         operandStack.push(subTree);
                         index += subParser.index;
                     } catch (Exception e) {
-                        throw new OpenBracketParserException("Exception when parsing open bracket '('. ", e);
+                        throw new OpenBracketParserException("\nException when parsing open bracket '('. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 } else if (Objects.equals(subString, ")")) {
                     break;
@@ -91,7 +92,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         operandStack.push(negationNode);
                         index += subParser.index;
                     } catch (Exception e) {
-                        throw new NotParserException("Exception when parsing 'not'. ", e);
+                        throw new NotParserException("\nException when parsing 'not'. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 } else if (isOperator(subString)) {
                     try {
@@ -105,7 +106,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         }
                         operatorStack.push(operatorNode);
                     } catch (Exception e) {
-                        throw new OperatorParserException("Exception when parsing operator. ", e);
+                        throw new OperatorParserException("\nException when parsing operator. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 } else if (isNumber(subString)) {
                     try {
@@ -113,7 +114,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         final PrimitiveValue numberOperand = new PrimitiveValue(number);
                         operandStack.push(new FilterNode(numberOperand));
                     } catch (Exception e) {
-                        throw new NumberParserException("Exception when parsing number. ", e);
+                        throw new NumberParserException("\nException when parsing number. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 } else if (isString(subString)) {
                     try {
@@ -121,7 +122,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         final PrimitiveValue stringOperand = new PrimitiveValue(strWithoutQuotes);
                         operandStack.push(new FilterNode(stringOperand));
                     } catch (Exception e) {
-                        throw new StringParserException("Exception when parsing string. ", e);
+                        throw new StringParserException("\nException when parsing string. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 } else if (subString.equals("true") || subString.equals("false")) {
                     try {
@@ -129,7 +130,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         final PrimitiveValue booleanOperand = new PrimitiveValue(subString.equals("true"));
                         operandStack.push(new FilterNode(booleanOperand));
                     } catch (Exception e) {
-                        throw new BooleanParserException("Exception when parsing boolean. ", e);
+                        throw new BooleanParserException("\nException when parsing boolean. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 } else {
                     try {
@@ -137,7 +138,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                         final ReferenceValue referenceValue = ReferenceValue.fromSubstring(subString);
                         operandStack.push(new FilterNode(referenceValue));
                     } catch (Exception e) {
-                        throw new FilterFieldParserException("Exception when parsing field. ", e);
+                        throw new FilterFieldParserException("\nException when parsing field. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
                 }
 
@@ -151,7 +152,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                     operandStack.push(poppedOperatorNode);
                 }
             } catch (Exception e) {
-                throw new PopOperatorsStackException("Exception when popping operators stack. ", e);
+                throw new PopOperatorsStackException("\nException when popping operators stack. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
             }
 
             return operandStack.pop();
@@ -159,7 +160,7 @@ public class FilterParser implements QueryParser<FilterNode> {
             if (throwable instanceof FilterParserException) {
                 throw throwable;
             } else {
-                throw new FilterParserException("Exception parsing filter token at index " + index + ": " + splitQuery.get(index) + " of " + String.join(", ", splitQuery), throwable);
+                throw new FilterParserException("\nException parsing filter. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), throwable);
             }
         }
     }

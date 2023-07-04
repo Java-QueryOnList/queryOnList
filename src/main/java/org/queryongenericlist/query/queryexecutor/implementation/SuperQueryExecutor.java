@@ -1,6 +1,7 @@
 package org.queryongenericlist.query.queryexecutor.implementation;
 
 import lombok.NonNull;
+import org.queryongenericlist.exceptions.query.queryexecutor.implementation.SuperQueryExecutorException;
 import org.queryongenericlist.query.queryengine.implementation.SuperQueryEngine;
 import org.queryongenericlist.query.queryexecutor.QueryExecutor;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.SuperQueryNode;
@@ -26,18 +27,26 @@ public class SuperQueryExecutor implements QueryExecutor {
      */
     @NonNull
     public <T> List<T> execute(@NonNull final String query, @NonNull final List<T> onList) {
-        List<T> queryResult;
+        try {
+            List<T> queryResult;
 
-        // parse query
-        final SuperQueryParser queryParser = new SuperQueryParser(query);
-        final SuperQueryNode parsedQuery = queryParser.parse();
+            // parse query
+            final SuperQueryParser queryParser = new SuperQueryParser(query);
+            final SuperQueryNode parsedQuery = queryParser.parse();
 
-        // apply parsed query which is now an abstract syntax tree on the given list
-        SuperQueryEngine queryEngine = new SuperQueryEngine();
-        Stream<T> queryStream = queryEngine.apply(parsedQuery, onList.stream());
-        queryResult = queryStream.collect(Collectors.toList());
+            // apply parsed query which is now an abstract syntax tree on the given list
+            SuperQueryEngine queryEngine = new SuperQueryEngine();
+            Stream<T> queryStream = queryEngine.apply(parsedQuery, onList.stream());
+            queryResult = queryStream.collect(Collectors.toList());
 
-        return queryResult;
+            return queryResult;
+        } catch (Throwable throwable) {
+            if (throwable instanceof SuperQueryExecutorException) {
+                throw  throwable;
+            } else {
+                throw new SuperQueryExecutorException("Error while executing query: " + query, throwable);
+            }
+        }
     }
 
     /**
