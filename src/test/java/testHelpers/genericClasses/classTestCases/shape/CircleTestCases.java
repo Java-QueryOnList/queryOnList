@@ -1,6 +1,7 @@
 package testHelpers.genericClasses.classTestCases.shape;
 
 import org.queryongenericlist.query.queryexecutor.implementation.SuperQueryExecutor;
+import org.queryongenericlist.utils.stringparser.applied.UrlParser;
 import testHelpers.genericClasses.classDecleration.shape.Circle;
 import testHelpers.genericClasses.classObjects.shape.CircleObjects;
 import testHelpers.genericClasses.classTestCases.PreparedCase;
@@ -100,7 +101,7 @@ public final class CircleTestCases {
         // Create query
         SuperQueryExecutor executor = new SuperQueryExecutor();
         String fullURL = "https://www.example.com/?$filter=radius gt 5 or color eq 'Blue' and (radius le 5.00 or color eq 'Yellow')&$orderBy=radius";
-        String query = executor.getQueryFromURL(fullURL);
+        String query = UrlParser.getQueryFromUrl(fullURL);
 
         // prepare the List which is expected after the query
         List<Circle> expectedList = new ArrayList<>();

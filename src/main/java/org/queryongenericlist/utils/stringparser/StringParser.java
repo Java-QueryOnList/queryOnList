@@ -1,4 +1,4 @@
-package org.queryongenericlist.utils;
+package org.queryongenericlist.utils.stringparser;
 
 import lombok.NonNull;
 

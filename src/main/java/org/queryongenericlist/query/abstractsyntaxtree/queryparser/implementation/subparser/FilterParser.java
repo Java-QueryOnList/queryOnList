@@ -14,7 +14,7 @@ import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filter
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.filteroperator.negativeoperator.NegativeOperator;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.QueryParser;
 import org.queryongenericlist.utils.LoggingHelper;
-import org.queryongenericlist.utils.StringParser;
+import org.queryongenericlist.utils.stringparser.StringParser;
 
 import java.util.List;
 import java.util.Objects;

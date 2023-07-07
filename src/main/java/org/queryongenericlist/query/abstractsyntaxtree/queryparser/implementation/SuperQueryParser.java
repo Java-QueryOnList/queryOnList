@@ -1,5 +1,6 @@
 package org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,14 +13,14 @@ import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementatio
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.QueryParser;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser.FilterParser;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser.PaginationParser;
-import org.queryongenericlist.utils.StringParser;
+import org.queryongenericlist.utils.stringparser.StringParser;
 
 
 /**
  * Parse given query and return the parsed QueryNode
  */
 @SuperBuilder
-@RequiredArgsConstructor
+@Getter
 public class SuperQueryParser implements QueryParser<SuperQueryNode> {
 
     /**
@@ -35,6 +36,19 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
 
     @NonNull
     private final String query; // e.g. "$filter=name eq 'david'&$orderBy=hireDate"
+    private final String filterQuery; // e.g. "name eq 'david'"
+    private final String sortingQuery; // e.g. "hireDate"
+    private final String paginationTopQuery; // e.g. "10"
+    private final String paginationSkipQuery; // e.g. "20"
+
+    public SuperQueryParser(@NonNull String query) {
+        this.query = query;
+        this.filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
+        this.sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
+        this.paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
+        this.paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
+    }
+
 
 
     @NonNull
@@ -44,22 +58,18 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
             SuperQueryNode.SuperQueryNodeBuilder nodeBuilder = SuperQueryNode.builder();
 
             // filter query
-            final String filterQuery = StringParser.getFirst(query, FILTER_PATTERN);
             if (!filterQuery.isEmpty()) {
                 final FilterNode filterNode = new FilterParser(filterQuery).parse();
                 nodeBuilder.filterNode(filterNode);
             }
 
             // sorting query
-            final String sortingQuery = StringParser.getFirst(query, SORTING_PATTERN);
             if (!sortingQuery.isEmpty()) {
                 final SortingNode sortingNode = new SortingParser(sortingQuery).parse();
                 nodeBuilder.sortingNode(sortingNode);
             }
 
             // pagination query
-            final String paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
-            final String paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
             if (!paginationTopQuery.isEmpty() || !paginationSkipQuery.isEmpty()) {
                 final PaginationNode paginationNode = new PaginationParser(paginationTopQuery, paginationSkipQuery).parse();
                 nodeBuilder.paginationNode(paginationNode);
