@@ -124,3 +124,4 @@ public class AssertionsExtended extends Assertions {
     }
 
 }
+
