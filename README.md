@@ -3,6 +3,10 @@
 The Java-QueryOnList library is a Java Library that provides functionality for parsing queries and retrieving queried lists based on
 the input query of type String.
 
+It involves various components and workflows that are visualized in the diagram below:
+
+![Diagram](Diagram.svg)
+
 ## Usage
 
 ### Example
