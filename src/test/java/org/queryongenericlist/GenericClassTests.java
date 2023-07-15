@@ -2,6 +2,7 @@ package org.queryongenericlist;
 
 import org.junit.jupiter.api.Test;
 import testHelpers.genericClasses.classDecleration.car.Car;
+import testHelpers.genericClasses.classDecleration.datatypeholder.DataTypeHolder;
 import testHelpers.genericClasses.classDecleration.developer.Developer;
 import testHelpers.genericClasses.classDecleration.dog.Dog;
 import testHelpers.genericClasses.classDecleration.pokemon.PokemonTrainer;
@@ -10,6 +11,7 @@ import testHelpers.genericClasses.classDecleration.shape.Shape;
 import testHelpers.genericClasses.classDecleration.shoppingList.ShoppingList;
 import testHelpers.genericClasses.classTestCases.CaseTester;
 import testHelpers.genericClasses.classTestCases.car.CarTestCases;
+import testHelpers.genericClasses.classTestCases.datatypeholder.DataTypeHolderTestCases;
 import testHelpers.genericClasses.classTestCases.developer.DeveloperTestCases;
 import testHelpers.genericClasses.classTestCases.dog.DogTestCases;
 import testHelpers.genericClasses.classTestCases.pokemon.PokemonTrainerTestCases;
@@ -102,6 +104,20 @@ public class GenericClassTests {
                 .addCase(DeveloperTestCases.orderByLanguagesWithNullOnList)
                 .addCase(DeveloperTestCases.orderByLanguagesThenProjects)
                 .addCase(DeveloperTestCases.filterRoleEnum)
+                .testCases();
+    }
+
+    @Test
+    public void testOnDataTypeHolderClass() {
+        CaseTester<DataTypeHolder> dataTypeHolderCaseTester = new CaseTester<>();
+
+        dataTypeHolderCaseTester
+                // usual data types:
+                .addCase(DataTypeHolderTestCases.filterBooleanField)
+                .addCase(DataTypeHolderTestCases.filterStringField)
+                .addCase(DataTypeHolderTestCases.orderByIntegerFieldDesc)
+                // not so usual data types:
+                .addCase(DataTypeHolderTestCases.filterCharField)
                 .testCases();
     }
 }

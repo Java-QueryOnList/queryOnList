@@ -124,7 +124,7 @@ public class FilterParser implements QueryParser<FilterNode> {
                     } catch (Exception e) {
                         throw new StringParserException("\nException when parsing string. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), e);
                     }
-                } else if (subString.equals("true") || subString.equals("false")) {
+                } else if (subString.equalsIgnoreCase("true") || subString.equalsIgnoreCase("false")) {
                     try {
                         // if substring is boolean
                         final PrimitiveValue booleanOperand = new PrimitiveValue(subString.equals("true"));

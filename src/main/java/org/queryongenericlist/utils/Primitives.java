@@ -15,7 +15,8 @@ public class Primitives {
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Boolean", value -> value instanceof Boolean));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Float", value -> value instanceof Float));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Double", value -> value instanceof Double));
-        SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("String", value -> value instanceof String));
+        SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("CharSequence", value -> value instanceof CharSequence));
+        SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("char", value -> value instanceof Character));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Enum", value -> value instanceof Enum));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Collection", value -> value instanceof Collection));
         SUPPORTED_PRIMITIVE_TYPES.add(new PrimitiveType("Array", value -> value.getClass().isArray()));

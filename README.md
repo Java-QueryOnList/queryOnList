@@ -15,7 +15,7 @@ following:
 
 ### Component Details
 
-| Category       | Component            | Description                                                                                                                                          |
+| Type           | Component            | Description                                                                                                                                          |
 |:---------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | Executor       | `QueryExecutor`      | Interface for executing a given query on a given list and returning the queried list.                                                                |
 | Executor       | `SuperQueryExecutor` | Implements `QueryExecutor` and provides specific parser and engine for executing the given query on a given list.                                    |
