@@ -60,7 +60,7 @@ public class PaginatedResult<T> {
      *
      * @return the total number of items of the result list
      */
-    public int getCurrentCount() {
+    public int getCurrentPageItemCount() {
         return result.size();
     }
 
@@ -125,8 +125,9 @@ public class PaginatedResult<T> {
     }
 
     private boolean isLastPage() {
-        // using resultsCountWithoutPagination
-        return resultsCountWithoutPagination <= currentSkip + currentTop;
+        boolean noElements = resultsCountWithoutPagination <= 0;
+        boolean noMoreElements = resultsCountWithoutPagination <= currentSkip + currentTop;
+        return noElements || noMoreElements;
     }
 
 
