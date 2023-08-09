@@ -14,5 +14,6 @@ public class SuperQueryNode implements QueryNode {
 
     private FilterNode filterNode;
     private SortingNode sortingNode;
+    @Setter
     private PaginationNode paginationNode;
 }

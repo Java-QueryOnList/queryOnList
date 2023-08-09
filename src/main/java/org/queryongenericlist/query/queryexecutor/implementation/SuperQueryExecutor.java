@@ -2,10 +2,11 @@ package org.queryongenericlist.query.queryexecutor.implementation;
 
 import lombok.NonNull;
 import org.queryongenericlist.exceptions.query.queryexecutor.implementation.SuperQueryExecutorException;
+import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.SuperQueryNode;
+import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.paginationnode.PaginationNode;
+import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.SuperQueryParser;
 import org.queryongenericlist.query.queryengine.implementation.SuperQueryEngine;
 import org.queryongenericlist.query.queryexecutor.QueryExecutor;
-import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.SuperQueryNode;
-import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.SuperQueryParser;
 import org.queryongenericlist.query.result.PaginatedResult;
 
 import java.util.List;
@@ -77,11 +78,20 @@ public class SuperQueryExecutor implements QueryExecutor {
             // sortingQuery
             String sortingQuery = queryParser.getSortingQuery();
             sortingQuery = sortingQuery.isEmpty() ? "" : "$orderBy=" + sortingQuery;
+
             // paginationQuery
-            String skipQuery = String.valueOf(parsedQuery.getPaginationNode().getSkip());
-            skipQuery = skipQuery.isEmpty() ? "" : "$skip=" + skipQuery;
-            String topQuery = String.valueOf(parsedQuery.getPaginationNode().getTop());
-            topQuery = topQuery.isEmpty() ? "" : "$top=" + topQuery;
+            String skipQuery;
+            String topQuery;
+            if (parsedQuery.getPaginationNode() == null) {
+                skipQuery = "$skip=0";
+                final PaginationNode paginationNode = new PaginationNode(0, onList.size());
+                topQuery="$top=" + onList.size();
+                parsedQuery.setPaginationNode(paginationNode);
+            } else {
+                skipQuery = String.valueOf(parsedQuery.getPaginationNode().getSkip());
+                topQuery = String.valueOf(parsedQuery.getPaginationNode().getTop());
+            }
+
             String paginationQuery = skipQuery + "&" + topQuery;
 
             // Create and return the new paginatedResult

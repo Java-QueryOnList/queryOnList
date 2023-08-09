@@ -2,8 +2,8 @@ package org.queryongenericlist.query.queryengine.implementation.subengine.pagina
 
 import lombok.NonNull;
 import org.queryongenericlist.exceptions.query.queryengine.implementation.subengine.paginationengine.PaginationEngineException;
-import org.queryongenericlist.query.queryengine.QueryEngine;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.paginationnode.PaginationNode;
+import org.queryongenericlist.query.queryengine.QueryEngine;
 
 import java.util.stream.Stream;
 

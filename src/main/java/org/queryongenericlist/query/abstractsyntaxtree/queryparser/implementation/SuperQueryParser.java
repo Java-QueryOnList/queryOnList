@@ -2,17 +2,16 @@ package org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementati
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.queryongenericlist.exceptions.query.abstractsyntaxtree.queryparser.implementation.SuperQueryParserException;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.SuperQueryNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.FilterNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.paginationnode.PaginationNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.sortingnode.SortingNode;
-import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser.SortingParser;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.QueryParser;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser.FilterParser;
 import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser.PaginationParser;
+import org.queryongenericlist.query.abstractsyntaxtree.queryparser.implementation.subparser.SortingParser;
 import org.queryongenericlist.utils.stringparser.StringParser;
 
 
@@ -48,7 +47,6 @@ public class SuperQueryParser implements QueryParser<SuperQueryNode> {
         this.paginationTopQuery = StringParser.getFirst(query, TOP_PATTERN);
         this.paginationSkipQuery = StringParser.getFirst(query, SKIP_PATTERN);
     }
-
 
 
     @NonNull

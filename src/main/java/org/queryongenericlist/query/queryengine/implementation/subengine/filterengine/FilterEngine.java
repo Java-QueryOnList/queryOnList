@@ -2,8 +2,8 @@ package org.queryongenericlist.query.queryengine.implementation.subengine.filter
 
 import lombok.NonNull;
 import org.queryongenericlist.exceptions.query.queryengine.implementation.subengine.filterengine.FilterEngineException;
-import org.queryongenericlist.query.queryengine.QueryEngine;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filternode.FilterNode;
+import org.queryongenericlist.query.queryengine.QueryEngine;
 
 import java.util.function.Predicate;
 import java.util.stream.Stream;

@@ -57,6 +57,17 @@ public class FilterParser implements QueryParser<FilterNode> {
         return false;
     }
 
+    private static FilterNode getNodeFromStacks(Stack<FilterNode> operatorStack, Stack<FilterNode> operandStack) {
+        // get instance for node
+        FilterNode poppedOperatorNode = operatorStack.pop();
+
+        // set left and right of node
+        poppedOperatorNode.setTailRight(operandStack.pop());
+        poppedOperatorNode.setTailLeft(operandStack.pop());
+
+        return poppedOperatorNode;
+    }
+
     @Override
     public @NonNull FilterNode parse() {
         try {
@@ -163,17 +174,6 @@ public class FilterParser implements QueryParser<FilterNode> {
                 throw new FilterParserException("\nException parsing filter. Current Token:\n" + LoggingHelper.showTokenFromTokens(index, splitQuery), throwable);
             }
         }
-    }
-
-    private static FilterNode getNodeFromStacks(Stack<FilterNode> operatorStack, Stack<FilterNode> operandStack) {
-        // get instance for node
-        FilterNode poppedOperatorNode = operatorStack.pop();
-
-        // set left and right of node
-        poppedOperatorNode.setTailRight(operandStack.pop());
-        poppedOperatorNode.setTailLeft(operandStack.pop());
-
-        return poppedOperatorNode;
     }
 
     private boolean isOperator(@NonNull final String subString) {
