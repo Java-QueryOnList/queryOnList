@@ -1,5 +1,6 @@
 package org.queryongenericlist.query.queryengine.implementation;
 
+import lombok.Getter;
 import lombok.NonNull;
 import org.queryongenericlist.exceptions.query.queryengine.implementation.SuperQueryEngineException;
 import org.queryongenericlist.query.queryengine.QueryEngine;
@@ -11,9 +12,14 @@ import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.filter
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.paginationnode.PaginationNode;
 import org.queryongenericlist.query.abstractsyntaxtree.querynode.subnodes.sortingnode.SortingNode;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SuperQueryEngine implements QueryEngine<SuperQueryNode> {
+    @Getter
+    private int filteredResultSize = -1;
+
     @Override
     public @NonNull <T> Stream<T> apply(SuperQueryNode syntaxTree, Stream<T> onStream) {
         try {
@@ -26,6 +32,11 @@ public class SuperQueryEngine implements QueryEngine<SuperQueryNode> {
                 if (filterNode != null) {
                     FilterEngine filterEngine = new FilterEngine();
                     queryResult = filterEngine.apply(filterNode, queryResult);
+                    // Save filtered list information for pagination later
+                    List<T> filteredList = queryResult.toList();
+                    filteredResultSize = filteredList.size();
+                    // Reset stream
+                    queryResult = filteredList.stream();
                 }
 
                 // Sorting engine

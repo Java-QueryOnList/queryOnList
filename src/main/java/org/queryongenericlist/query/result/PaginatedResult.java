@@ -5,10 +5,12 @@ import org.queryongenericlist.query.queryexecutor.QueryExecutor;
 import org.queryongenericlist.query.queryexecutor.implementation.SuperQueryExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class PaginatedResult<T> {
     final private List<T> result;
+    final private int resultsCountWithoutPagination;
     final private String filterQuery;
     final private String orderByQuery;
     final private String paginationQuery;
@@ -19,6 +21,7 @@ public class PaginatedResult<T> {
     // Constructor
     public PaginatedResult(
             List<T> result,
+            int resultsCountWithoutPagination,
             String filterQuery,
             String orderByQuery,
             String paginationQuery,
@@ -27,6 +30,7 @@ public class PaginatedResult<T> {
             String baseUrl
     ) {
         this.result = result;
+        this.resultsCountWithoutPagination = resultsCountWithoutPagination;
         this.filterQuery = filterQuery;
         this.orderByQuery = orderByQuery;
         this.paginationQuery = paginationQuery;
@@ -81,6 +85,7 @@ public class PaginatedResult<T> {
             // Create the new paginated result
             paginatedResult = new PaginatedResult<>(
                     nextPageResult,
+                    resultsCountWithoutPagination,
                     filterQuery,
                     orderByQuery,
                     nextPaginationQuery,
@@ -119,19 +124,25 @@ public class PaginatedResult<T> {
         return queryBuilder.toString();
     }
 
+    private boolean isLastPage() {
+        // using resultsCountWithoutPagination
+        return resultsCountWithoutPagination <= currentSkip + currentTop;
+    }
+
 
     /**
      * Get the next page url.
      *
      * @return the next page url or null if the current page is the last one
      */
-    public String getNextPageUrl() {
+
+    public Optional<String> getNextPageUrl() {
         String nextPageUrl = null;
-        if (baseUrl != null) {
+        if (baseUrl != null && !isLastPage()) {
             int nextSkip = currentSkip + currentTop;
             String nextPaginationQuery = "$skip=" + nextSkip + "&$top=" + currentTop;
             nextPageUrl = baseUrl + "?" + getQueryOfPage(nextPaginationQuery);
         }
-        return nextPageUrl;
+        return Optional.ofNullable(nextPageUrl);
     }
 }

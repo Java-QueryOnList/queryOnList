@@ -79,24 +79,12 @@ public class SuperQueryExecutor implements QueryExecutor {
             String sortingQuery = queryParser.getSortingQuery();
             sortingQuery = sortingQuery.isEmpty() ? "" : "$orderBy=" + sortingQuery;
 
-            // paginationQuery
-            String skipQuery;
-            String topQuery;
-            if (parsedQuery.getPaginationNode() == null) {
-                skipQuery = "$skip=0";
-                final PaginationNode paginationNode = new PaginationNode(0, onList.size());
-                topQuery="$top=" + onList.size();
-                parsedQuery.setPaginationNode(paginationNode);
-            } else {
-                skipQuery = String.valueOf(parsedQuery.getPaginationNode().getSkip());
-                topQuery = String.valueOf(parsedQuery.getPaginationNode().getTop());
-            }
-
-            String paginationQuery = skipQuery + "&" + topQuery;
+            String paginationQuery = getPaginationQuery(onList, parsedQuery);
 
             // Create and return the new paginatedResult
             return new PaginatedResult<>(
-                    queryStream.collect(Collectors.toList()),
+                    queryStream.collect(Collectors.toList()), // paginated result
+                    queryEngine.getFilteredResultSize(), // total result size when filtered only
                     filterQuery,
                     sortingQuery,
                     paginationQuery,
@@ -111,5 +99,22 @@ public class SuperQueryExecutor implements QueryExecutor {
                 throw new SuperQueryExecutorException("Error while executing query: " + query, throwable);
             }
         }
+    }
+
+    private static <T> String getPaginationQuery(List<T> onList, SuperQueryNode parsedQuery) {
+        // paginationQuery
+        String skipQuery;
+        String topQuery;
+        if (parsedQuery.getPaginationNode() == null) {
+            skipQuery = "0";
+            final PaginationNode paginationNode = new PaginationNode(0, onList.size());
+            topQuery=String.valueOf(onList.size());
+            parsedQuery.setPaginationNode(paginationNode);
+        } else {
+            skipQuery = String.valueOf(parsedQuery.getPaginationNode().getSkip());
+            topQuery = String.valueOf(parsedQuery.getPaginationNode().getTop());
+        }
+
+        return String.format("$skip=%s&$top=%s", skipQuery, topQuery);
     }
 }

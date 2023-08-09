@@ -36,9 +36,25 @@ public class PaginatedResultTest {
         PaginatedResult<Car> paginatedResult = superQueryExecutor.executeForPaginatedResult(query, onList, baseUrl);
 
         // actual results
-        String actualNextPageUrl = paginatedResult.getNextPageUrl();
+        String actualNextPageUrl = paginatedResult.getNextPageUrl().orElse(null);
 
         // testing results
         Assertions.assertEquals("https://example.com/cars?$filter=engine.horsepower gt 50&$skip=6&$top=2", actualNextPageUrl);
+    }
+
+    @Test
+    public void testLastPageUrl() {
+        // prepare data
+        SuperQueryExecutor superQueryExecutor = new SuperQueryExecutor();
+        String query = "$filter=engine.horsepower gt 50&$skip=4&$top=1000";
+        String baseUrl = "https://example.com/cars";
+        List<Car> onList = CarObjects.getRawList();
+        PaginatedResult<Car> paginatedResult = superQueryExecutor.executeForPaginatedResult(query, onList, baseUrl);
+
+        // actual results
+        String actualNextPageUrl = paginatedResult.getNextPageUrl().orElse(null);
+
+        // Testing results
+        Assertions.assertNull(actualNextPageUrl); // because there is no next page when top=1000
     }
 }
